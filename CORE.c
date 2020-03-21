@@ -60,5 +60,5 @@ void SetupDatabaseNode(
 			DefDb = 0;
 	}
 
-	printf("%s",DatabaseNode);
+	DatabaseNodeName = DatabaseNode;
 }
