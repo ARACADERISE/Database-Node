@@ -9,7 +9,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-char *DatabaeNodeName;
+char *DatabaseNodeName;
 static char * DbNodeNames[] = {
 	// DEFAULT NAMES(12-15)
 	"Default01", // Default db, user can assign era type
