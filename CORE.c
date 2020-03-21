@@ -10,7 +10,7 @@
 char *DatabaseNodeName;
 // This will append names created by the user
 static char * DbNodeNames[] = {
-	// DEFAULT NAMES(12-15)
+	// DEFAULT NAMES(14-17)
 	"Default01", // Default db, user can assign era type
 	"Tyme7", // Default db, user can assign era type
 	"FileReader", // Defaut db, can only read files
