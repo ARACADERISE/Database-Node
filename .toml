@@ -1,14 +1,14 @@
 [AUTHOR]
-	[AUTHOR_NAME] = "ARACADERISE"
+	AUTHOR_NAME = "ARACADERISE"
 [TITLE]
-	[TITLE_NAME] = "Database Nodes"
+	TITLE_NAME = "Database Nodes"
 [DESCRIPTION]
-	[DESCRIPTION_] = "Database-Node in a C project that creates Database Nodes, or Databases that do specific tasks"
+	DESCRIPTION_ = "Database-Node in a C project that creates Database Nodes, or Databases that do specific tasks"
 
 [RUN]
-	[_] = "gcc -c main.c"
-	[COMPILER] = "./main"
+	_ = "gcc -c main.c"
+	COMPILER = "./main"
 
 [FILES]
-	[MAIN_FILE] = "./main.c"
-	[OTHERS] = ["./CORE.c","./CORE.h"]
+	MAIN_FILE = "./main.c"
+	OTHERS = ["./CORE.c","./CORE.h"]
