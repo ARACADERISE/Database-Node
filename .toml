@@ -1,4 +1,5 @@
-[AUTHOR]: "ARACADERISE"
+[AUTHOR]
+	"ARACADERISE"
 [TITLE]: "Database Nodes"
 [DESCRIPTION]:
 	"Database-Node in a C project that creates Database Nodes, or Databases that do specific tasks"
