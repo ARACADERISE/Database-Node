@@ -1,13 +1,13 @@
-AUTHOR: "ARACADERISE"
-TITLE: "Database Nodes"
-DESCRIPTION:
+[AUTHOR]: "ARACADERISE"
+[TITLE]: "Database Nodes"
+[DESCRIPTION]:
 	"Database-Node in a C project that creates Database Nodes, or Databases that do specific tasks"
 
-RUN:
+[RUN]:
 	"gcc -c main.c"
 	"./main"
 
-FILES:
+[FILES]:
 	./main.c
 	./CORE.c
 	./CORE.h
