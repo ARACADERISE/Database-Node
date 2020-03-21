@@ -31,7 +31,7 @@ typedef struct {
 		struct {
 			bool Core_Generated_Errs;
 			bool CanRead;
-			void *EraType;
+			char *EraType;
 		} CoreInfo;
 	} setup;
 } DatabaseNodeset;
