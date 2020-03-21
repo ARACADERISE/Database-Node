@@ -52,14 +52,20 @@ void SetupDatabaseNode(
 	static int DefDb = 0;
 	DatabaseNodeset * NodeSetup = (DatabaseNodeset *) malloc(sizeof(DatabaseNodeset));
 	
-	if(strcmp(DatabaseNode,"default "/*Space needed due to /0 at end of string*/)) {
-		DatabaseNode = DbNodeNames[DefDb++];
-		if(DefDb != 3)
-			DefDb++;
-		else
-			DefDb = 0;
+	if(DefDb != -1) {
+		if(strcmp(DatabaseNode,"default "/*Space needed due to /0 at end of string*/)) {
+			DatabaseNode = DbNodeNames[DefDb];
+			if(DefDb != 3) {
+				DefDb++;
+			}
+			else {
+				DefDb = -1;
+			}
+		}
+	} else {
+		printf("You can only assign 4 default Database Nodes\n");
+		exit(EXIT_FAILURE);
 	}
 
 	DatabaseNodeName = DatabaseNode;
-	printf("%s",DatabaseNodeName);
 }
