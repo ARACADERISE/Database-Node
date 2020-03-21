@@ -48,12 +48,12 @@ void SetupDatabaseNode(
 	bool NodeCanRead,
 	char *Era
 ) {
-	int InitId = 0;
-	int DefDb = 0;
+	static int InitId = 0;
+	static int DefDb = 0;
 	DatabaseNodeset * NodeSetup = (DatabaseNodeset *) malloc(sizeof(DatabaseNodeset));
 	
 	if(strcmp(DatabaseNode,"default "/*Space needed due to /0 at end of string*/)) {
-		DatabaseNode = DbNodeNames[DefDb];
+		DatabaseNode = DbNodeNames[DefDb++];
 		if(DefDb != 3)
 			DefDb++;
 		else
@@ -61,4 +61,5 @@ void SetupDatabaseNode(
 	}
 
 	DatabaseNodeName = DatabaseNode;
+	printf("%s",DatabaseNodeName);
 }
