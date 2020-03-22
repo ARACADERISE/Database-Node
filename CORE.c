@@ -37,7 +37,7 @@ void SetupDatabaseNode(
 	DatabaseNodeset * NodeSetup = (DatabaseNodeset *) malloc(sizeof(DatabaseNodeset));
 	
 	if(DefDb != -1) {
-		if(strcmp(DatabaseNode,"default" /*Space needed due to /0 at end of string*/) == 0) {
+		if(strcmp(DatabaseNode,"default") == 0) {
 			DatabaseNode = DefDbNodeNames[DefDb];
 			if(DefDb != 3)
 				DefDb ++;
