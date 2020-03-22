@@ -11,6 +11,7 @@
 
 char *DatabaseNodeName;
 int _CGE;
+int Total;
 // This is Default db names
 static char * DefDbNodeNames[] = {
 	// DEFAULT NAMES
@@ -33,14 +34,18 @@ CheckFile(char *FileName, char *LookFor) {
 
 	FILE *OpenCheck;
 	OpenCheck = fopen(FileName,"r");
-	fread(Read,1,sizeof(char)*40,OpenCheck);
-	fclose(OpenCheck);
-
-	if(strcmp(Read,LookFor) == 0) {
-		printf("%s found in file %s\n",LookFor,FileName);
-		ExitCode = FoundInOtherFile;
+	if(OpenCheck == NULL) {
+		printf("Error finding file %s",FileName);
 	} else {
-		ExitCode = 0;
+		fread(Read,1,sizeof(char)*40,OpenCheck);
+		fclose(OpenCheck);
+
+		if(strcmp(Read,LookFor) == 0) {
+			printf("%s found in file %s\n",LookFor,FileName);
+			ExitCode = FoundInOtherFile;
+		} else {
+			ExitCode = 0;
+		}
 	}
 
 	return ExitCode;
@@ -52,9 +57,10 @@ void SetupDatabaseNode(
 	bool NodeCanRead,
 	char *Era
 ) {
-	static int InitId = 0;
+	static int InitId = 1;
 	static int DefDb = 0;
 	static int InitUpd = 0;
+	static int upds = 1;
 	DatabaseNodeset * NodeSetup = (DatabaseNodeset *) malloc(sizeof(DatabaseNodeset));
 	
 	if(DefDb != -1) {
@@ -68,7 +74,7 @@ void SetupDatabaseNode(
 		} else {
 			FILE *Created;
 			if(InitUpd > 0) {
-				if(CheckFile("Created",DatabaseNode) == 			FoundInOtherFile) {
+				if(CheckFile("CreatedNodeName",DatabaseNode) == 			FoundInOtherFile) {
 					exit(FoundInOtherFile);
 				}
 			}
@@ -87,6 +93,7 @@ void SetupDatabaseNode(
 
 	DatabaseNodeName = DatabaseNode;
 	_CGE = (CoreGenereatedErrs) ? 0:1;
+	DatabaseNodeset * NodeSetup_ = (DatabaseNodeset *) malloc(sizeof(DatabaseNodeset));
 
-	CTYPES();
+	NodeSetup_->NodeId = InitId++;
 }
