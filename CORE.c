@@ -13,7 +13,7 @@ char *DatabaseNodeName;
 int _CGE;
 // This is Default db names
 static char * DefDbNodeNames[] = {
-	// DEFAULT NAMES(14-17)
+	// DEFAULT NAMES
 	"Default01", // Default db, user can assign era type
 	"Tyme7", // Default db, user can assign era type
 	"FileReader", // Defaut db, can only read files
