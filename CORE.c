@@ -11,7 +11,6 @@
 
 char *DatabaseNodeName;
 int _CGE;
-int Total;
 // This is Default db names
 static char * DefDbNodeNames[] = {
 	// DEFAULT NAMES
