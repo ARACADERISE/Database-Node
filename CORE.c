@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
+#include "types.h"
 #include "CORE_types.h"
 
 char *DatabaseNodeName;
@@ -20,27 +21,6 @@ static char * DbNodeNames[] = {
 
 	// User defined Database Nodes defined from index 4+
 };
-
-typedef struct {
-	int ResetId;
-	char *DatabaseNode;
-} Reset;
-
-typedef struct {
-	int NodeId;
-	struct {
-		// If true, can return error status other than 0 and 1
-		// If false, can only return 10 for Core Failure Err
-		bool Core_Generated_Errs;
-		// If true, the Database Node can read files and print
-		bool CanRead;
-		// An Era type basically defines the whole use
-		// of the Database Node
-		// NOTE: The Database Node does not depend fully on
-		// The era type
-		char *EraType;
-	} CoreInfo;
-} DatabaseNodeset;
 
 void SetupDatabaseNode(
 	char *DatabaseNode,
