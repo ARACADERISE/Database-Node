@@ -9,6 +9,7 @@
 */
 
 #include <stdio.h>
+#include <stdlib.h>
 
 extern int _CGE;
 
@@ -26,7 +27,7 @@ extern int _CGE;
 	if(TYPE == CoreConErr) \
 		printf("Error connection with core. \n\tReturn Exit status %d",CoreConErr); \
 	else if(TYPE == FileConErr) \
-		printf("Error connecting/finding file. Return Exit status %d",FileConErr); \
+		printf("Error connecting/finding file. \n\tReturn Exit status %d",FileConErr); \
 	else if(TYPE == FoundInOtherFile) \
 		printf("The string/number/character was found in another file. \n\tReturn Exit status %d",FoundInOtherFile); \
 	else if(TYPE == Failure) \
