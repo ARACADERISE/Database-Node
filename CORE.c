@@ -61,6 +61,7 @@ void SetupDatabaseNode(
 	static int DefDb = 0;
 	static int InitUpd = 0;
 	static int upds = 1;
+	AddInfo Add_Info;
 	DatabaseNodeset * NodeSetup = (DatabaseNodeset *) malloc(sizeof(DatabaseNodeset));
 	
 	if(DefDb != -1) {
@@ -84,7 +85,14 @@ void SetupDatabaseNode(
 			fclose(Created);
 
 			strcpy(&DbNames[InitUpd],DatabaseNode);
-			InitUpd++;
+
+			// Add Info
+			Add_Info.AddId = InitUpd+1;
+			char AddDetails[150];
+			sprintf(AddDetails,"Added Database Node %s",DatabaseNode);
+			strcpy(Add_Info.NameOfNode[InitUpd],AddDetails);
+
+			++InitUpd;
 		}
 	} else {
 		printf("You can only assign 4 default Database Nodes\n");
@@ -95,5 +103,5 @@ void SetupDatabaseNode(
 	_CGE = (CoreGenereatedErrs) ? 0:1;
 	DatabaseNodeset * NodeSetup_ = (DatabaseNodeset *) malloc(sizeof(DatabaseNodeset));
 
-	NodeSetup_->NodeId = InitId++;
+	NodeSetup_->NodeId = InitUpd;
 }
