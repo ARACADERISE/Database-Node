@@ -10,6 +10,7 @@
 #include <stdbool.h>
 
 char *DatabaseNodeName;
+bool _CGE;
 static char * DbNodeNames[] = {
 	// DEFAULT NAMES(12-15)
 	"Default01", // Default db, user can assign era type
@@ -27,13 +28,11 @@ typedef struct {
 
 typedef struct {
 	int NodeId;
-	union {
-		struct {
-			bool Core_Generated_Errs;
-			bool CanRead;
-			char *EraType;
-		} CoreInfo;
-	} setup;
+	struct {
+		bool Core_Generated_Errs;
+		bool CanRead;
+		char *EraType;
+	} CoreInfo;
 } DatabaseNodeset;
 
 void SetupDatabaseNode(
