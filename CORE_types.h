@@ -35,5 +35,4 @@ extern int _CGE;
 		printf("Program compiled successfully. \n\tReturn Exit status %d",Success); \
 	else { \
 		printf("Unknown return type"); \
-		abort(); \
 	}
