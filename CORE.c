@@ -23,7 +23,28 @@ static char * DefDbNodeNames[] = {
 // This is needed due to the fact if we set calloc(500, sizeof(DefDbNodeNames)*80)
 // To DefDbNodeNames, it appends all user created names
 // To the begginning
-char *DbNames;
+char DbNames[500];
+
+// Opens a file and checks for certain names in it
+static int
+CheckFile(char *FileName, char *LookFor) {
+	char Read[200];
+	int ExitCode;
+
+	FILE *OpenCheck;
+	OpenCheck = fopen(FileName,"r");
+	fread(Read,1,sizeof(char)*40,OpenCheck);
+	fclose(OpenCheck);
+
+	if(strcmp(Read,LookFor) == 0) {
+		printf("%s found in file %s\n",LookFor,FileName);
+		ExitCode = FoundInOtherFile;
+	} else {
+		ExitCode = 0;
+	}
+
+	return ExitCode;
+}
 
 void SetupDatabaseNode(
 	char *DatabaseNode,
@@ -40,12 +61,22 @@ void SetupDatabaseNode(
 		if(strcmp(DatabaseNode,"default") == 0) {
 			DatabaseNode = DefDbNodeNames[DefDb];
 			if(DefDb != 3)
-				DefDb ++;
+				DefDb++;
 			else
 				DefDb = -1;
 			printf("Yep");
 		} else {
-			DbNames = calloc(500, sizeof(DbNames)*80);
+			FILE *Created;
+			if(InitUpd > 0) {
+				if(CheckFile("Created",DatabaseNode) == 			FoundInOtherFile) {
+					exit(FoundInOtherFile);
+				}
+			}
+
+			Created = fopen("CreatedNodeName","w");
+			fwrite(DatabaseNode,1,sizeof(char)*10,Created);
+			fclose(Created);
+
 			strcpy(&DbNames[InitUpd],DatabaseNode);
 			InitUpd++;
 		}
