@@ -6,8 +6,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
+#include "CORE_types.h"
 
 char *DatabaseNodeName;
+int _CGE;
 // This will append names created by the user
 static char * DbNodeNames[] = {
 	// DEFAULT NAMES(14-17)
@@ -26,20 +28,18 @@ typedef struct {
 
 typedef struct {
 	int NodeId;
-	union {
-		struct {
-			// If true, can return error status other than 0 and 1
-			// If false, can only return 10 for Core Failure Err
-			bool Core_Generated_Errs;
-			// If true, the Database Node can read files and print
-			bool CanRead;
-			// An Era type basically defines the whole use
-			// of the Database Node
-			// NOTE: The Database Node does not depend fully on
-			// The era type
-			char *EraType;
-		} CoreInfo;
-	} setup;
+	struct {
+		// If true, can return error status other than 0 and 1
+		// If false, can only return 10 for Core Failure Err
+		bool Core_Generated_Errs;
+		// If true, the Database Node can read files and print
+		bool CanRead;
+		// An Era type basically defines the whole use
+		// of the Database Node
+		// NOTE: The Database Node does not depend fully on
+		// The era type
+		char *EraType;
+	} CoreInfo;
 } DatabaseNodeset;
 
 void SetupDatabaseNode(
@@ -68,4 +68,5 @@ void SetupDatabaseNode(
 	}
 
 	DatabaseNodeName = DatabaseNode;
+	_CGE = (CoreGenereatedErrs) ? 0:1;
 }
