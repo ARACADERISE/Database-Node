@@ -74,7 +74,7 @@ void SetupDatabaseNode(
 			}
 
 			Created = fopen("CreatedNodeName","w");
-			fwrite(DatabaseNode,1,sizeof(char)*10,Created);
+			fwrite(DatabaseNode,1,sizeof(char)*80,Created);
 			fclose(Created);
 
 			strcpy(&DbNames[InitUpd],DatabaseNode);
@@ -87,4 +87,6 @@ void SetupDatabaseNode(
 
 	DatabaseNodeName = DatabaseNode;
 	_CGE = (CoreGenereatedErrs) ? 0:1;
+
+	CTYPES();
 }
