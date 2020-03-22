@@ -7,33 +7,13 @@
 */
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include <stdbool.h>
+#include "CORE_types.h"
 
 char *DatabaseNodeName;
-bool _CGE;
-static char * DbNodeNames[] = {
-	// DEFAULT NAMES(12-15)
-	"Default01", // Default db, user can assign era type
-	"Tyme7", // Default db, user can assign era type
-	"FileReader", // Defaut db, can only read files
-	"FileWriter" // Default db, can only write files
-
-	// User defined Database Nodes defined from index 4+
-};
-
-typedef struct {
-	int ResetIt;
-	char *DatabaseNode;
-} Reset;
-
-typedef struct {
-	int NodeId;
-	struct {
-		bool Core_Generated_Errs;
-		bool CanRead;
-		char *EraType;
-	} CoreInfo;
-} DatabaseNodeset;
+int _CGE;
 
 void SetupDatabaseNode(
 	char *DatabaseNode,
