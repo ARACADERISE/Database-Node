@@ -21,7 +21,7 @@ extern int _CGE;
 #  define Success            0
 
 #define CTYPES() \
-	printf("TYPES: \n%s",(_CGE == 0) ? "\tCoreConErr - Err Status 1\n\tFileConErr - Err Status 2\n\tNotDumped - Err Status 3\n" : "\tFailure - Exit Status 1\n\tSuccess - Exit Status 0");
+	printf("TYPES: \n%s",(_CGE == 0) ? "\tCoreConErr - Err Status 2\n\tFileConErr - Err Status 3\n\tNotDumped - Err Status 4\n\tFoundInOtherFile - Err Status 5" : "\tFailure - Exit Status 1\n\tSuccess - Exit Status 0");
 
 #define RETURNERRINFO(TYPE) \
 	if(TYPE == CoreConErr) \
