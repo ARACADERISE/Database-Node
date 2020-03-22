@@ -26,7 +26,7 @@ static char * DefDbNodeNames[] = {
 char *DbNames;
 
 void SetupDatabaseNode(
-	char DatabaseNode[50],
+	char *DatabaseNode,
 	bool CoreGenereatedErrs,
 	bool NodeCanRead,
 	char *Era
