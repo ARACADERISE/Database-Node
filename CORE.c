@@ -80,7 +80,7 @@ void SetupDatabaseNode(
 			}
 
 			Created = fopen("CreatedNodeName","w");
-			fwrite(DatabaseNode,1,sizeof(char)*80,Created);
+			fwrite(DatabaseNode,1,sizeof(char)*40,Created);
 			fclose(Created);
 
 			strcpy(&DbNames[InitUpd],DatabaseNode);
