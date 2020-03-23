@@ -56,6 +56,27 @@ StoreInFile(
 	return 0;
 };
 
+// Finsishes setting up Default Database Node
+static int
+DefaultDbNode(DefaultMainDbNode *DefDbMainMode, const int MaxFileSize, const int MaxStringSize, const int MaxIntegerSize) {
+	NodeSizes * Sizes = (NodeSizes *) malloc(sizeof(NodeSizes));
+
+	Sizes->MaxFileSize = MaxFileSize;
+	Sizes->MaxStringSize = MaxStringSize;
+	Sizes->MaxIntegerSize = MaxIntegerSize;
+
+	// Changing the value of the enum Storage
+	enum Storage sir;
+	sir=FileStorage;
+	sir += Sizes->MaxFileSize;
+	sir=StringStorage;
+	sir += Sizes->MaxStringSize;
+	sir=IntegerStorage;
+	sir += Sizes->MaxIntegerSize;
+
+	return 0;
+}
+
 // Opens a file and checks for certain names in it
 static int
 CheckFile(char *FileName, char *LookFor) {
@@ -90,6 +111,7 @@ void SetupDatabaseNode(
 	static int InitUpd = 0;
 	AddInfo * Add_Info = (AddInfo *) malloc(sizeof(AddInfo));
 	DatabaseNodeset * NodeSetup = (DatabaseNodeset *) malloc(sizeof(DatabaseNodeset));
+	DefaultMainDbNode * DefDbNode = (DefaultMainDbNode *) malloc(sizeof(DefaultMainDbNode));
 
 	// Specifiers for functions
 	char FileName[50];
@@ -101,7 +123,6 @@ void SetupDatabaseNode(
 			printf("\033[0;33mDefaultNodeSetup needs a Era of type NUN, not %s\n\tERR_STATUS_%d\n\n",Era,ErrStatus);
 			exit(ErrStatus);
 		}
-		DefaultMainDbNode * DefDbNode = (DefaultMainDbNode *) malloc(sizeof(DefaultMainDbNode));
 
 		// Getting ideals for struct data
 		sprintf(DefaultDbNodeId,"DEFDBNODEID[%d~%d]",InitUpd,(_CGE));
@@ -111,6 +132,11 @@ void SetupDatabaseNode(
 		strcpy(DefDbNode->ERAS[1],"ro"); // Read only type of Node
 		strcpy(DefDbNode->ERAS[2],"wo"); // Write only type of node
 		strcpy(DefDbNode->ERAS[3],"da"); // Checker type of Database. Read only type, but can do more with the data
+		DefDbNode->NodeName = DatabaseNode;
+
+		// Finishing up the Default Database Node
+		// These are big sizes, but it'll be needed when the Database Nodes are put to work
+		DefaultDbNode(DefDbNode,20000,15000,10000);
 	} else {
 		if(strcmp(Era,"NUN") == 0) {
 			ErrStatus = (_CGE == 0) ? DeclarationOfEraNun : Failure;
@@ -131,11 +157,16 @@ void SetupDatabaseNode(
 			if(InitUpd > 0) {
 				CheckFile("CreatedNodeName",DatabaseNode);
 			}
-
 			strcpy(DbNames[InitUpd],DatabaseNode);
-			Created = fopen("CreatedNodeName","w");
-			fwrite(DbNames[InitUpd],1,strlen(DbNames[InitUpd]),Created);
-			fclose(Created);
+
+			if(!(strcmp(DatabaseNode,"DefaultNodeSetup") == 0)) {
+				Created = fopen("CreatedNodeName","w");
+				fwrite(DbNames[InitUpd],1,strlen(DbNames[InitUpd]),Created);
+				fclose(Created);
+			} else {
+				Created = fopen("CreateDefaultNode","w");
+				fclose(Created);
+			}
 
 			// Add Info
 			Add_Info->AddId = InitUpd+1;
