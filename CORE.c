@@ -11,7 +11,7 @@
 
 char *DatabaseNodeName;
 int _CGE;
-static int ExitCode;
+int ErrStatus;
 // This is Default db names
 static char * DefDbNodeNames[] = {
 	// DEFAULT NAMES
@@ -71,14 +71,14 @@ CheckFile(char *FileName, char *LookFor) {
 
 		if(strcmp(Read,LookFor) == 0) {
 			printf("\033[1;31mERROR: %s found in file %s\nERR_STATUS_%d\n\n",LookFor,FileName,ErrStatus);
-			ExitCode = ErrStatus;
-			exit(ExitCode);
+			ErrStatus = ErrStatus;
+			exit(ErrStatus);
 		} else {
-			ExitCode = 0;
+			ErrStatus = 0;
 		}
 	}
 
-	return ExitCode;
+	return ErrStatus;
 }
 
 void SetupDatabaseNode(
@@ -110,8 +110,9 @@ void SetupDatabaseNode(
 		strcpy(DefDbNode->ERAS[3],"da"); // Checker type of Database. Read only type, but can do more with the data
 	} else {
 		if(strcmp(Era,"NUN") == 0) {
-			printf("\033[1;31mERROR: You're trying to assign Era type of NUN to your Database Node %s\nNUN Is defaultly assigned to DefaultNodeSetup.\n",DatabaseNode);
-			exit(DeclarationOfEraNun);
+			ErrStatus = (_CGE == 0) ? DeclarationOfEraNun : Failure;
+			printf("\033[1;31mERROR: You're trying to assign Era type of NUN to your Database Node %s\nNUN Is defaultly assigned to DefaultNodeSetup.\n\tERR_STATUS_%d\n\n",DatabaseNode,ErrStatus);
+			exit(ErrStatus);
 		}
 	}
 	
@@ -154,4 +155,25 @@ void SetupDatabaseNode(
 	NodeSetup_->NodeId = InitUpd;
 	sprintf(FileName,"Node Information #%d",InitUpd);
 	StoreInFile(Add_Info->AddId,*Add_Info->NameOfNode,FileName,Add_Info);
+
+	// Going through all the appended Database Node names to see if DefaultNodeSetup is in it
+	static int times;
+	for(int i = 0; i < sizeof(DbNames)/sizeof(DbNames[0]); i++) {
+		if(strcmp(DbNames[i],"DefaultNodeSetup") == 0)
+			times++;
+		else
+			times = 0;
+	}
+	if(times == 0) {
+		ErrStatus = (_CGE == 0) ? DefaultNodeSetupNotFound : Failure;
+		printf("\033[1;31mERROR: DefaultNodeSetup is needed for the application.\n\tERR_STATUS_%d\n\n",ErrStatus);
+		FILE *Error;
+
+		// Writing error to DefaultNodeSetup ERROR
+		Error = fopen("DefaultNodeSetup ERROR","w");
+		fputs("Error with setting up/finding Database Node: DatabaseNodeSetup",Error);
+		fclose(Error);
+
+		exit(ErrStatus);
+	}
 }
