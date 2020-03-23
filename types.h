@@ -21,8 +21,8 @@ typedef struct {
 	char *NodeName;
 	// Has a different type of id
 	char Id[150];
-	// Signals it will set up
-	// 4 default signals, needs no more than 20 characters
+	// ERAS it will set up
+	// 4 default ERAS, needs no more than 20 characters
 	char ERAS[4][20];
 } DefaultMainDbNode;
 
