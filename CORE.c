@@ -71,10 +71,7 @@ CheckFile(char *FileName, char *LookFor) {
 
 		if(strcmp(Read,LookFor) == 0) {
 			printf("\033[1;31mERROR: %s found in file %s\nERR_STATUS_%d\n\n",LookFor,FileName,ErrStatus);
-			ErrStatus = ErrStatus;
 			exit(ErrStatus);
-		} else {
-			ErrStatus = 0;
 		}
 	}
 
@@ -98,6 +95,11 @@ void SetupDatabaseNode(
 	char DefaultDbNodeId[150];
 
 	if(strcmp(DatabaseNode,"DefaultNodeSetup") == 0) {
+		if(!(strcmp(Era,"NUN")==0)) {
+			ErrStatus = (_CGE == 0) ? DefaultNodeSetupEraTypeNotNun : Failure;
+			printf("\033[0;33mDefaultNodeSetup needs a Era of type NUN, not %s\n\tERR_STATUS_%d\n\n",Era,ErrStatus);
+			exit(ErrStatus);
+		}
 		DefaultMainDbNode * DefDbNode = (DefaultMainDbNode *) malloc(sizeof(DefaultMainDbNode));
 
 		// Getting ideals for struct data
@@ -161,10 +163,8 @@ void SetupDatabaseNode(
 	for(int i = 0; i < sizeof(DbNames)/sizeof(DbNames[0]); i++) {
 		if(strcmp(DbNames[i],"DefaultNodeSetup") == 0)
 			times++;
-		else
-			times = 0;
 	}
-	if(times == 0) {
+	if(times != 1) {
 		ErrStatus = (_CGE == 0) ? DefaultNodeSetupNotFound : Failure;
 		printf("\033[1;31mERROR: DefaultNodeSetup is needed for the application.\n\tERR_STATUS_%d\n\n",ErrStatus);
 		FILE *Error;
