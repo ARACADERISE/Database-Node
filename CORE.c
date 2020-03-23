@@ -25,6 +25,7 @@ StoreInFile(
 
 	FileToSaveData = fopen(StoreInFile,"w");
 	
+	// This will write all data into seperate files about the added Database Node
 	fputs(SaveData,FileToSaveData);
 	fputs("\n",FileToSaveData);
 	fwrite(&AddId,1,sizeof(int),FileToSaveData);
@@ -32,7 +33,8 @@ StoreInFile(
 	fputs(UpdateInfo,FileToSaveData);
 
 	fclose(FileToSaveData);
-
+	
+	// We want to free up the memory for the next added Database Node
 	free(AddedInfo);
 
 	return 0;
