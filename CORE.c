@@ -107,10 +107,11 @@ void SetupDatabaseNode(
 		strcpy(DefDbNode->ERAS[1],"ro"); // Read only type of Node
 		strcpy(DefDbNode->ERAS[2],"wo"); // Write only type of node
 		strcpy(DefDbNode->ERAS[3],"da"); // Checker type of Database. Read only type, but can do more with the data
-	}
-	if(strcmp(Era,"NUN") == 0 && !(strcmp(DatabaseNode,"DefaultNodeSetup"))) {
-		printf("\033[1;31mERROR: You're trying to assign Era type of NUN to your Database Node\nNUN Is defaultly assigned to DefaultNodeSetup.\n");
-		exit(DeclarationOfEraNun);
+	} else {
+		if(strcmp(Era,"NUN") == 0) {
+			printf("\033[1;31mERROR: You're trying to assign Era type of NUN to your Database Node\nNUN Is defaultly assigned to DefaultNodeSetup.\n");
+			exit(DeclarationOfEraNun);
+		}
 	}
 	
 	if(DefDb != -1) {
