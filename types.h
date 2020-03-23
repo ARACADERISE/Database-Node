@@ -5,11 +5,23 @@
 
 #include <stdio.h>
 
+
+// Keeps track of Database Nodes added
+typedef struct {
+	int AddId;
+	char NameOfNode[500][100];
+} AddInfo;
+
+static int
+StoreInFile(int AddId, char UpdateInfo[500], char *StoreInFile);
+
+// Used to keep track of reset information
 typedef struct {
 	int ResetId;
 	char *DatabaseNode;
 } Reset;
 
+// Used when setting up the core of the Database Node
 typedef struct {
 	int NodeId;
 	struct {
