@@ -13,12 +13,13 @@
 
 extern int _CGE;
 
-#  define CoreConErr         2 // Starts at 2 since Failure is 1
-#  define FileConErr         3
-#  define NotDumped          4
-#  define FoundInOtherFile   5
-#  define Failure            1
-#  define Success            0
+#  define CoreConErr            2 // Starts at 2 since Failure is 1
+#  define FileConErr            3
+#  define NotDumped             4
+#  define FoundInOtherFile      5
+#  define DeclarationOfEraNun   6
+#  define Failure               1
+#  define Success               0
 
 #define CTYPES() \
 	printf("TYPES: \n%s",(_CGE == 0) ? "\tCoreConErr - Err Status 2\n\tFileConErr - Err Status 3\n\tNotDumped - Err Status 4\n\tFoundInOtherFile - Err Status 5" : "\tFailure - Exit Status 1\n\tSuccess - Exit Status 0");
