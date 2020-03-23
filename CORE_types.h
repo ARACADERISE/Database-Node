@@ -5,7 +5,7 @@
 		represented by a number. The exit will then return
 		the number, with printing what the error was.
 
-		_CGE Is not used majorly in this file, but errors returned in other files are majorly dependent on _CGE
+		_CGE Is not used majorly depended on in this file, but errors returned in other files are majorly dependent on _CGE
 */
 
 #include <stdio.h>
