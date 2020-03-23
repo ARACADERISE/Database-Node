@@ -14,7 +14,7 @@ typedef struct {
 
 // This will be for the Main Database Node, or for the Database Node that sets up the whole application
 /* 
-	The DefaultDatabaseNode is set with Era "NUN" because there is no era types when the DefaultDatabaseNode is setup
+	The DefaultNodeSetup is set with Era "NUN" because there is no era types when the DefaultDatabaseNode is setup
 */
 typedef struct {
 	// We want to keep the name
