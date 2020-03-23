@@ -38,14 +38,15 @@ StoreInFile(
 	AddInfo *AddedInfo
 ){
 	FILE *FileToSaveData;
+	char ID[50];
 
 	FileToSaveData = fopen(StoreInFile,"w");
 	
 	// This will write all data into seperate files about the added Database Node
-	fputs("\n",FileToSaveData);
-	fwrite(&AddId,1,sizeof(int),FileToSaveData);
-	fputs("\n",FileToSaveData);
 	fputs(UpdateInfo,FileToSaveData);
+	fputs("\n",FileToSaveData);
+	sprintf(ID,"%d",AddId);
+	fputs(ID,FileToSaveData);
 
 	fclose(FileToSaveData);
 	
@@ -131,11 +132,10 @@ void SetupDatabaseNode(
 				CheckFile("CreatedNodeName",DatabaseNode);
 			}
 
-			Created = fopen("CreatedNodeName","w");
-			fwrite(DatabaseNode,1,sizeof(char)*40,Created);
-			fclose(Created);
-
 			strcpy(DbNames[InitUpd],DatabaseNode);
+			Created = fopen("CreatedNodeName","w");
+			fwrite(DbNames[InitUpd],1,strlen(DbNames[InitUpd]),Created);
+			fclose(Created);
 
 			// Add Info
 			Add_Info->AddId = InitUpd+1;
@@ -160,20 +160,22 @@ void SetupDatabaseNode(
 
 	// Going through all the appended Database Node names to see if DefaultNodeSetup is in it
 	static int times;
-	for(int i = 0; i < sizeof(DbNames)/sizeof(DbNames[0]); i++) {
+	for(int i = 0; i < InitUpd; i++) {
 		if(strcmp(DbNames[i],"DefaultNodeSetup") == 0)
 			times++;
 	}
-	if(times != 1) {
-		ErrStatus = (_CGE == 0) ? DefaultNodeSetupNotFound : Failure;
-		printf("\033[1;31mERROR: DefaultNodeSetup is needed for the application.\n\tERR_STATUS_%d\n\n",ErrStatus);
-		FILE *Error;
+	if(times < 1) {
+		if(times != 1) {
+			ErrStatus = (_CGE == 0) ? DefaultNodeSetupNotFound : Failure;
+			printf("\033[1;31mERROR: DefaultNodeSetup is needed for the application.\n\tERR_STATUS_%d\n\n",ErrStatus);
+			FILE *Error;
 
-		// Writing error to DefaultNodeSetup ERROR
-		Error = fopen("DefaultNodeSetup ERROR","w");
-		fputs("Error with setting up/finding Database Node: DatabaseNodeSetup",Error);
-		fclose(Error);
+			// Writing error to DefaultNodeSetup ERROR
+			Error = fopen("DefaultNodeSetup ERROR","w");
+			fputs("Error with setting up/finding Database Node: DatabaseNodeSetup",Error);
+			fclose(Error);
 
-		exit(ErrStatus);
+			exit(ErrStatus);
+		}
 	}
 }
