@@ -3,7 +3,7 @@
 [TITLE]
 	TITLE_NAME = "Database Nodes"
 [DESCRIPTION]
-	DESCRIPTION_ = "Database-Node in a C project that creates Database Nodes, or Databases that do specific tasks"
+	DESCRIPTION_ = "Database-Node is a C project that creates Database Nodes, or Databases that do specific tasks"
 
 [RUN]
 	_ = "gcc -c main.c"
