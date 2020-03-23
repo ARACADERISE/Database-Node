@@ -9,39 +9,9 @@
 #include "types.h"
 #include "CORE_types.h"
 
-// From types.h. Declared in types.h, given functionality
-// in CORE.c.
-// MEANT FOR AddInfo struct, nothing else
-static int 
-StoreInFile(
-	int AddId, 
-	char UpdateInfo[500], 
-	char *StoreInFile,
-	AddInfo *AddedInfo
-){
-
-	char SaveData[5000];
-	FILE *FileToSaveData;
-
-	FileToSaveData = fopen(StoreInFile,"w");
-	
-	// This will write all data into seperate files about the added Database Node
-	fputs(SaveData,FileToSaveData);
-	fputs("\n",FileToSaveData);
-	fwrite(&AddId,1,sizeof(int),FileToSaveData);
-	fputs("\n",FileToSaveData);
-	fputs(UpdateInfo,FileToSaveData);
-
-	fclose(FileToSaveData);
-	
-	// We want to free up the memory for the next added Database Node
-	free(AddedInfo);
-
-	return 0;
-};
-
 char *DatabaseNodeName;
 int _CGE;
+static int ExitCode = 0;
 // This is Default db names
 static char * DefDbNodeNames[] = {
 	// DEFAULT NAMES
@@ -56,11 +26,39 @@ static char * DefDbNodeNames[] = {
 // To the begginning
 char DbNames[500];
 
+// From types.h. Declared in types.h, given functionality
+// in CORE.c.
+// MEANT FOR AddInfo struct, nothing else
+static int 
+StoreInFile(
+	int AddId, 
+	char UpdateInfo[500], 
+	char *StoreInFile,
+	AddInfo *AddedInfo
+){
+	FILE *FileToSaveData;
+
+	FileToSaveData = fopen(StoreInFile,"w");
+	
+	// This will write all data into seperate files about the added Database Node
+	fputs("\n",FileToSaveData);
+	fwrite(&AddId,1,sizeof(int),FileToSaveData);
+	fputs("\n",FileToSaveData);
+	fputs(UpdateInfo,FileToSaveData);
+
+	fclose(FileToSaveData);
+	
+	// We want to free up the memory for the next added Database Node
+	free(AddedInfo);
+
+	return 0;
+};
+
 // Opens a file and checks for certain names in it
 static int
 CheckFile(char *FileName, char *LookFor) {
 	char Read[200];
-	int ExitCode;
+	int ErrStatus = (_CGE == 0) ? FoundInOtherFile : Failure;
 
 	FILE *OpenCheck;
 	OpenCheck = fopen(FileName,"r");
@@ -71,8 +69,9 @@ CheckFile(char *FileName, char *LookFor) {
 		fclose(OpenCheck);
 
 		if(strcmp(Read,LookFor) == 0) {
-			printf("%s found in file %s\n",LookFor,FileName);
-			ExitCode = FoundInOtherFile;
+			printf("\033[1;31mERROR: %s found in file %s\nERR_STATUS_%d\n\n",LookFor,FileName,ErrStatus);
+			ExitCode = ErrStatus;
+			exit(ExitCode);
 		} else {
 			ExitCode = 0;
 		}
@@ -92,7 +91,27 @@ void SetupDatabaseNode(
 	static int InitUpd = 0;
 	AddInfo * Add_Info = (AddInfo *) malloc(sizeof(AddInfo));
 	DatabaseNodeset * NodeSetup = (DatabaseNodeset *) malloc(sizeof(DatabaseNodeset));
+
+	// Specifiers for functions
 	char FileName[50];
+	char DefaultDbNodeId[150];
+
+	if(strcmp(DatabaseNode,"DefaultNodeSetup") == 0) {
+		DefaultMainDbNode * DefDbNode = (DefaultMainDbNode *) malloc(sizeof(DefaultMainDbNode));
+
+		// Getting ideals for struct data
+		sprintf(DefaultDbNodeId,"DEFDBNODEID[%d~%d]",InitUpd,(_CGE));
+		strcpy(DefDbNode->Id,DefaultDbNodeId);
+		// 4 default signals
+		strcpy(DefDbNode->ERAS[0],"wro"); // Read/Write files
+		strcpy(DefDbNode->ERAS[1],"ro"); // Read only type of Node
+		strcpy(DefDbNode->ERAS[2],"wo"); // Write only type of node
+		strcpy(DefDbNode->ERAS[3],"da"); // Checker type of Database. Read only type, but can do more with the data
+	}
+	if(strcmp(Era,"NUN") == 0 && !(strcmp(DatabaseNode,"DefaultNodeSetup"))) {
+		printf("\033[1;31mERROR: You're trying to assign Era type of NUN to your Database Node\nNUN Is defaultly assigned to DefaultNodeSetup.\n");
+		exit(DeclarationOfEraNun);
+	}
 	
 	if(DefDb != -1) {
 		if(strcmp(DatabaseNode,"default") == 0) {
@@ -104,9 +123,7 @@ void SetupDatabaseNode(
 		} else {
 			FILE *Created;
 			if(InitUpd > 0) {
-				if(CheckFile("CreatedNodeName",DatabaseNode) == 			FoundInOtherFile) {
-					exit(FoundInOtherFile);
-				}
+				CheckFile("CreatedNodeName",DatabaseNode);
 			}
 
 			Created = fopen("CreatedNodeName","w");
