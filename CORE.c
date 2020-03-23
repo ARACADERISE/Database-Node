@@ -16,7 +16,8 @@ static int
 StoreInFile(
 	int AddId, 
 	char UpdateInfo[500], 
-	char *StoreInFile
+	char *StoreInFile,
+	AddInfo *AddedInfo
 ){
 
 	char SaveData[5000];
@@ -31,6 +32,8 @@ StoreInFile(
 	fputs(UpdateInfo,FileToSaveData);
 
 	fclose(FileToSaveData);
+
+	free(AddedInfo);
 
 	return 0;
 };
@@ -85,7 +88,7 @@ void SetupDatabaseNode(
 	static int InitId = 1;
 	static int DefDb = 0;
 	static int InitUpd = 0;
-	AddInfo Add_Info;
+	AddInfo * Add_Info = (AddInfo *) malloc(sizeof(AddInfo));
 	DatabaseNodeset * NodeSetup = (DatabaseNodeset *) malloc(sizeof(DatabaseNodeset));
 	char FileName[50];
 	
@@ -111,10 +114,10 @@ void SetupDatabaseNode(
 			strcpy(&DbNames[InitUpd],DatabaseNode);
 
 			// Add Info
-			Add_Info.AddId = InitUpd+1;
+			Add_Info->AddId = InitUpd+1;
 			char AddDetails[150];
 			sprintf(AddDetails,"Added Database Node %s",&DbNames[InitUpd]);
-			strcpy(*Add_Info.NameOfNode,AddDetails);
+			strcpy(*Add_Info->NameOfNode,AddDetails);
 
 			++InitUpd;
 		}
@@ -129,5 +132,5 @@ void SetupDatabaseNode(
 
 	NodeSetup_->NodeId = InitUpd;
 	sprintf(FileName,"Node Information #%d",InitUpd);
-	StoreInFile(Add_Info.AddId,*Add_Info.NameOfNode,FileName);
+	StoreInFile(Add_Info->AddId,*Add_Info->NameOfNode,FileName,Add_Info);
 }
