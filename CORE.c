@@ -85,7 +85,6 @@ void SetupDatabaseNode(
 	static int InitId = 1;
 	static int DefDb = 0;
 	static int InitUpd = 0;
-	static int upds = 1;
 	AddInfo Add_Info;
 	DatabaseNodeset * NodeSetup = (DatabaseNodeset *) malloc(sizeof(DatabaseNodeset));
 	char FileName[50];
@@ -97,7 +96,6 @@ void SetupDatabaseNode(
 				DefDb++;
 			else
 				DefDb = -1;
-			printf("Yep");
 		} else {
 			FILE *Created;
 			if(InitUpd > 0) {
