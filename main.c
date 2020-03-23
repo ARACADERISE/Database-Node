@@ -3,5 +3,6 @@
 #include "CORE.h"
 
 int main(void) {
-	SetupDatabaseNode("DefaultNodeSetup", true, true, "ao");
+	// The program will go off of this
+	SetupDatabaseNode("DefaultNodeSetup", true, true, "NUN");
 }
