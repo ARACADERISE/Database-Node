@@ -9,6 +9,33 @@
 #include "types.h"
 #include "CORE_types.h"
 
+// From types.h. Declared in types.h, given functionality
+// in CORE.c.
+// MEANT FOR AddInfo struct, nothing else
+static int StoreInFile(int AddId, char UpdateInfo[500], char *StoreInFile) {
+	char SaveData[5000];
+	FILE *FileToSaveData;
+
+	FileToSaveData = fopen(StoreInFile,"r");
+
+	if(FileToSaveData != NULL) {
+		fread(SaveData,1,sizeof(SaveData)*20,FileToSaveData);
+		fclose(FileToSaveData);
+	}
+
+	FileToSaveData = fopen(StoreInFile,"w");
+	
+	fputs(SaveData,FileToSaveData);
+	fputs("\n",FileToSaveData);
+	fwrite(&AddId,1,sizeof(int),FileToSaveData);
+	fputs("\n",FileToSaveData);
+	fputs(UpdateInfo,FileToSaveData);
+
+	fclose(FileToSaveData);
+
+	return 0;
+};
+
 char *DatabaseNodeName;
 int _CGE;
 // This is Default db names
@@ -62,6 +89,7 @@ void SetupDatabaseNode(
 	static int upds = 1;
 	AddInfo Add_Info;
 	DatabaseNodeset * NodeSetup = (DatabaseNodeset *) malloc(sizeof(DatabaseNodeset));
+	char FileName[50];
 	
 	if(DefDb != -1) {
 		if(strcmp(DatabaseNode,"default") == 0) {
@@ -88,8 +116,8 @@ void SetupDatabaseNode(
 			// Add Info
 			Add_Info.AddId = InitUpd+1;
 			char AddDetails[150];
-			sprintf(AddDetails,"Added Database Node %s",DatabaseNode);
-			strcpy(Add_Info.NameOfNode[InitUpd],AddDetails);
+			sprintf(AddDetails,"Added Database Node %s",&DbNames[InitUpd]);
+			strcpy(*Add_Info.NameOfNode,AddDetails);
 
 			++InitUpd;
 		}
@@ -103,4 +131,6 @@ void SetupDatabaseNode(
 	DatabaseNodeset * NodeSetup_ = (DatabaseNodeset *) malloc(sizeof(DatabaseNodeset));
 
 	NodeSetup_->NodeId = InitUpd;
+	sprintf(FileName,"Node Information #%d",InitUpd);
+	StoreInFile(Add_Info.AddId,*Add_Info.NameOfNode,FileName);
 }
