@@ -16,8 +16,9 @@ static int
 StoreInFile(
 	int AddId, 
 	char UpdateInfo[500], 
-	char *StoreInFile ) 
-	{
+	char *StoreInFile
+){
+
 	char SaveData[5000];
 	FILE *FileToSaveData;
 
