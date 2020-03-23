@@ -11,7 +11,7 @@
 
 char *DatabaseNodeName;
 int _CGE;
-static int ExitCode = 0;
+static int ExitCode;
 // This is Default db names
 static char * DefDbNodeNames[] = {
 	// DEFAULT NAMES
