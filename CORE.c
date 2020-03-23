@@ -12,7 +12,12 @@
 // From types.h. Declared in types.h, given functionality
 // in CORE.c.
 // MEANT FOR AddInfo struct, nothing else
-static int StoreInFile(int AddId, char UpdateInfo[500], char *StoreInFile) {
+static int 
+StoreInFile(
+	int AddId, 
+	char UpdateInfo[500], 
+	char *StoreInFile ) 
+	{
 	char SaveData[5000];
 	FILE *FileToSaveData;
 
