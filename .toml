@@ -11,4 +11,4 @@
 
 [FILES]
 	MAIN_FILE = "./main.c"
-	OTHERS = ["./CORE.c","./CORE.h"]
+	OTHERS = ["./CORE.c","./CORE.h","types.h","CORE_types.h"]
