@@ -24,7 +24,7 @@ static char * DefDbNodeNames[] = {
 // This is needed due to the fact if we set calloc(500, sizeof(DefDbNodeNames)*80)
 // To DefDbNodeNames, it appends all user created names
 // To the begginning
-char DbNames[500];
+static char DbNames[500][100];
 
 // From types.h. Declared in types.h, given functionality
 // in CORE.c.
@@ -131,12 +131,12 @@ void SetupDatabaseNode(
 			fwrite(DatabaseNode,1,sizeof(char)*40,Created);
 			fclose(Created);
 
-			strcpy(&DbNames[InitUpd],DatabaseNode);
+			strcpy(DbNames[InitUpd],DatabaseNode);
 
 			// Add Info
 			Add_Info->AddId = InitUpd+1;
 			char AddDetails[150];
-			sprintf(AddDetails,"Added Database Node %s",&DbNames[InitUpd]);
+			sprintf(AddDetails,"Added Database Node %s",DbNames[InitUpd]);
 			strcpy(*Add_Info->NameOfNode,AddDetails);
 
 			++InitUpd;
