@@ -59,7 +59,7 @@ StoreInFile(
 static int
 CheckFile(char *FileName, char *LookFor) {
 	char Read[200];
-	int ErrStatus = (_CGE == 0) ? FoundInOtherFile : Failure;
+	ErrStatus = (_CGE == 0) ? FoundInOtherFile : Failure;
 
 	FILE *OpenCheck;
 	OpenCheck = fopen(FileName,"r");
