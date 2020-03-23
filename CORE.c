@@ -21,13 +21,6 @@ StoreInFile(
 	char SaveData[5000];
 	FILE *FileToSaveData;
 
-	FileToSaveData = fopen(StoreInFile,"r");
-
-	if(FileToSaveData != NULL) {
-		fread(SaveData,1,sizeof(SaveData)*20,FileToSaveData);
-		fclose(FileToSaveData);
-	}
-
 	FileToSaveData = fopen(StoreInFile,"w");
 	
 	fputs(SaveData,FileToSaveData);
