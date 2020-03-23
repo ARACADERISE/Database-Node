@@ -13,7 +13,7 @@ typedef struct {
 } AddInfo;
 
 static int
-StoreInFile(int AddId, char UpdateInfo[500], char *StoreInFile);
+StoreInFile(int AddId, char UpdateInfo[500], char *StoreInFile, AddInfo *AddedInfo);
 
 // Used to keep track of reset information
 typedef struct {
