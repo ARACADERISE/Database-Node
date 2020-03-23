@@ -5,12 +5,22 @@
 
 #include <stdio.h>
 
+// This enum stores the storage ammount of each Database Node
+// Asscociated with NodeSizes
+enum Storage {FileStorage=0,StringStorage=0,IntegerStorage=0};
 
 // Keeps track of Database Nodes added
 typedef struct {
 	int AddId;
 	char NameOfNode[500][100];
 } AddInfo;
+
+// This will store sizes the Database Nodes have
+typedef struct {
+	int MaxFileSize;
+	int MaxStringSize;
+	int MaxIntegerSize;
+} NodeSizes;
 
 // This will be for the Main Database Node, or for the Database Node that sets up the whole application
 /* 
@@ -27,8 +37,9 @@ typedef struct {
 } DefaultMainDbNode;
 
 // Will continue the work upon the DefaultMainDbNode
+// Return 0 if it is fully setup, else 1
 static int
-DefaultDbNode(DefaultMainDbNode *DefDbMainNode);
+DefaultDbNode(DefaultMainDbNode *DefDbMainNode, int MaxFileSize, int MaxStringSize, int MaxIntegerSize);
 
 static int
 StoreInFile(int AddId, char UpdateInfo[500], char *StoreInFile, AddInfo *AddedInfo);
