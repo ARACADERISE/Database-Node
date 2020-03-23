@@ -20,7 +20,7 @@ static char * DefDbNodeNames[] = {
 	"FileReader", // Defaut db, can only read files
 	"FileWriter" // Default db, can only write files
 };
-// This is user created name
+// This is user created Database Node names
 // This is needed due to the fact if we set calloc(500, sizeof(DefDbNodeNames)*80)
 // To DefDbNodeNames, it appends all user created names
 // To the begginning
