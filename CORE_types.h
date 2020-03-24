@@ -25,23 +25,33 @@ extern int _CGE;
 #  define DefaultDbNodeNotFullySetup     9
 #  define MoreThanOneDefaultNodeCreated  10
 #  define DatabaseNodeAlreadyCreated     11
+#  define NotAEraType                    12
 #  define Failure                        1
 #  define Success                        0
 
 #define CTYPES() \
 	printf("TYPES: \n%s",(_CGE == 0) ? "\tCoreConErr - Err Status 2\n\tFileConErr - Err Status 3\n\tNotDumped - Err Status 4\n\tFoundInOtherFile - Err Status 5" : "\tFailure - Exit Status 1\n\tSuccess - Exit Status 0")
 
-#define RETURNERRINFO(TYPE) \
-	if(TYPE == CoreConErr) \
-		printf("Error connection with core. \n\tReturn Exit status %d",CoreConErr); \
-	else if(TYPE == FileConErr) \
-		printf("Error connecting/finding file. \n\tReturn Exit status %d",FileConErr); \
-	else if(TYPE == FoundInOtherFile) \
-		printf("The string/number/character was found in another file. \n\tReturn Exit status %d",FoundInOtherFile); \
-	else if(TYPE == Failure) \
-		printf("Failed to compile successfully. \n\tReturn Exit status %d",Failure); \
-	else if(TYPE == Success) \
-		printf("Program compiled successfully. \n\tReturn Exit status %d",Success); \
-	else { \
-		printf("Unknown return type"); \
+#define RETURNERRINFO(COLOR,TYPE)                         \
+	if(TYPE == CoreConErr) {                                \
+		printf("%sError connection with core. \n\tReturn Exit status %d\n",COLOR,CoreConErr);                                    \
+	}                                                       \
+	else if(TYPE == FileConErr) {                           \
+		printf("%sError connecting/finding file. \n\tReturn Exit status %d\n",COLOR,FileConErr);                              \
+	}                                                       \
+	else if(TYPE == FoundInOtherFile) {                     \
+		printf("%sThe string/number/character was found in another file. \n\tReturn Exit status %d\n",COLOR,FoundInOtherFile); \
+	}                                                       \
+	else if(TYPE == DeclarationOfEraNun) {                  \
+		printf("%sAttempt to set a Era type of NUN to your Database Node. \n\tERR_STATUS_%d",COLOR,DeclarationOfEraNun);        \
+	}                                                       \
+	else if(TYPE == Failure) {                              \
+		printf("%sFailed to compile successfully. \n\tReturn Exit status %d\n",COLOR,Failure);                                 \
+	 }                                                      \
+	else if(TYPE == Success) {                              \
+		printf("%sProgram compiled successfully. \n\tReturn Exit status %d\n",COLOR,Success);                                 \
+	}                                                       \
+	else {                                                  \
+		printf("%s",COLOR);                                   \
+		printf("Unknown return type\n");                      \
 	}
