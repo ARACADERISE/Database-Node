@@ -58,7 +58,13 @@ StoreInFile(
 
 // Finsishes setting up Default Database Node
 static int
-DefaultDbNode(DefaultMainDbNode *DefDbMainMode, const int MaxFileSize, const int MaxStringSize, const int MaxIntegerSize, NodeSizes *Sizes) {
+DefaultDbNode(
+	DefaultMainDbNode *DefDbMainMode, 
+	const int MaxFileSize, 
+	const int MaxStringSize, 
+	const int MaxIntegerSize, 
+	NodeSizes *Sizes
+ ) {
 
 	Sizes->MaxFileSize = MaxFileSize;
 	Sizes->MaxStringSize = MaxStringSize;
