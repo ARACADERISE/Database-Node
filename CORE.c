@@ -71,13 +71,13 @@ DefaultDbNode(
 	Sizes->MaxIntegerSize = MaxIntegerSize;
 
 	// Changing the value of the enum Storage
-	enum Storage sir;
-	sir=FileStorage;
-	sir += Sizes->MaxFileSize;
-	sir=StringStorage;
-	sir += Sizes->MaxStringSize;
-	sir=IntegerStorage;
-	sir += Sizes->MaxIntegerSize;
+	enum Storage storage;
+	storage=FileStorage;
+	storage += Sizes->MaxFileSize;
+	storage=StringStorage;
+	storage += Sizes->MaxStringSize;
+	storage=IntegerStorage;
+	storage += Sizes->MaxIntegerSize;
 
 	return 0;
 }
