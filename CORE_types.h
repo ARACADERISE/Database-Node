@@ -23,6 +23,8 @@ extern int _CGE;
 #  define DefaultNodeSetupNotFound       7
 #  define DefaultNodeSetupEraTypeNotNun  8
 #  define DefaultDbNodeNotFullySetup     9
+#  define MoreThanOneDefaultNodeCreated  10
+#  define DatabaseNodeAlreadyCreated     11
 #  define Failure                        1
 #  define Success                        0
 
