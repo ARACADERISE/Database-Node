@@ -11,7 +11,7 @@ Action = []
 IdNumber = []
 d = 1
 
-for i in os.listdir('/home/runner/FinishedSecretOutlier'):
+for i in os.listdir(os.path.abspath('.')):
 	if 'Node Information #' in i:
 		listed_.append(i)
 
