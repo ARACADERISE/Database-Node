@@ -29,9 +29,6 @@ extern int _CGE;
 #  define Failure                        1
 #  define Success                        0
 
-#define CTYPES() \
-	printf("TYPES: \n%s",(_CGE == 0) ? "\tCoreConErr - Err Status 2\n\tFileConErr - Err Status 3\n\tNotDumped - Err Status 4\n\tFoundInOtherFile - Err Status 5" : "\tFailure - Exit Status 1\n\tSuccess - Exit Status 0")
-
 #define RETURNERRINFO(COLOR,TYPE)                                                                                                                   \
 	if(TYPE == CoreConErr) {                                                                                                                    \
 		printf("%sError connection with core. \n\tReturn Exit status %d\n",COLOR,CoreConErr);                                               \
