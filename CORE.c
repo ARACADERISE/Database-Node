@@ -157,12 +157,17 @@ void SetupDatabaseNode(
 			strcpy(DbNames[InitUpd],DatabaseNode);
 
 			if(!(strcmp(DatabaseNode,"DefaultNodeSetup") == 0)) {
-				if(InitUpd > 0) {
-					CheckFile("CreatedNodeName",DatabaseNode);
+				int Times = 1;
+				for(int i = 0; i < InitUpd; i++) {
+					if(strcmp(DbNames[i],DatabaseNode) == 0) {
+						++Times;
+					}
 				}
-				Created = fopen("CreatedNodeName","w");
-				fwrite(DbNames[InitUpd],1,strlen(DbNames[InitUpd]),Created);
-				fclose(Created);
+				if(Times > 1) {
+					ErrStatus = (_CGE == 0) ? DatabaseNodeAlreadyCreated : Failure;
+					printf("\033[1;31mERROR: You attempted to make the same Database Node.\n\tERR_STATUS_%d\n\n",ErrStatus);
+					exit(ErrStatus);
+				}
 			} else {
 				Created = fopen("CreateDefaultNode","w");
 				fputs("Default Database Node created successfully\n",Created);
@@ -171,6 +176,18 @@ void SetupDatabaseNode(
 
 				// Instead of wasting lines in CORE.c, we're going to write a python file to easily do the work
 				system("python Python/DefaultNode.py");
+			}
+
+			int TimesFound = 0;
+			for(int i = 0; i < InitUpd; i++) {
+				if(strcmp(DbNames[i],"DefaultNodeSetup") == 0) {
+					++TimesFound;
+				}
+			}
+			if(TimesFound > 1) {
+				ErrStatus = (_CGE == 0) ? MoreThanOneDefaultNodeCreated : Failure;
+				printf("\033[1;31mERROR: You attempted to make multiple Default Database Nodes.\n\tERR_STATUS_%d\n\n",ErrStatus);
+				exit(ErrStatus);
 			}
 
 			// Add Info
