@@ -85,7 +85,7 @@ DefaultDbNode(
 // Opens a file and checks for certain names in it
 static int
 CheckFile(char *FileName, char *LookFor) {
-	char Read[200];
+	char Read[1000];
 	ErrStatus = (_CGE == 0) ? FoundInOtherFile : Failure;
 
 	FILE *OpenCheck;
@@ -111,7 +111,6 @@ void SetupDatabaseNode(
 	bool NodeCanRead,
 	char *Era
 ) {
-	CheckFile("CORE.c", "SetupDatabaseNodechar");
 	static int InitId = 1;
 	static int DefDb = 0;
 	static int InitUpd = 0;
