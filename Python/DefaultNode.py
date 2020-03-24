@@ -1,4 +1,4 @@
-import os, json
+import os
 
 """
 	Touches up on files containing data about the Default  Database Node(DefaultNodeSetup).
