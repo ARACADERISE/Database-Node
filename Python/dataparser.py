@@ -40,5 +40,5 @@ with open('NodeData.json','w') as NodeData:
 	NodeData.flush()
 	NodeData.close()
 
-for i in range(len(listed_)):
-	os.remove(listed_[i])
+#for i in range(len(listed_)):
+#	os.remove(listed_[i])
