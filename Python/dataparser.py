@@ -41,5 +41,5 @@ if len(listed_) != 0:
 		NodeData.flush()
 		NodeData.close()
 
-	#for i in range(len(listed_)):
-	#	os.remove(listed_[i])
+	for i in range(len(listed_)):
+		os.remove(listed_[i])
