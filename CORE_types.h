@@ -32,26 +32,26 @@ extern int _CGE;
 #define CTYPES() \
 	printf("TYPES: \n%s",(_CGE == 0) ? "\tCoreConErr - Err Status 2\n\tFileConErr - Err Status 3\n\tNotDumped - Err Status 4\n\tFoundInOtherFile - Err Status 5" : "\tFailure - Exit Status 1\n\tSuccess - Exit Status 0")
 
-#define RETURNERRINFO(COLOR,TYPE)                                                                                           \
-	if(TYPE == CoreConErr) {                                                                                                  \
+#define RETURNERRINFO(COLOR,TYPE)                                                                                                       \
+	if(TYPE == CoreConErr) {                                                                                                        \
 		printf("%sError connection with core. \n\tReturn Exit status %d\n",COLOR,CoreConErr);                                   \
-	}                                                                                                                         \
-	else if(TYPE == FileConErr) {                                                                                             \
+	}                                                                                                                               \
+	else if(TYPE == FileConErr) {                                                                                                   \
 		printf("%sError connecting/finding file. \n\tReturn Exit status %d\n",COLOR,FileConErr);                                \
-	}                                                                                                                         \
-	else if(TYPE == FoundInOtherFile) {                                                                                       \
+	}                                                                                                                               \
+	else if(TYPE == FoundInOtherFile) {                                                                                             \
 		printf("%sThe string/number/character was found in another file. \n\tReturn Exit status %d\n",COLOR,FoundInOtherFile);  \
-	}                                                                                                                         \
-	else if(TYPE == DeclarationOfEraNun) {                                                                                    \
+	}                                                                                                                               \
+	else if(TYPE == DeclarationOfEraNun) {                                                                                          \
 		printf("%sAttempt to set a Era type of NUN to your Database Node. \n\tERR_STATUS_%d",COLOR,DeclarationOfEraNun);        \
-	}                                                                                                                         \
-	else if(TYPE == Failure) {                                                                                                \
+	}                                                                                                                               \
+	else if(TYPE == Failure) {                                                                                                      \
 		printf("%sFailed to compile successfully. \n\tReturn Exit status %d\n",COLOR,Failure);                                  \
-	 }                                                                                                                        \
-	else if(TYPE == Success) {                                                                                                \
+	 }                                                                                                                              \
+	else if(TYPE == Success) {                                                                                                      \
 		printf("%sProgram compiled successfully. \n\tReturn Exit status %d\n",COLOR,Success);                                   \
-	}                                                                                                                         \
-	else {                                                                                                                    \
+	}                                                                                                                               \
+	else {                                                                                                                          \
 		printf("%s",COLOR);                                                                                                     \
 		printf("Unknown return type\n");                                                                                        \
 	}
