@@ -125,7 +125,7 @@ void SetupDatabaseNode(
 		}
 
 		// Getting ideals for struct data
-		sprintf(DefaultDbNodeId,"DEFDBNODEID[%d~%d]",InitUpd,(_CGE));
+		sprintf(DefaultDbNodeId,"DEFDBNODEID[%d~%d~%d]",InitUpd+1,(_CGE),rand());
 		strcpy(DefDbNode->Id,DefaultDbNodeId);
 		// 4 default signals
 		strcpy(DefDbNode->ERAS[0],"wro"); // Read/Write files
@@ -154,18 +154,23 @@ void SetupDatabaseNode(
 				DefDb = -1;
 		} else {
 			FILE *Created;
-			if(InitUpd > 0) {
-				CheckFile("CreatedNodeName",DatabaseNode);
-			}
 			strcpy(DbNames[InitUpd],DatabaseNode);
 
 			if(!(strcmp(DatabaseNode,"DefaultNodeSetup") == 0)) {
+				if(InitUpd > 0) {
+					CheckFile("CreatedNodeName",DatabaseNode);
+				}
 				Created = fopen("CreatedNodeName","w");
 				fwrite(DbNames[InitUpd],1,strlen(DbNames[InitUpd]),Created);
 				fclose(Created);
 			} else {
 				Created = fopen("CreateDefaultNode","w");
+				fputs("Default Database Node created successfully\n",Created);
+				fputs(DefDbNode->Id,Created);
 				fclose(Created);
+
+				// Instead of wasting lines in CORE.c, we're going to write a python file to easily do the work
+				system("python Python/DefaultNode.py");
 			}
 
 			// Add Info
