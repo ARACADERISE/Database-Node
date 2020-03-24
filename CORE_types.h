@@ -14,6 +14,7 @@
 
 extern int _CGE;
 
+// Default Errors
 #  define CoreConErr                     2 // Starts at 2 since Failure is 1
 #  define FileConErr                     3
 #  define NotDumped                      4
@@ -22,10 +23,13 @@ extern int _CGE;
 #  define DeclarationOfEraNun            6
 #  define DefaultNodeSetupNotFound       7
 #  define DefaultNodeSetupEraTypeNotNun  8
+// Default Database Node errors
 #  define DefaultDbNodeNotFullySetup     9
 #  define MoreThanOneDefaultNodeCreated  10
+// User created Database Node errors
 #  define DatabaseNodeAlreadyCreated     11
 #  define NotAEraType                    12
+// Regular success/fail errors
 #  define Failure                        1
 #  define Success                        0
 
