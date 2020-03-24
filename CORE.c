@@ -199,10 +199,10 @@ void SetupDatabaseNode(
 				system("python Python/DefaultNode.py");
 			}
 
-			int TimesFound = 0;
+			int TimesFound = 1;
 			for(int i = 0; i < InitUpd; i++) {
 				if(strcmp(DbNames[i],"DefaultNodeSetup") == 0) {
-					++TimesFound;
+					TimesFound++;
 				}
 			}
 			if(TimesFound > 1) {
