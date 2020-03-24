@@ -233,6 +233,7 @@ void SetupDatabaseNode(
 	StoreInFile(Add_Info->AddId,*Add_Info->NameOfNode,FileName,Add_Info);
 
 	// Going through all the appended Database Node names to see if DefaultNodeSetup is in it
+	// Other errors will be raised before this, such as "Assigning Database Node to Era type NUN"
 	static int times;
 	for(int i = 0; i < InitUpd; i++) {
 		if(strcmp(DbNames[i],"DefaultNodeSetup") == 0)
