@@ -58,8 +58,7 @@ StoreInFile(
 
 // Finsishes setting up Default Database Node
 static int
-DefaultDbNode(DefaultMainDbNode *DefDbMainMode, const int MaxFileSize, const int MaxStringSize, const int MaxIntegerSize) {
-	NodeSizes * Sizes = (NodeSizes *) malloc(sizeof(NodeSizes));
+DefaultDbNode(DefaultMainDbNode *DefDbMainMode, const int MaxFileSize, const int MaxStringSize, const int MaxIntegerSize, NodeSizes *Sizes) {
 
 	Sizes->MaxFileSize = MaxFileSize;
 	Sizes->MaxStringSize = MaxStringSize;
@@ -92,7 +91,7 @@ CheckFile(char *FileName, char *LookFor) {
 		fclose(OpenCheck);
 
 		if(strcmp(Read,LookFor) == 0) {
-			printf("\033[1;31mERROR: %s found in file %s\nERR_STATUS_%d\n\n",LookFor,FileName,ErrStatus);
+			RETURNERRINFO("\033[1;31m", ErrStatus);
 			exit(ErrStatus);
 		}
 	}
@@ -106,12 +105,22 @@ void SetupDatabaseNode(
 	bool NodeCanRead,
 	char *Era
 ) {
+	CheckFile("CORE.c", "SetupDatabaseNodechar");
 	static int InitId = 1;
 	static int DefDb = 0;
 	static int InitUpd = 0;
+
+	// Struct ideals for the application
 	AddInfo * Add_Info = (AddInfo *) malloc(sizeof(AddInfo));
 	DatabaseNodeset * NodeSetup = (DatabaseNodeset *) malloc(sizeof(DatabaseNodeset));
 	DefaultMainDbNode * DefDbNode = (DefaultMainDbNode *) malloc(sizeof(DefaultMainDbNode));
+	NodeSizes * Sizes = (NodeSizes *) malloc(sizeof(NodeSizes));
+
+	// 4 default ERAS
+	strcpy(DefDbNode->ERAS[0],"wro"); // Read/Write files
+	strcpy(DefDbNode->ERAS[1],"ro"); // Read only type of Node
+	strcpy(DefDbNode->ERAS[2],"wo"); // Write only type of node
+	strcpy(DefDbNode->ERAS[3],"da"); // Checker type of Database. Read only type, but can do more with the data
 
 	// Specifiers for functions
 	char FileName[50];
@@ -120,27 +129,34 @@ void SetupDatabaseNode(
 	if(strcmp(DatabaseNode,"DefaultNodeSetup") == 0) {
 		if(!(strcmp(Era,"NUN")==0)) {
 			ErrStatus = (_CGE == 0) ? DefaultNodeSetupEraTypeNotNun : Failure;
-			printf("\033[0;33mDefaultNodeSetup needs a Era of type NUN, not %s\n\tERR_STATUS_%d\n\n",Era,ErrStatus);
+			RETURNERRINFO("\033[1;33m", ErrStatus);
 			exit(ErrStatus);
 		}
 
 		// Getting ideals for struct data
 		sprintf(DefaultDbNodeId,"DEFDBNODEID[%d~%d~%d]",InitUpd+1,(_CGE),rand());
 		strcpy(DefDbNode->Id,DefaultDbNodeId);
-		// 4 default signals
-		strcpy(DefDbNode->ERAS[0],"wro"); // Read/Write files
-		strcpy(DefDbNode->ERAS[1],"ro"); // Read only type of Node
-		strcpy(DefDbNode->ERAS[2],"wo"); // Write only type of node
-		strcpy(DefDbNode->ERAS[3],"da"); // Checker type of Database. Read only type, but can do more with the data
+		
 		DefDbNode->NodeName = DatabaseNode;
 
 		// Finishing up the Default Database Node
 		// These are big sizes, but it'll be needed when the Database Nodes are put to work
-		DefaultDbNode(DefDbNode,20000,15000,10000);
+		DefaultDbNode(DefDbNode,20000,15000,10000, Sizes);
 	} else {
 		if(strcmp(Era,"NUN") == 0) {
 			ErrStatus = (_CGE == 0) ? DeclarationOfEraNun : Failure;
-			printf("\033[1;31mERROR: You're trying to assign Era type of NUN to your Database Node %s\nNUN Is defaultly assigned to DefaultNodeSetup.\n\tERR_STATUS_%d\n\n",DatabaseNode,ErrStatus);
+			RETURNERRINFO("\033[1;31m", ErrStatus);
+			exit(ErrStatus);
+		}
+		int EraNotFound = 0;
+		for(int i = 0; i < 4/*Only 4 types of ERAS*/; i++) {
+			if(!(strcmp(Era,DefDbNode->ERAS[i]) == 0)) {
+				EraNotFound++;
+			}
+		}
+		if(EraNotFound == 4/*Meaning the Era assigned to the Database Node doesn't exist*/) {
+			ErrStatus = (_CGE == 0) ? NotAEraType : Failure;
+			RETURNERRINFO("\033[1;31m",ErrStatus);
 			exit(ErrStatus);
 		}
 	}
@@ -165,7 +181,7 @@ void SetupDatabaseNode(
 				}
 				if(Times > 1) {
 					ErrStatus = (_CGE == 0) ? DatabaseNodeAlreadyCreated : Failure;
-					printf("\033[1;31mERROR: You attempted to make the same Database Node.\n\tERR_STATUS_%d\n\n",ErrStatus);
+					RETURNERRINFO("\033[1;31m", ErrStatus);
 					exit(ErrStatus);
 				}
 			} else {
@@ -186,7 +202,7 @@ void SetupDatabaseNode(
 			}
 			if(TimesFound > 1) {
 				ErrStatus = (_CGE == 0) ? MoreThanOneDefaultNodeCreated : Failure;
-				printf("\033[1;31mERROR: You attempted to make multiple Default Database Nodes.\n\tERR_STATUS_%d\n\n",ErrStatus);
+				RETURNERRINFO("\033[1;31m", ErrStatus);
 				exit(ErrStatus);
 			}
 
@@ -220,7 +236,7 @@ void SetupDatabaseNode(
 	if(times < 1) {
 		if(times != 1) {
 			ErrStatus = (_CGE == 0) ? DefaultNodeSetupNotFound : Failure;
-			printf("\033[1;31mERROR: DefaultNodeSetup is needed for the application.\n\tERR_STATUS_%d\n\n",ErrStatus);
+			RETURNERRINFO("\033[1;31m", ErrStatus);
 			FILE *Error;
 
 			// Writing error to DefaultNodeSetup ERROR
