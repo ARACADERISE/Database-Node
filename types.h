@@ -4,6 +4,7 @@
 */
 
 #include <stdio.h>
+#include <stdbool.h>
 
 // This enum stores the storage ammount of each Database Node
 // Asscociated with NodeSizes
@@ -39,7 +40,7 @@ typedef struct {
 // Will continue the work upon the DefaultMainDbNode
 // Return 0 if it is fully setup, else 1
 static int
-DefaultDbNode(DefaultMainDbNode *DefDbMainNode, int MaxFileSize, int MaxStringSize, int MaxIntegerSize);
+DefaultDbNode(DefaultMainDbNode *DefDbMainNode, const int MaxFileSize, const int MaxStringSize, const int MaxIntegerSize, NodeSizes *Sizes);
 
 static int
 StoreInFile(int AddId, char UpdateInfo[500], char *StoreInFile, AddInfo *AddedInfo);
