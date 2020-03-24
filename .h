@@ -1,1 +1,1 @@
-NSString *fail = @"Yeah this is a fail";
+NSString *fail = @"Sure dude, nice try";
