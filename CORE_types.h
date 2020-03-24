@@ -21,14 +21,14 @@ extern int _CGE;
 #  define FoundInOtherFile               5
 // ERA errors
 #  define DeclarationOfEraNun            6
-#  define DefaultNodeSetupNotFound       7
-#  define DefaultNodeSetupEraTypeNotNun  8
+#  define DefaultNodeSetupEraTypeNotNun  7
+#  define NotAEraType                    8
 // Default Database Node errors
-#  define DefaultDbNodeNotFullySetup     9
-#  define MoreThanOneDefaultNodeCreated  10
+#  define DefaultNodeSetupNotFound       9
+#  define DefaultDbNodeNotFullySetup     10
+#  define MoreThanOneDefaultNodeCreated  11
 // User created Database Node errors
-#  define DatabaseNodeAlreadyCreated     11
-#  define NotAEraType                    12
+#  define DatabaseNodeAlreadyCreated     12
 // Regular success/fail errors
 #  define Failure                        1
 #  define Success                        0
