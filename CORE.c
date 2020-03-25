@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 #include <stdbool.h>
 #include "types.h"
 #include "CORE_types.h"
@@ -138,6 +139,7 @@ void SetupDatabaseNode(
 			exit(ErrStatus);
 		}
 
+		srand(time(0));
 		// Getting ideals for struct data
 		sprintf(DefaultDbNodeId,"DEFDBNODEID[%d~%d~%d]",InitUpd+1,(_CGE),rand());
 		strcpy(DefDbNode->Id,DefaultDbNodeId);
