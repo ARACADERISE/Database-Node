@@ -37,6 +37,12 @@ typedef struct {
 	char ERAS[4][20];
 } DefaultMainDbNode;
 
+// This will be for SetupEra.c
+typedef struct {
+	char *Era;
+	char *Action;
+} EraSetup;
+
 // Will continue the work upon the DefaultMainDbNode
 // Return 0 if it is fully setup, else 1
 static int
