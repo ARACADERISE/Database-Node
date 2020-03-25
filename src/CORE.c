@@ -5,10 +5,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <time.h> // Library needed for DefaultNodeSetup ID
+#include <time.h> // Library Needed for DefaultNodeSetup ID
 #include <stdbool.h>
 #include "types.h"
 #include "CORE_types.h"
+#include "SetupEra.h"
 
 char *DatabaseNodeName;
 int _CGE;
@@ -255,4 +256,7 @@ void SetupDatabaseNode(
 			exit(ErrStatus);
 		}
 	}
+
+	// Giving meaning to the Era
+	GatherEra(Era, DefDbNode);
 }
