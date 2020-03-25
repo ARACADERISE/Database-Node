@@ -11,6 +11,8 @@ Action = []
 IdNumber = []
 d = 1
 nums = ['1','2','3','4','5','6','7','8','9','0']
+ADDINFO = ''
+DATA = []
 
 for i in os.listdir(os.path.abspath('.')):
 	if 'Node Information #' in i:
@@ -41,6 +43,10 @@ if len(listed_) != 0:
 		Action.append(node_names[i])
 		node_names[i] = node_names[i].replace('Added Database Node ','')
 		data_ = {'Actions':Action,'NodeNames':node_names,'NodeIds':IdNumber}
+
+		ADDINFO = '[AddedDatabaseNode]\n\t\t!Node name!\t~\t%s\n'
+		DATA.append(ADDINFO % (node_names[i]))
+
 		d+= 1
 
 	with open('NodeData.json','w') as NodeData:
@@ -54,3 +60,20 @@ if len(listed_) != 0:
 
 	for i in range(len(listed_)):
 		os.remove(listed_[i])
+	
+	for i in range(len(listed_)):
+		listed_[i] = listed_[i].replace(' ','')
+
+		with open(listed_[i],'w') as UpdFile:
+			UpdFile.write(DATA[i])
+			UpdFile.flush()
+			UpdFile.close()
+		
+		DataOfFile = open(listed_[i],'r').read()
+		if 'DefaultNodeSetup' in DataOfFile:
+			new = '[DefaultNodeMsg]\n\t\tMESSAGE\t~\tREFER TO CreateDefaultNode FILE'
+		
+			with open(listed_[i],'w') as Update:
+				Update.write(new)
+				Update.flush()
+				Update.close()
