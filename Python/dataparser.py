@@ -20,6 +20,8 @@ d = 1
 nums = ['1','2','3','4','5','6','7','8','9','0']
 ADDINFO = ''
 DATA = []
+AllAddedFiles = []
+FoundFiles = []
 
 for i in os.listdir(os.path.abspath('.')):
 	if 'Node Information #' in i:
@@ -29,6 +31,8 @@ if len(listed_) != 0:
 	for i in range(len(listed_)):
 		data = open(listed_[i],'r').read()
 		node_names.append(data)
+
+	dirs = [os.listdir(os.path.abspath('.'))]
 
 	for i in range(len(node_names)):
 		if str(d) in node_names[i]:
@@ -53,18 +57,30 @@ if len(listed_) != 0:
 			node_names[i] = {'Default Node(NEEDED)':node_names[i]}
 		if 'DefaultNodeSetup' in Action[i]:
 			Action[i] = {'Default Node Added:':Action[i]}
-		data_ = {'Actions':Action,'NodeNames':node_names,'NodeIds':IdNumber}
+		
+		AllAddedFiles.append(listed_[i].replace(' ',''))
+		data_ = {'Actions':Action,'NodeNames':node_names,'NodeIds':IdNumber,'DataFiles':AllAddedFiles}
 
 		ADDINFO = '[AddedDatabaseNode]\n\t\t!Node name!\t~\t%s\n\t\t!Node Id!\t~\t%s'
 		DATA.append(ADDINFO % (node_names[i],IdNumber[i]))
 
 		d+= 1
+	
+	# If the user deletes the Database Nodes, this will update the files
+	for i in range(len(dirs[0])):
+		if 'NodeInformation#' in dirs[0][i]:
+			FoundFiles.append(dirs[0][i])
+	for i in FoundFiles:
+		if i in AllAddedFiles:
+			pass
+		if not i in AllAddedFiles:
+			os.remove(i)
 
 	with open('NodeData.json','w') as NodeData:
 		NodeData.write(json.dumps(
 			data_,
 			indent=2,
-			sort_keys=True
+			sort_keys=False
 		))
 		NodeData.flush()
 		NodeData.close()
