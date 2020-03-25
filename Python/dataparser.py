@@ -87,19 +87,20 @@ if len(listed_) != 0:
 	for i in range(len(listed_)):
 		os.remove(listed_[i])
 	
-	for i in range(len(listed_)):
-		listed_[i] = listed_[i].replace(' ','')
+	for i in AllAddedFiles:
+		#listed_[i] = listed_[i].replace(' ','')
 
-		with open(listed_[i],'w') as UpdFile:
-			UpdFile.write(DATA[i])
-			UpdFile.flush()
-			UpdFile.close()
+		for b in range(len(DATA)):
+			with open(i,'w') as UpdFile:
+				UpdFile.write(DATA[b])
+				UpdFile.flush()
+				UpdFile.close()
 		
-		DataOfFile = open(listed_[i],'r').read()
+		DataOfFile = open(i,'r').read()
 		if 'DefaultNodeSetup' in DataOfFile:
 			new = '[DefaultNodeMsg]\n\t\tMESSAGE\t~\tREFER TO THE CreateDefaultNode FILE'
 		
-			with open(listed_[i],'w') as Update:
+			with open(i,'w') as Update:
 				Update.write(new)
 				Update.flush()
 				Update.close()
