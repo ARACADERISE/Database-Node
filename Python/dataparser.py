@@ -22,6 +22,7 @@ ADDINFO = ''
 DATA = []
 AllAddedFiles = []
 FoundFiles = []
+dirs = [os.listdir(os.path.abspath('.'))]
 
 for i in os.listdir(os.path.abspath('.')):
 	if 'Node Information #' in i:
@@ -31,8 +32,6 @@ if len(listed_) != 0:
 	for i in range(len(listed_)):
 		data = open(listed_[i],'r').read()
 		node_names.append(data)
-
-	dirs = [os.listdir(os.path.abspath('.'))]
 
 	for i in range(len(node_names)):
 		if str(d) in node_names[i]:
