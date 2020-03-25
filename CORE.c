@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <time.h>
+#include <time.h> // Library needed for DefaultNodeSetup ID
 #include <stdbool.h>
 #include "types.h"
 #include "CORE_types.h"
