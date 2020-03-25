@@ -1,5 +1,12 @@
 import os, json
 
+# will be used later on when bigger files are generated
+try:
+	from tqdm import tqdm
+except ImportError:
+	os.system('pip install tqdm')
+	from tqdm import tqdm
+
 """
 	Opens the files storing information about the Database Nodes being added,
 	and takes the data and puts it into a .json formatted file
@@ -71,7 +78,7 @@ if len(listed_) != 0:
 		
 		DataOfFile = open(listed_[i],'r').read()
 		if 'DefaultNodeSetup' in DataOfFile:
-			new = '[DefaultNodeMsg]\n\t\tMESSAGE\t~\tREFER TO CreateDefaultNode FILE'
+			new = '[DefaultNodeMsg]\n\t\tMESSAGE\t~\tREFER TO THE CreateDefaultNode FILE'
 		
 			with open(listed_[i],'w') as Update:
 				Update.write(new)
