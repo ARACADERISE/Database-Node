@@ -49,10 +49,14 @@ if len(listed_) != 0:
 					IdNumber[IIndex+1]='11'
 		Action.append(node_names[i])
 		node_names[i] = node_names[i].replace('Added Database Node ','')
+		if node_names[i] == 'DefaultNodeSetup':
+			node_names[i] = {'Default Node(NEEDED)':node_names[i]}
+		if 'DefaultNodeSetup' in Action[i]:
+			Action[i] = {'Default Node Added:':Action[i]}
 		data_ = {'Actions':Action,'NodeNames':node_names,'NodeIds':IdNumber}
 
-		ADDINFO = '[AddedDatabaseNode]\n\t\t!Node name!\t~\t%s\n'
-		DATA.append(ADDINFO % (node_names[i]))
+		ADDINFO = '[AddedDatabaseNode]\n\t\t!Node name!\t~\t%s\n\t\t!Node Id!\t~\t%s'
+		DATA.append(ADDINFO % (node_names[i],IdNumber[i]))
 
 		d+= 1
 
