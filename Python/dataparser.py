@@ -31,6 +31,8 @@ listed__ = []
 era_data = []
 era = []
 era_one = ''
+AddedFiles = []
+files = []
 
 for i in os.listdir(os.path.abspath('.')):
 	# This will parse files made for setting up the Database Nodes
@@ -77,6 +79,22 @@ if len(listed__) != 0:
 		))
 		EraSetup.flush()
 		EraSetup.close()
+
+	for i in dirs[0]:
+		if 'Era Setup #' in i:
+			files.append(i)
+			AddedFiles.append(i.replace(' ',''))
+
+	write_ = '[EraSetupInformation]\n\t\t!Era Name!\t~\t%s\n\t\t!Action!\t~\t%s'
+
+	for i in range(len(AddedFiles)):
+		with open(AddedFiles[i],'w') as AddedFile:
+			AddedFile.write(write_ % (era[i] if len(era) > 1 else era[0], era_data[i] if len(era_data) > 1 else era_data[0]))
+			AddedFile.flush()
+			AddedFile.close()
+
+	for i in files:
+		os.remove(i);
 
 if len(listed_) != 0:
 	for i in range(len(listed_)):
