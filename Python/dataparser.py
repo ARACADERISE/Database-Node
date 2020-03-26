@@ -12,6 +12,7 @@ except ImportError:
 	and takes the data and puts it into a .json formatted file
 """
 
+# For the Nodes
 listed_ = []
 node_names = []
 Action = []
@@ -24,9 +25,58 @@ AllAddedFiles = []
 FoundFiles = []
 dirs = [os.listdir(os.path.abspath('.'))]
 
+# For the Eras
+era_types = ['wro','ro','wo','da'] # this is needed so we can parse through the files
+listed__ = []
+era_data = []
+era = []
+era_one = ''
+
 for i in os.listdir(os.path.abspath('.')):
+	# This will parse files made for setting up the Database Nodes
 	if 'Node Information #' in i:
 		listed_.append(i)
+	
+	# This will parse files made for setting up the Era
+	if 'Era Setup #' in i:
+		listed__.append(i)
+
+if len(listed__) != 0:
+	for i in range(len(listed__)):
+		open_ = open(listed__[i],'r').read()
+		era_data.append(open_)
+	
+	for i in range(len(era_data)):
+		if era_data[i][0] != 'w':
+			for x in era_types:
+				if x in era_data[i]:
+					era.append(x)
+		else:
+			era.append('wro')
+
+		era_data[i] = era_data[i].replace(era[i],'')
+		era_data[i] = era_data[i].replace('\n','')
+	
+	if len(era_data) > 1:
+		MoreThanOnce = False # False by defult
+		for i in range(len(era_data)):
+			if era_data[i] == era_data[i+1]:
+				MoreThanOnce = True
+			if MoreThanOnce:
+				del(era_data[i+1])
+				del(era[i+1])
+				break
+	
+	data = {'Era Types':era,'Era Used For':era_data}
+	
+	with open('EraData.json','w') as EraSetup:
+		EraSetup.write(json.dumps(
+			data,
+			indent=2,
+			sort_keys=False
+		))
+		EraSetup.flush()
+		EraSetup.close()
 
 if len(listed_) != 0:
 	for i in range(len(listed_)):
