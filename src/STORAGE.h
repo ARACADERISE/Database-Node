@@ -7,6 +7,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+// Updates the Database Nodes storage
+int
+UpdateStorage(DatabaseNodeset *Db,int *ToChange,int changeBy, int Maxed);
+
 // A very simple function
 void
 SetupNodeStorage(
