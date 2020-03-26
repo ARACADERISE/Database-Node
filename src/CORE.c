@@ -63,24 +63,30 @@ StoreInFile(
 static int
 DefaultDbNode(
 	DefaultMainDbNode *DefDbMainMode, 
-	const int MaxFileSize, 
-	const int MaxStringSize, 
-	const int MaxIntegerSize, 
+	int MaxFileSize, 
+	int MaxStringSize, 
+	int MaxIntegerSize, 
 	NodeSizes *Sizes
  ) {
+	
+	// Refactoring the storage to its initial storage ammount if it's below its init value
+	int ammountLeft;
+	if(MaxFileSize < 10000) {
+		ammountLeft = 10000-MaxFileSize;
+		MaxFileSize += ammountLeft;
+	}
+	if(MaxStringSize < 20000) {
+		ammountLeft = 20000 - MaxStringSize;
+		MaxStringSize += ammountLeft;
+	}
+	if(MaxIntegerSize < 20000) {
+		ammountLeft = 20000 - MaxIntegerSize;
+		MaxIntegerSize += ammountLeft;
+	}
 
 	Sizes->MaxFileSize = MaxFileSize;
 	Sizes->MaxStringSize = MaxStringSize;
 	Sizes->MaxIntegerSize = MaxIntegerSize;
-
-	// Changing the value of the enum Storage
-	enum Storage storage;
-	storage=FileStorage;
-	storage += Sizes->MaxFileSize;
-	storage=StringStorage;
-	storage += Sizes->MaxStringSize;
-	storage=IntegerStorage;
-	storage += Sizes->MaxIntegerSize;
 
 	return 0;
 }
@@ -150,10 +156,6 @@ void SetupDatabaseNode(
 		strcpy(DefDbNode->Id,DefaultDbNodeId);
 		
 		DefDbNode->NodeName = DatabaseNode;
-
-		// Finishing up the Default Database Node
-		// These are big sizes, but it'll be needed when the Database Nodes are put to work
-		DefaultDbNode(DefDbNode,FileSize,StringSize,IntegerSize, Sizes);
 	} else {
 		if(strcmp(Era,"NUN") == 0) {
 			ErrStatus = (_CGE == 0) ? DeclarationOfEraNun : Failure;
@@ -172,6 +174,9 @@ void SetupDatabaseNode(
 			exit(ErrStatus);
 		}
 	}
+	// Finishing up the Default Database Node
+	// These are big sizes, but it'll be needed when the Database Nodes are put to work
+	DefaultDbNode(DefDbNode,FileSize,StringSize,IntegerSize, Sizes);
 	
 	if(DefDb != -1) {
 		if(strcmp(DatabaseNode,"default") == 0) {
@@ -265,10 +270,8 @@ void SetupDatabaseNode(
 	if(!(strcmp(DatabaseNode,"DefaultNodeSetup") == 0)) {
 		// Giving meaning to the Era
 		GatherEra(Era, DefDbNode, NodeSetup/*We give meaning to each ideal of the struct bit by bit*/);
-
-		// Sets up the storage
-		SetupNodeStorage(FileSize, StringSize, IntegerSize, NodeSetup, Sizes);
 		
-		printf("%d",NodeSetup->CoreInfo.NodeStorage.MaxIntegerSize);
+		// Sets up the storage
+		SetupNodeStorage(NodeSetup, Sizes);
 	}
 }
