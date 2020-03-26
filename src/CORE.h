@@ -19,5 +19,8 @@ void SetupDatabaseNode(
 	char *DatabaseNode,
 	bool CoreGenereatedErrs,
 	bool NodeCanRead,
-	char *Era
+	char *Era,
+	int FileSize,
+	int StringSize,
+	int IntegerSize
 );
