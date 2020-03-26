@@ -7,12 +7,29 @@
 #include <string.h>
 #include "types.h"
 
+// Writes data stored in struct EraSetup
+static void
+WriteFile(char *FileName,EraSetup *Era_Setup) {
+	FILE *Data;
+
+	Data = fopen(FileName,"w");
+	fputs(Era_Setup->Era,Data);
+	fputs("\n",Data);
+	fputs(Era_Setup->Action,Data);
+	fclose(Data);
+}
+
 char *Action;
 // Gathers the Era name using the DefaultMainDbNode struct
 void *
-GatherEra(char *Era, DefaultMainDbNode * Db/*Used to go through all ERAS setup through the Default Node*/) {
+GatherEra(char *Era, DefaultMainDbNode * Db/*Used to go through all ERAS setup through the Default Node*/,DatabaseNodeset *DbNode) {
 	
 	EraSetup * Era_Setup = (EraSetup *) malloc(sizeof(EraSetup));
+	static int InitUpd = 1;
+	char fileName[50];
+
+	// Setting up filename
+	sprintf(fileName,"Era Setup #%d",InitUpd);
 
 	Era_Setup->Era = Era;
 
@@ -41,6 +58,11 @@ GatherEra(char *Era, DefaultMainDbNode * Db/*Used to go through all ERAS setup t
 	}
 	
 	Era_Setup->Action = Action;
+
+	DbNode->CoreInfo.NodeEra.EraType = Era_Setup->Era;
+	DbNode->CoreInfo.NodeEra.EraAction = Era_Setup->Action;
+
+	WriteFile(fileName,Era_Setup);
 
 	return 0;
 }
