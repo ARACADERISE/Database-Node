@@ -144,11 +144,25 @@ void SetupDatabaseNode(
 	char DefaultDbNodeId[150];
 
 	if(strcmp(DatabaseNode,"DefaultNodeSetup") == 0) {
+
+		/* Going through DbNames to see if DefaultNodeSetup is in it more than once.
+		*/
+		int timesFound = 1;
+		for(int i = 0; i < InitUpd; i++) {
+			if(strcmp(DbNames[i],"DefaultNodeSetup") == 0)
+				timesFound++;
+		}
+		if(timesFound > 1) {
+			ErrStatus = (_CGE == 0) ? MoreThanOneDefaultNodeCreated : Failure;
+			RETURNERRINFO("\033[1;31m", ErrStatus);
+			exit(ErrStatus);
+		}
+
 		if(!(strcmp(Era,"NUN")==0)) {
 			ErrStatus = (_CGE == 0) ? DefaultNodeSetupEraTypeNotNun : Failure;
 			RETURNERRINFO("\033[1;33m", ErrStatus);
 			exit(ErrStatus);
-		}
+			}
 
 		srand(time(0));
 		// Getting ideals for struct data
@@ -211,17 +225,19 @@ void SetupDatabaseNode(
 				system("python Python/DefaultNode.py");
 			}
 
-			int TimesFound = 0;
-			for(int i = 0; i <= InitUpd; i++) {
-				if(strcmp(DbNames[i],"DefaultNodeSetup") == 0) {
-					TimesFound++;
-				}
-			}
-			if(TimesFound > 1) {
-				ErrStatus = (_CGE == 0) ? MoreThanOneDefaultNodeCreated : Failure;
-				RETURNERRINFO("\033[1;31m", ErrStatus);
-				exit(ErrStatus);
-			}
+			/* Original code for catching more than one DefaultNodeSetup
+			 * int TimesFound = 0;
+			 * for(int i = 0; i <= InitUpd; i++) {
+			 *	if(strcmp(DbNames[i],"DefaultNodeSetup") == 0) {
+			 *		TimesFound++;
+			 *	}
+			 * }
+			 * if(TimesFound > 1) {
+			 *	ErrStatus = (_CGE == 0) ?  *MoreThanOneDefaultNodeCreated : Failure;
+			 *	RETURNERRINFO("\033[1;31m", ErrStatus);
+			 *	exit(ErrStatus);
+			 *}
+			 */
 
 			// Add Info
 			Add_Info->AddId = InitUpd+1;
