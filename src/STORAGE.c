@@ -11,13 +11,13 @@ extern int _CGE;
 int ErrStatus;
 
 int
-UpdateStorage(DatabaseNodeset *Db,int *ToChange,long int changeBy, int Maxed){
+UpdateStorage(DatabaseNodeset *Db,int *ToChange,int changeBy, int Maxed){
 
 	*ToChange += changeBy;
 
 	/*
-	 * Maxed: Set the Database Nodes storage to a maximum,* so if the new storage amount is anywhere near Maxed,
-	 * it rounds it up. If it's above Maxed, it rounds it * down
+	 * Maxed: Set the Database Nodes storage to a maximum, so if the new storage amount is anywhere near Maxed,
+	 * it rounds it up. If it's above Maxed, it rounds it  down
 	*/
 
 	if(*ToChange > Maxed) {
