@@ -10,6 +10,7 @@
 #include "types.h"
 #include "CORE_types.h"
 #include "SetupEra.h"
+#include "STORAGE.h"
 
 char *DatabaseNodeName;
 int _CGE;
@@ -111,7 +112,10 @@ void SetupDatabaseNode(
 	char *DatabaseNode,
 	bool CoreGenereatedErrs,
 	bool NodeCanRead,
-	char *Era
+	char *Era,
+	int FileSize,
+	int StringSize,
+	int IntegerSize
 ) {
 	static int InitId = 1;
 	static int DefDb = 0;
@@ -149,7 +153,7 @@ void SetupDatabaseNode(
 
 		// Finishing up the Default Database Node
 		// These are big sizes, but it'll be needed when the Database Nodes are put to work
-		DefaultDbNode(DefDbNode,20000,15000,10000, Sizes);
+		DefaultDbNode(DefDbNode,FileSize,StringSize,IntegerSize, Sizes);
 	} else {
 		if(strcmp(Era,"NUN") == 0) {
 			ErrStatus = (_CGE == 0) ? DeclarationOfEraNun : Failure;
@@ -257,6 +261,14 @@ void SetupDatabaseNode(
 		}
 	}
 
-	// Giving meaning to the Era
-	GatherEra(Era, DefDbNode);
+	// The default Database Node doesn't need storage
+	if(!(strcmp(DatabaseNode,"DefaultNodeSetup") == 0)) {
+		// Giving meaning to the Era
+		GatherEra(Era, DefDbNode, NodeSetup/*We give meaning to each ideal of the struct bit by bit*/);
+
+		// Sets up the storage
+		SetupNodeStorage(FileSize, StringSize, IntegerSize, NodeSetup, Sizes);
+		
+		printf("%d",NodeSetup->CoreInfo.NodeStorage.MaxIntegerSize);
+	}
 }
