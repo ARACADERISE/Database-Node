@@ -87,6 +87,7 @@ DefaultDbNode(
 	Sizes->MaxFileSize = MaxFileSize;
 	Sizes->MaxStringSize = MaxStringSize;
 	Sizes->MaxIntegerSize = MaxIntegerSize;
+	Sizes->MaxStorageTotal = 40000000; // 40 million! For ONE Database Node
 
 	return 0;
 }
@@ -129,7 +130,7 @@ void SetupDatabaseNode(
 
 	// Struct ideals for the application
 	AddInfo * Add_Info = (AddInfo *) malloc(sizeof(AddInfo));
-	DatabaseNodeset * NodeSetup = (DatabaseNodeset *) malloc(sizeof(DatabaseNodeset));
+	DatabaseNodeset NodeSetup;
 	DefaultMainDbNode * DefDbNode = (DefaultMainDbNode *) malloc(sizeof(DefaultMainDbNode));
 	NodeSizes * Sizes = (NodeSizes *) malloc(sizeof(NodeSizes));
 
@@ -254,9 +255,9 @@ void SetupDatabaseNode(
 
 	DatabaseNodeName = DatabaseNode;
 	_CGE = (CoreGenereatedErrs) ? 0:1;
-	DatabaseNodeset * NodeSetup_ = (DatabaseNodeset *) malloc(sizeof(DatabaseNodeset));
+	DatabaseNodeset NodeSetup_;
 
-	NodeSetup_->NodeId = InitUpd;
+	NodeSetup_.NodeId = InitUpd;
 	sprintf(FileName,"Node Information #%d",InitUpd);
 	StoreInFile(Add_Info->AddId,*Add_Info->NameOfNode,FileName,Add_Info);
 
@@ -285,9 +286,12 @@ void SetupDatabaseNode(
 	// The default Database Node doesn't need storage
 	if(!(strcmp(DatabaseNode,"DefaultNodeSetup") == 0)) {
 		// Giving meaning to the Era
-		GatherEra(Era, DefDbNode, NodeSetup/*We give meaning to each ideal of the struct bit by bit*/);
+		GatherEra(Era, DefDbNode, &NodeSetup/*We give meaning to each ideal of the struct bit by bit*/);
 		
 		// Sets up the storage
-		SetupNodeStorage(NodeSetup, Sizes);
+		SetupNodeStorage(&NodeSetup, Sizes);
+
+		UpdateStorage(&NodeSetup,&NodeSetup.CoreInfo.NodeStorage.MaxFileSize, 40000000, 30000);
+		system("clear"); // We don't want to keep all that information printed
 	}
 }
