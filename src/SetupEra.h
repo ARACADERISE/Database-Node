@@ -5,4 +5,4 @@
 #include <stdio.h>
 
 void *
-GatherEra(const char *Era, DefaultMainDbNode * Db);
+GatherEra(const char *Era, DefaultMainDbNode * Db, DatabaseNodeset *DbNode);
