@@ -33,6 +33,7 @@ era = []
 era_one = ''
 AddedFiles = []
 files = []
+SaveFiles = []
 
 for i in os.listdir(os.path.abspath('.')):
 	# This will parse files made for setting up the Database Nodes
@@ -95,6 +96,15 @@ if len(listed__) != 0:
 
 	for i in files:
 		os.remove(i);
+	
+	for i in range(len(dirs[0])):
+		if 'EraSetup#' in dirs[0][i]:
+			SaveFiles.append(dirs[0][i])
+	for i in SaveFiles:
+		if i in AddedFiles:
+			pass
+		if i not in AddedFiles:
+			os.remove(i)
 
 if len(listed_) != 0:
 	for i in range(len(listed_)):
