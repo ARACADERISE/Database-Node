@@ -236,7 +236,7 @@ void SetupDatabaseNode(
 			 *	ErrStatus = (_CGE == 0) ?  *MoreThanOneDefaultNodeCreated : Failure;
 			 *	RETURNERRINFO("\033[1;31m", ErrStatus);
 			 *	exit(ErrStatus);
-			 *}
+			 * }
 			 */
 
 			// Add Info
