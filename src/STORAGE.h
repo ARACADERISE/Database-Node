@@ -10,9 +10,6 @@
 // A very simple function
 void
 SetupNodeStorage(
-	int MaxFileSize, // Size of 10000+
-	int MaxStringSize, // Size of 20000+
-	int MaxIntegerSize, // Size of 20000+
 	DatabaseNodeset *DbNode,
 	NodeSizes *Sizes
 );
