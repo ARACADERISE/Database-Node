@@ -12,7 +12,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-extern int _CGE;
+//extern int _CGE;
 
 // Default Errors
 #  define CoreConErr                     2 // Starts at 2 since Failure is 1
@@ -29,6 +29,9 @@ extern int _CGE;
 #  define MoreThanOneDefaultNodeCreated  11
 // User created Database Node errors
 #  define DatabaseNodeAlreadyCreated     12
+// Storage Errors
+#  define StorageAboveMax                13
+#  define StorageAddOverload             14
 // Regular success/fail errors
 #  define Failure                        1
 #  define Success                        0
