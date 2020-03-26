@@ -8,7 +8,7 @@
 
 // This enum stores the storage ammount of each Database Node
 // Asscociated with NodeSizes
-enum Storage {FileStorage=0,StringStorage=0,IntegerStorage=0};
+// enum Storage {FileStorage=0,StringStorage=0,IntegerStorage=0};
 
 // Keeps track of Database Nodes added
 typedef struct {
@@ -59,12 +59,21 @@ typedef struct {
 } Reset;
 
 // Used when setting up the core of the Database Node
+// All data stored before this struct is used will be freed after being assigned to in this struct
 typedef struct {
 	int NodeId;
 	struct {
 		bool Core_Generated_Errs;
 		bool CanRead;
-		char *EraType;
+		struct {
+			char *EraType;
+			char *EraAction; // We need this so we don't waste code in other files
+		} NodeEra;
+		struct {
+			int MaxFileSize;
+			int MaxStringSize;
+			int MaxIntegerSize;
+		} NodeStorage;
 		char *NodeName;
 	} CoreInfo;
 } DatabaseNodeset;
