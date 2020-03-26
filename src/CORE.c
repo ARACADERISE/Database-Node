@@ -63,9 +63,9 @@ StoreInFile(
 static int
 DefaultDbNode(
 	DefaultMainDbNode *DefDbMainMode, 
-	int MaxFileSize, 
-	int MaxStringSize, 
-	int MaxIntegerSize, 
+	int MaxFileSize, // INIT: 10000+
+	int MaxStringSize, // INIT: 20000+
+	int MaxIntegerSize, // INIT: 20000+
 	NodeSizes *Sizes
  ) {
 	
