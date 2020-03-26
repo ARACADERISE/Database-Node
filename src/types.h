@@ -21,6 +21,7 @@ typedef struct {
 	int MaxFileSize;
 	int MaxStringSize;
 	int MaxIntegerSize;
+	long int MaxStorageTotal;
 } NodeSizes;
 
 // This will be for the Main Database Node, or for the Database Node that sets up the whole application
@@ -73,7 +74,14 @@ typedef struct {
 			int MaxFileSize;
 			int MaxStringSize;
 			int MaxIntegerSize;
+			int MaxStorageTotal;
+			int MaxStorageUpgrade;
 		} NodeStorage;
+		struct {
+			int TotalFileStorageUsed;
+			int TotalStringStorageUsed;
+			int TotalIntegerStorageUsed;
+		} StorageUsed;
 		char *NodeName;
 	} CoreInfo;
 } DatabaseNodeset;
