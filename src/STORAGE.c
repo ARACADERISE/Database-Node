@@ -12,32 +12,15 @@ UpdateStorage(int *ToChange,int changeBy){return 0;}
 // A very simple function
 void
 SetupNodeStorage(
-	int MaxFileSize,
-	int MaxStringSize,
-	int MaxIntegerSize,
 	DatabaseNodeset *DbNode,
 	NodeSizes *Sizes
 ) {
 
-	int ammountLeft;
-	// Reallocates the storage defaulty
-	// If this wants to be done later on the function UpdateStorage will have to be used
-	if(MaxFileSize < 10000) {
-		ammountLeft = 10000 - MaxFileSize;
-		MaxFileSize += ammountLeft;
-	}
-	if(MaxStringSize < 20000) {
-		ammountLeft = 20000 - MaxStringSize;
-		MaxStringSize += ammountLeft;
-	}
-	if(MaxIntegerSize < 20000) {
-		ammountLeft = 20000 - MaxIntegerSize;
-		MaxIntegerSize += ammountLeft;
-	}
+	// Storage is factored into the enum Storage in CORE.c, just not set to the Datbase Node
+	DbNode->CoreInfo.NodeStorage.MaxFileSize = Sizes->MaxFileSize;
+	DbNode->CoreInfo.NodeStorage.MaxStringSize = Sizes->MaxStringSize;
+	DbNode->CoreInfo.NodeStorage.MaxIntegerSize = Sizes->MaxIntegerSize;
 
-	DbNode->CoreInfo.NodeStorage.MaxFileSize = MaxFileSize;
-	DbNode->CoreInfo.NodeStorage.MaxStringSize = MaxStringSize;
-	DbNode->CoreInfo.NodeStorage.MaxIntegerSize = MaxIntegerSize;
-
+	// Sizes aren't needed anymore
 	free(Sizes);
 }
