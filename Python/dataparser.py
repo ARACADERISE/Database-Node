@@ -1,11 +1,11 @@
 import os, json
 
 # will be used later on when bigger files are generated
-try:
-	from tqdm import tqdm
-except ImportError:
-	os.system('pip install tqdm')
-	from tqdm import tqdm
+#try:
+#	from tqdm import tqdm
+#except ImportError:
+#	os.system('pip install tqdm')
+#	from tqdm import tqdm
 
 """
 	Opens the files storing information about the Database Nodes being added,
