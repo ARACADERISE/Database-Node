@@ -42,15 +42,15 @@ UpdateStorage(DatabaseNodeset *Db,int *ToChange,int changeBy, int Maxed, int Siz
 			All = Db->CoreInfo.NodeStorage.MaxFileSize[i] + Db->CoreInfo.NodeStorage.MaxStringSize[i] + Db->CoreInfo.NodeStorage.MaxIntegerSize[i];
 
 			if(All > Db->CoreInfo.NodeStorage.MaxStorageTotal[i]) {
-			ErrStatus = (_CGE == 0) ? StorageAboveMax : Failure;
-			RETURNERRINFO("\033[1;33m", ErrStatus);
+				ErrStatus = (_CGE == 0) ? StorageAboveMax : Failure;
+				RETURNERRINFO("\033[1;33m", ErrStatus);
 
-			Db->CoreInfo.NodeStorage.MaxFileSize[i] = 40000000/3;
-			Db->CoreInfo.NodeStorage.MaxStringSize[i] = 40000000/3;
-			Db->CoreInfo.NodeStorage.MaxIntegerSize[i]=40000000/3;
+				Db->CoreInfo.NodeStorage.MaxFileSize[i] = 40000000/3;
+				Db->CoreInfo.NodeStorage.MaxStringSize[i] = 40000000/3;
+				Db->CoreInfo.NodeStorage.MaxIntegerSize[i]=40000000/3;
 
-			system("clear"); // We don't want to keep all that information printed
-		}
+				system("clear"); // We don't want to keep all that information printed
+			}
 		}
 		
 		int Sub = Maxed-*ToChange;
