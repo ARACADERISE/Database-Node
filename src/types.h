@@ -59,7 +59,7 @@ typedef struct {
 } Reset;
 
 // Used when setting up the core of the Database Node
-// All data stored before this struct is used will be freed after being assigned to in this struct
+// All data stored before this struct will be freed after being assigned to in this struct
 typedef struct {
 	int NodeId[1000];
 	struct {
