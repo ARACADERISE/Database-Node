@@ -61,7 +61,7 @@ typedef struct {
 // Used when setting up the core of the Database Node
 // All data stored before this struct is used will be freed after being assigned to in this struct
 typedef struct {
-	int NodeId;
+	int NodeId[1000];
 	struct {
 		bool Core_Generated_Errs;
 		bool CanRead;
@@ -70,17 +70,17 @@ typedef struct {
 			char *EraAction; // We need this so we don't waste code in other files
 		} NodeEra;
 		struct {
-			int MaxFileSize;
-			int MaxStringSize;
-			int MaxIntegerSize;
-			int MaxStorageTotal;
+			int MaxFileSize[1000];
+			int MaxStringSize[1000];
+			int MaxIntegerSize[1000];
+			int MaxStorageTotal[1000];
 			int MaxStorageUpgrade;
 		} NodeStorage;
 		struct {
-			int TotalFileStorageUsed;
-			int TotalStringStorageUsed;
-			int TotalIntegerStorageUsed;
-			int Total;
+			int TotalFileStorageUsed[1000];
+			int TotalStringStorageUsed[1000];
+			int TotalIntegerStorageUsed[1000];
+			int Total[1000];
 		} StorageUsed;
 		/** 
 			* Allocated Data is storage being transfered from one Node
@@ -91,6 +91,6 @@ typedef struct {
 			* the ammount of storage the last one had
 		*/
 		bool AllocatedData;
-		char *NodeName;
+		char NodeName[1000][100]; // Storing a thousand Node Names
 	} CoreInfo;
 } DatabaseNodeset;
