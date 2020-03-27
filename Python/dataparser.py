@@ -163,7 +163,6 @@ if len(listed_) != 0:
 	for i in range(len(listed_)):
 		os.remove(listed_[i])
 	
-	c = []
 	for d in range(len(DATA)):
 
 		with open(AllAddedFiles[d],'w') as w:
