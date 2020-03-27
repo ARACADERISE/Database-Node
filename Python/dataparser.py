@@ -112,10 +112,7 @@ if len(listed_) != 0:
 		node_names.append(data)
 
 	for i in range(len(node_names)):
-		if str(d) in node_names[i]:
-			TOTAL_LENGTH = len(node_names[i])
-			index = node_names[i].find(str(d))
-			
+		index = node_names[i].find(str(d))
 		
 		IdNumber.append(node_names[i][index])
 		node_names[i] = node_names[i].replace('\n','')
@@ -130,6 +127,7 @@ if len(listed_) != 0:
 					IdNumber[IIndex+1]='11'
 		Action.append(node_names[i])
 		node_names[i] = node_names[i].replace('Added Database Node ','')
+
 		if node_names[i] == 'DefaultNodeSetup':
 			node_names[i] = {'Default Node(NEEDED)':node_names[i]}
 		if 'DefaultNodeSetup' in Action[i]:
@@ -138,10 +136,10 @@ if len(listed_) != 0:
 		AllAddedFiles.append(listed_[i].replace(' ',''))
 		data_ = {'Actions':Action,'NodeNames':node_names,'NodeIds':IdNumber,'DataFiles':AllAddedFiles}
 
-		ADDINFO = '[AddedDatabaseNode]\n\t\t!Node name!\t~\t%s\n\t\t!Node Id!\t~\t%s'
-		DATA.append(ADDINFO % (node_names[i],IdNumber[i]))
-
-		d+= 1
+		d = d+1
+	
+	for i in range(len(node_names)):
+		DATA.append('[AddedDatabaseNode]\n\t\t!Node name!\t~\t%s\n\t\t!Node Id!\t~\t%s' % (node_names[i],IdNumber[i]))
 	
 	# If the user deletes the Database Nodes, this will update the files
 	for i in range(len(dirs[0])):
@@ -165,15 +163,13 @@ if len(listed_) != 0:
 	for i in range(len(listed_)):
 		os.remove(listed_[i])
 	
-	for i in AllAddedFiles:
-		#listed_[i] = listed_[i].replace(' ','')
+	c = []
+	for d in range(len(DATA)):
 
-		for b in range(len(DATA)):
-			with open(i,'w') as UpdFile:
-				UpdFile.write(DATA[b])
-				UpdFile.flush()
-				UpdFile.close()
-		
+		with open(AllAddedFiles[d],'w') as w:
+			w.write(DATA[d])
+			w.close()
+	for i in AllAddedFiles:
 		DataOfFile = open(i,'r').read()
 		if 'DefaultNodeSetup' in DataOfFile:
 			new = '[DefaultNodeMsg]\n\t\tMESSAGE\t~\tREFER TO THE CreateDefaultNode FILE'
