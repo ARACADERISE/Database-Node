@@ -38,7 +38,7 @@ UpdateStorage(DatabaseNodeset *Db,int *ToChange,int changeBy, int Maxed, int Siz
 
 	if(*ToChange > Maxed) {
 		int All;
-		for(int i = 0; i < SizeToIterate; i++) {
+		for(int i = 0; i < SizeToIterate+1; i++) {
 			All = Db->CoreInfo.NodeStorage.MaxFileSize[i] + Db->CoreInfo.NodeStorage.MaxStringSize[i] + Db->CoreInfo.NodeStorage.MaxIntegerSize[i];
 
 			if(All > Db->CoreInfo.NodeStorage.MaxStorageTotal[i]) {
