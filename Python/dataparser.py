@@ -162,18 +162,3 @@ if len(listed_) != 0:
 
 	for i in range(len(listed_)):
 		os.remove(listed_[i])
-	
-	for d in range(len(DATA)):
-
-		with open(AllAddedFiles[d],'w') as w:
-			w.write(DATA[d])
-			w.close()
-	for i in AllAddedFiles:
-		DataOfFile = open(i,'r').read()
-		if 'DefaultNodeSetup' in DataOfFile:
-			new = '[DefaultNodeMsg]\n\t\tMESSAGE\t~\tREFER TO THE CreateDefaultNode FILE'
-		
-			with open(i,'w') as Update:
-				Update.write(new)
-				Update.flush()
-				Update.close()
