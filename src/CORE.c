@@ -216,21 +216,7 @@ void SetupDatabaseNode(
 					RETURNERRINFO("\033[1;31m", ErrStatus);
 					exit(ErrStatus);
 				}
-				if(AllocateData) {
-					if(InitUpd >= 1) {
-						for(int i = 0; i < InitUpd+1; i++) {
-							if(strcmp(DbNames[i],"DefaultNodeSetup") == 0) {
-								if(strcmp(DbNames[i+1],DatabaseNode) == 0) {
-									ErrStatus = (_CGE == 0) ? AllocatingStorageWithDefaultNode : Failure;
-									printf("\033[0;35mCannot allocate data with Database Node %s. \n\tThe Database Node %s is a Default Node and carries no data/storage\n\n", DatabaseNode,DbNames[i]);
-									RETURNERRINFO("\033[1;33m", ErrStatus);
-									AllocateData=false;
-								}
-							}
-						}
-					}
-					system("clear");
-				}
+				
 			} else {
 				Created = fopen("CreateDefaultNode","w");
 				fputs("Default Database Node created successfully\n",Created);
