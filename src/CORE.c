@@ -265,7 +265,7 @@ void SetupDatabaseNode(
 			++InitId;
 		}
 	} else {
-		printf("You can only assign 4 default Database Nodes\n");
+		fprintf(stderr,"You can only assign 4 default Database Nodes\n");
 		exit(EXIT_FAILURE);
 	}
 
