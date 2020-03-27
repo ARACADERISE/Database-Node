@@ -3,7 +3,6 @@
 	the project
 */
 
-#include <stdio.h>
 #include <stdbool.h>
 
 // This enum stores the storage ammount of each Database Node
@@ -85,7 +84,8 @@ typedef struct {
 		} StorageUsed;
 		/** 
 			* Allocated Data is storage being transfered from one Node
-			* to another. The struct below AllocatedData goes with AllocatedData if it is true.
+			* to another. If AllocatedData is true then StorageUsed.Total will equal that Database Nodes
+			* storage
 
 			* When AllocatedData is true, the storage of the recently created Database Node is set to
 			* the ammount of storage the last one had
