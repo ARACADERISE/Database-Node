@@ -8,9 +8,25 @@
 #include "CORE_types.h"
 
 extern int _CGE;
+
 int ErrStatus;
 
-int
+DatabaseNodeset *ResetStorage(DatabaseNodeset *Db) {
+
+	// Checking allocated data
+	if(Db->CoreInfo.AllocatedData) {
+		
+	}
+
+	return 0;
+}
+
+DatabaseNodeset *
+AllocateData(DatabaseNodeset *Db) {
+	return Db;
+}
+
+DatabaseNodeset *
 UpdateStorage(DatabaseNodeset *Db,int *ToChange,int changeBy, int Maxed){
 
 	*ToChange += changeBy;
@@ -30,7 +46,12 @@ UpdateStorage(DatabaseNodeset *Db,int *ToChange,int changeBy, int Maxed){
 			Db->CoreInfo.NodeStorage.MaxFileSize = 40000000/3;
 			Db->CoreInfo.NodeStorage.MaxStringSize = 40000000/3;
 			Db->CoreInfo.NodeStorage.MaxIntegerSize=40000000/3;
+
+			system("clear"); // We don't want to keep all that information printed
 		}
+		
+		int Sub = Maxed-*ToChange;
+		*ToChange = *ToChange + Sub;
 	}
 	else {
 		int AmLeft;
@@ -39,11 +60,12 @@ UpdateStorage(DatabaseNodeset *Db,int *ToChange,int changeBy, int Maxed){
 			*ToChange += AmLeft;
 		}
 	}
+
 	return 0;
 }
 
 // A very simple function
-void
+DatabaseNodeset *
 SetupNodeStorage(
 	DatabaseNodeset *DbNode,
 	NodeSizes *Sizes
@@ -67,4 +89,6 @@ SetupNodeStorage(
 
 	// Sizes aren't needed anymore
 	free(Sizes);
+
+	return 0;
 }
