@@ -90,7 +90,8 @@ SetupNodeStorage(
 		*/
 		DbNode->CoreInfo.NodeStorage.MaxStorageTotal[i]=Sizes->MaxStorageTotal;
 
-		// This needs to be done in SetupNodeStorage, sets all of them to zero since no storage is being used as of thus far
+		// This needs to be done in SetupNodeStorage, sets all of them to zero since no storage is being used as 
+		// of thus far
 		DbNode->CoreInfo.StorageUsed.TotalFileStorageUsed[i]=0;
 		DbNode->CoreInfo.StorageUsed.TotalStringStorageUsed[i]=0;
 		DbNode->CoreInfo.StorageUsed.TotalIntegerStorageUsed[i]=0;
