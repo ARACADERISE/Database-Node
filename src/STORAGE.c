@@ -75,7 +75,7 @@ SetupNodeStorage(
 	int SizeToIterate
 ) {
 
-	// Storage is factored into the enum Storage in CORE.c, just not set to the Datbase Node
+	// Storage is factored into the Sizes struct in types.h, just not set to the Datbase Node
 	for(int i = 0; i < SizeToIterate+1; i++) {
 		DbNode->CoreInfo.NodeStorage.MaxFileSize[i] = Sizes->MaxFileSize;
 		DbNode->CoreInfo.NodeStorage.MaxStringSize[i] = Sizes->MaxStringSize;
