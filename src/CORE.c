@@ -119,6 +119,7 @@ void SetupDatabaseNode(
 	char *DatabaseNode,
 	bool CoreGenereatedErrs,
 	bool NodeCanRead,
+	bool AllocateData,
 	char *Era,
 	int FileSize,
 	int StringSize,
@@ -130,9 +131,11 @@ void SetupDatabaseNode(
 
 	// Struct ideals for the application
 	AddInfo * Add_Info = (AddInfo *) malloc(sizeof(AddInfo));
-	DatabaseNodeset NodeSetup;
+	DatabaseNodeset *NodeSetup = (DatabaseNodeset *) malloc(sizeof(DatabaseNodeset));
 	DefaultMainDbNode * DefDbNode = (DefaultMainDbNode *) malloc(sizeof(DefaultMainDbNode));
 	NodeSizes * Sizes = (NodeSizes *) malloc(sizeof(NodeSizes));
+
+	bool allocate = true;
 
 	// 4 default ERAS
 	strcpy(DefDbNode->ERAS[0],"wro"); // Read/Write files
@@ -216,6 +219,21 @@ void SetupDatabaseNode(
 					RETURNERRINFO("\033[1;31m", ErrStatus);
 					exit(ErrStatus);
 				}
+				if(AllocateData) {
+					if(InitUpd >= 1) {
+						for(int i = 0; i < InitUpd+1; i++) {
+							if(strcmp(DbNames[i],"DefaultNodeSetup") == 0) {
+								if(strcmp(DbNames[i+1],DatabaseNode) == 0) {
+									ErrStatus = (_CGE == 0) ? AllocatingStorageWithDefaultNode : Failure;
+									printf("\033[0;35mCannot allocate data with Database Node %s. \n\tThe Database Node %s is a Default Node and carries no data/storage\n\n", DatabaseNode,DbNames[i]);
+									RETURNERRINFO("\033[1;33m", ErrStatus);
+									AllocateData=false;
+								}
+							}
+						}
+					}
+					system("clear");
+				}
 			} else {
 				Created = fopen("CreateDefaultNode","w");
 				fputs("Default Database Node created successfully\n",Created);
@@ -247,6 +265,7 @@ void SetupDatabaseNode(
 			strcpy(*Add_Info->NameOfNode,AddDetails);
 
 			++InitUpd;
+			++InitId;
 		}
 	} else {
 		printf("You can only assign 4 default Database Nodes\n");
@@ -255,9 +274,12 @@ void SetupDatabaseNode(
 
 	DatabaseNodeName = DatabaseNode;
 	_CGE = (CoreGenereatedErrs) ? 0:1;
-	DatabaseNodeset NodeSetup_;
 
-	NodeSetup_.NodeId = InitUpd;
+	// Setting the Node Id
+	for(int i = 0; i < InitId; i++) {
+		NodeSetup->NodeId[i] = i+1;
+	}
+
 	sprintf(FileName,"Node Information #%d",InitUpd);
 	StoreInFile(Add_Info->AddId,*Add_Info->NameOfNode,FileName,Add_Info);
 
@@ -286,12 +308,12 @@ void SetupDatabaseNode(
 	// The default Database Node doesn't need storage
 	if(!(strcmp(DatabaseNode,"DefaultNodeSetup") == 0)) {
 		// Giving meaning to the Era
-		GatherEra(Era, DefDbNode, &NodeSetup/*We give meaning to each ideal of the struct bit by bit*/);
+		GatherEra(Era, DefDbNode, NodeSetup/*We give meaning to each ideal of the struct bit by bit*/);
 		
 		// Sets up the storage
-		SetupNodeStorage(&NodeSetup, Sizes);
-
-		UpdateStorage(&NodeSetup,&NodeSetup.CoreInfo.NodeStorage.MaxFileSize, 40000000, 30000);
-		system("clear"); // We don't want to keep all that information printed
+		if(InitUpd > 1) {
+			InitUpd--;
+		}
+		SetupNodeStorage(NodeSetup, Sizes, InitUpd);
 	}
 }
