@@ -21,7 +21,7 @@ typedef struct {
 	int MaxFileSize;
 	int MaxStringSize;
 	int MaxIntegerSize;
-	long int MaxStorageTotal;
+	int MaxStorageTotal;
 } NodeSizes;
 
 // This will be for the Main Database Node, or for the Database Node that sets up the whole application
@@ -81,7 +81,16 @@ typedef struct {
 			int TotalFileStorageUsed;
 			int TotalStringStorageUsed;
 			int TotalIntegerStorageUsed;
+			int Total;
 		} StorageUsed;
+		/** 
+			* Allocated Data is storage being transfered from one Node
+			* to another. The struct below AllocatedData goes with AllocatedData if it is true.
+
+			* When AllocatedData is true, the storage of the recently created Database Node is set to
+			* the ammount of storage the last one had
+		*/
+		bool AllocatedData;
 		char *NodeName;
 	} CoreInfo;
 } DatabaseNodeset;
