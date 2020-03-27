@@ -27,7 +27,7 @@ AllocateData(DatabaseNodeset *Db) {
 }
 
 DatabaseNodeset *
-UpdateStorage(DatabaseNodeset *Db,int *ToChange,int changeBy, int Maxed){
+UpdateStorage(DatabaseNodeset *Db,int *ToChange,int changeBy, int Maxed, int SizeToIterate){
 
 	*ToChange += changeBy;
 
@@ -37,17 +37,20 @@ UpdateStorage(DatabaseNodeset *Db,int *ToChange,int changeBy, int Maxed){
 	*/
 
 	if(*ToChange > Maxed) {
-		int All = Db->CoreInfo.NodeStorage.MaxFileSize + Db->CoreInfo.NodeStorage.MaxStringSize + Db->CoreInfo.NodeStorage.MaxIntegerSize;
+		int All;
+		for(int i = 0; i < SizeToIterate; i++) {
+			All = Db->CoreInfo.NodeStorage.MaxFileSize[i] + Db->CoreInfo.NodeStorage.MaxStringSize[i] + Db->CoreInfo.NodeStorage.MaxIntegerSize[i];
 
-		if(All > Db->CoreInfo.NodeStorage.MaxStorageTotal) {
+			if(All > Db->CoreInfo.NodeStorage.MaxStorageTotal[i]) {
 			ErrStatus = (_CGE == 0) ? StorageAboveMax : Failure;
 			RETURNERRINFO("\033[1;33m", ErrStatus);
 
-			Db->CoreInfo.NodeStorage.MaxFileSize = 40000000/3;
-			Db->CoreInfo.NodeStorage.MaxStringSize = 40000000/3;
-			Db->CoreInfo.NodeStorage.MaxIntegerSize=40000000/3;
+			Db->CoreInfo.NodeStorage.MaxFileSize[i] = 40000000/3;
+			Db->CoreInfo.NodeStorage.MaxStringSize[i] = 40000000/3;
+			Db->CoreInfo.NodeStorage.MaxIntegerSize[i]=40000000/3;
 
 			system("clear"); // We don't want to keep all that information printed
+		}
 		}
 		
 		int Sub = Maxed-*ToChange;
@@ -68,24 +71,29 @@ UpdateStorage(DatabaseNodeset *Db,int *ToChange,int changeBy, int Maxed){
 DatabaseNodeset *
 SetupNodeStorage(
 	DatabaseNodeset *DbNode,
-	NodeSizes *Sizes
+	NodeSizes *Sizes,
+	int SizeToIterate
 ) {
 
 	// Storage is factored into the enum Storage in CORE.c, just not set to the Datbase Node
-	DbNode->CoreInfo.NodeStorage.MaxFileSize = Sizes->MaxFileSize;
-	DbNode->CoreInfo.NodeStorage.MaxStringSize = Sizes->MaxStringSize;
-	DbNode->CoreInfo.NodeStorage.MaxIntegerSize = Sizes->MaxIntegerSize;
+	for(int i = 0; i < SizeToIterate+1; i++) {
+		DbNode->CoreInfo.NodeStorage.MaxFileSize[i] = Sizes->MaxFileSize;
+		DbNode->CoreInfo.NodeStorage.MaxStringSize[i] = Sizes->MaxStringSize;
+		DbNode->CoreInfo.NodeStorage.MaxIntegerSize[i] = Sizes->MaxIntegerSize;
+	}
 	DbNode->CoreInfo.NodeStorage.MaxStorageUpgrade=50000;
-	/* 
-	 *	DbNode->CoreInfo.NodeStorage.MaxStorageTotal:
-	 *	This will be the total ammount of storage of all the   Storages combined
-	 */
-	DbNode->CoreInfo.NodeStorage.MaxStorageTotal=Sizes->MaxStorageTotal;
+	for(int i = 0; i < SizeToIterate+1; i++) {
+			/* 
+		*	DbNode->CoreInfo.NodeStorage.MaxStorageTotal:
+		*	This will be the total ammount of storage of all the   Storages combined
+		*/
+		DbNode->CoreInfo.NodeStorage.MaxStorageTotal[i]=Sizes->MaxStorageTotal;
 
-	// This needs to be done in SetupNodeStorage, sets all of them to zero since no storage is being used as of thus far
-	DbNode->CoreInfo.StorageUsed.TotalFileStorageUsed=0;
-	DbNode->CoreInfo.StorageUsed.TotalStringStorageUsed=0;
-	DbNode->CoreInfo.StorageUsed.TotalIntegerStorageUsed=0;
+		// This needs to be done in SetupNodeStorage, sets all of them to zero since no storage is being used as of thus far
+		DbNode->CoreInfo.StorageUsed.TotalFileStorageUsed[i]=0;
+		DbNode->CoreInfo.StorageUsed.TotalStringStorageUsed[i]=0;
+		DbNode->CoreInfo.StorageUsed.TotalIntegerStorageUsed[i]=0;
+	}
 
 	// Sizes aren't needed anymore
 	free(Sizes);
