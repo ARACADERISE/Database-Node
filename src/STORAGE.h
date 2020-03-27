@@ -8,11 +8,16 @@
 #include <stdlib.h>
 
 // Updates the Database Nodes storage
-int
+DatabaseNodeset *
 UpdateStorage(DatabaseNodeset *Db,int *ToChange,int changeBy, int Maxed);
 
+DatabaseNodeset *
+AllocateData(DatabaseNodeset *Db);
+
+DatabaseNodeset *ResetStorage(DatabaseNodeset *Db);
+
 // A very simple function
-void
+DatabaseNodeset *
 SetupNodeStorage(
 	DatabaseNodeset *DbNode,
 	NodeSizes *Sizes
