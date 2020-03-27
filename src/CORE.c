@@ -191,7 +191,6 @@ void SetupDatabaseNode(
 		}
 	}
 	// Finishing up the Default Database Node
-	// These are big sizes, but it'll be needed when the Database Nodes are put to work
 	DefaultDbNode(DefDbNode,FileSize,StringSize,IntegerSize, Sizes);
 	
 	if(DefDb != -1) {
