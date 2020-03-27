@@ -135,8 +135,6 @@ void SetupDatabaseNode(
 	DefaultMainDbNode * DefDbNode = (DefaultMainDbNode *) malloc(sizeof(DefaultMainDbNode));
 	NodeSizes * Sizes = (NodeSizes *) malloc(sizeof(NodeSizes));
 
-	bool allocate = true;
-
 	// 4 default ERAS
 	strcpy(DefDbNode->ERAS[0],"wro"); // Read/Write files
 	strcpy(DefDbNode->ERAS[1],"ro"); // Read only type of Node
