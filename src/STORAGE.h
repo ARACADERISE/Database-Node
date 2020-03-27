@@ -9,7 +9,7 @@
 
 // Updates the Database Nodes storage
 DatabaseNodeset *
-UpdateStorage(DatabaseNodeset *Db,int *ToChange,int changeBy, int Maxed);
+UpdateStorage(DatabaseNodeset *Db,int *ToChange,int changeBy, int Maxed, int SizeToIterate);
 
 DatabaseNodeset *
 AllocateData(DatabaseNodeset *Db);
@@ -20,5 +20,6 @@ DatabaseNodeset *ResetStorage(DatabaseNodeset *Db);
 DatabaseNodeset *
 SetupNodeStorage(
 	DatabaseNodeset *DbNode,
-	NodeSizes *Sizes
+	NodeSizes *Sizes,
+	int SizeToIterate
 );
