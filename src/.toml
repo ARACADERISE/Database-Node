@@ -11,4 +11,21 @@
 
 [FILES]
 	MAIN_FILE = "./main.c"
-	OTHERS = ["./CORE.c","./CORE.h","./types.h","./CORE_types.h"]
+	OTHERS = [
+		"./CORE.c",
+		"./CORE.h",
+		"./types.h",
+		"./CORE_types.h",
+		"./Python/DefaultNode.py",
+		"./Python/dataparser.py",
+		"./SetupEra.c",
+		"./SetupEra.h",
+		"./STORAGE.c",
+		"./STORAGE.h"
+	]
+	GENERATED = [
+		"EraData.json -> Python/dataparser.py",
+		"CreateDefaultNode -> Generated -> CORE.c, Edited -> Python/dataparser.py",
+		"NodeData.json -> Python/dataparser.py",
+		"NodeInformation -> Generated -> CORE.c, Edited -> Python/dataparser.py"
+	]
