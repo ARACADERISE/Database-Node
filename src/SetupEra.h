@@ -4,5 +4,8 @@
 
 #include <stdio.h>
 
+void
+StoreEraAction(char *ActionMade);
+
 void *
 GatherEra(const char *Era, DefaultMainDbNode * Db, DatabaseNodeset *DbNode);
