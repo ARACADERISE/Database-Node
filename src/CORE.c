@@ -304,7 +304,5 @@ void SetupDatabaseNode(
 			InitUpd--;
 		}
 		SetupNodeStorage(NodeSetup, Sizes, InitUpd);
-
-		printf("%d",NodeSetup->CoreInfo.StorageUsed.Total[InitUpd]);
 	}
 }
