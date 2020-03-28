@@ -124,8 +124,8 @@ if len(listed_) != 0:
 				ind = node_names[i].find(n)
 				node_names[i] = node_names[i].replace(node_names[i][ind],'')
 				IdNumber[i]+=n
-				if '12' in IdNumber:
-					IIndex = IdNumber.index('10')
+				if 12 in IdNumber:
+					IIndex = IdNumber.index(10)
 					IdNumber[IIndex+1]=11
 		Action.append(node_names[i])
 		node_names[i] = node_names[i].replace('Added Database Node ','')
