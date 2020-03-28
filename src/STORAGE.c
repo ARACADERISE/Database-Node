@@ -3,26 +3,43 @@
 */
 
 #include <stdio.h>
+#include <stdbool.h>
+#include <string.h>
 #include <stdlib.h>
 #include "types.h"
 #include "CORE_types.h"
 
 extern int _CGE;
+//extern bool AllocatedData;
 
 int ErrStatus;
 
-DatabaseNodeset *ResetStorage(DatabaseNodeset *Db) {
-
-	// Checking allocated data
-	if(Db->CoreInfo.AllocatedData) {
-		
-	}
-
+DatabaseNodeset *ResetStorage(DatabaseNodeset *Db, int SizeToIterate) {
 	return 0;
 }
 
 DatabaseNodeset *
-AllocateData(DatabaseNodeset *Db) {
+AllocateData(DatabaseNodeset *Db, int SizeToIterate, const char *NodeName) {
+	static int Print_ = 0; // Zero by default meaning the error prints once
+	static int UseIndex = 0;
+	
+	for(int i = 0; i < SizeToIterate+1; i++) {
+		if(Db->CoreInfo.StorageUsed.Total[i]==0) {
+			ErrStatus = (_CGE == 0) ? AllocatingStorageWithSizeZero : Failure;
+			if(Print_ < 1) {
+				RETURNERRINFO("\033[1;31m", ErrStatus);
+			}
+			Print_=1;
+			break;
+		} else {
+			if(Db->CoreInfo.StorageUsed.Total[i+1]==0) {
+				UseIndex = i+1;
+				Db->CoreInfo.StorageUsed.Total[UseIndex]=Db->CoreInfo.StorageUsed.Total[i];
+				//printf("%d\n",Db->CoreInfo.StorageUsed.Total[i+1]);
+			}
+		}
+	}
+
 	return Db;
 }
 
