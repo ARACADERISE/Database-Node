@@ -19,14 +19,12 @@ DatabaseNodeset *ResetStorage(DatabaseNodeset *Db, int SizeToIterate) {
 
 	if(AllocatedData) {
 		for(int i = 0; i < SizeToIterate; i++) {
-			if(Db->NodeId[i] == 2) {
-				if(Db->CoreInfo.StorageUsed.Total[i] != 0) {
-					Db->CoreInfo.StorageUsed.TotalFileStorageUsed[i]=0;
-					Db->CoreInfo.StorageUsed.TotalIntegerStorageUsed[i]=0;
-					Db->CoreInfo.StorageUsed.TotalStringStorageUsed[i]=0;
-					Db->CoreInfo.StorageUsed.Total[i]=0;
-					break;
-				}
+			if(Db->CoreInfo.StorageUsed.Total[i] != 0) {
+				Db->CoreInfo.StorageUsed.TotalFileStorageUsed[i]=0;
+				Db->CoreInfo.StorageUsed.TotalIntegerStorageUsed[i]=0;
+				Db->CoreInfo.StorageUsed.TotalStringStorageUsed[i]=0;
+				Db->CoreInfo.StorageUsed.Total[i]=0;
+				break;
 			} else {
 				ErrStatus = (_CGE == 0) ? ResetingStorageOfSizeZero : Failure;
 				if(Print_ == 0) {
