@@ -19,6 +19,7 @@ void SetupDatabaseNode(
 	char *DatabaseNode,
 	bool CoreGenereatedErrs,
 	bool NodeCanRead,
+	bool AllocateData_,
 	char *Era,
 	int FileSize,
 	int StringSize,
