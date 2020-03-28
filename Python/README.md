@@ -4,7 +4,7 @@
 
 <h3><i>Why?</i></h3>
 
-```
-<p>Python is a very easy, dynamically typed language. I personally use it heavily on files<p>
-<p>So I wrote a small Python project that helps with the generating of files with Database Nodes<p>
-```
+<p>
+  <b>Python</b> is a very easy, <i>dynamically</i> typed language. I personally use it heavily on files
+So I wrote a small <b>Python</b> project that helps with the <i>generating of files with Database Nodes</i>
+</p>
