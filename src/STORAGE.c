@@ -24,6 +24,7 @@ DatabaseNodeset *ResetStorage(DatabaseNodeset *Db, int SizeToIterate) {
 					Db->CoreInfo.StorageUsed.TotalFileStorageUsed[i]=0;
 					Db->CoreInfo.StorageUsed.TotalIntegerStorageUsed[i]=0;
 					Db->CoreInfo.StorageUsed.TotalStringStorageUsed[i]=0;
+					Db->CoreInfo.StorageUsed.Total[i]=0;
 					break;
 				}
 			} else {
