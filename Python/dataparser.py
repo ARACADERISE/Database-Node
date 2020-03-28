@@ -1,4 +1,4 @@
-import os, json
+import os, json, struct
 
 # will be used later on when bigger files are generated
 #try:
@@ -89,7 +89,7 @@ if len(listed__) != 0:
 	write_ = '[EraSetupInformation]\n\t\t!Era Name!\t~\t%s\n\t\t!Action!\t~\t%s'
 
 	for i in range(len(AddedFiles)):
-		with open(AddedFiles[i],'w') as AddedFile:
+		with open(AddedFiles[i],'wb') as AddedFile:
 			AddedFile.write(write_ % (era[i-1] if len(era) > 1 else era[0], era_data[i-1] if len(era_data) > 1 else era_data[0]))
 			AddedFile.flush()
 			AddedFile.close()
