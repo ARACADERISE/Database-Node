@@ -82,15 +82,6 @@ typedef struct {
 			int TotalIntegerStorageUsed[1000];
 			int Total[1000];
 		} StorageUsed;
-		/** 
-			* Allocated Data is storage being transfered from one Node
-			* to another. If AllocatedData is true then StorageUsed.Total will equal that Database Nodes
-			* storage
-
-			* When AllocatedData is true, the storage of the recently created Database Node is set to
-			* the ammount of storage the last one had
-		*/
-		bool AllocatedData;
 		char NodeName[1000][100]; // Storing a thousand Node Names
 	} CoreInfo;
 } DatabaseNodeset;
