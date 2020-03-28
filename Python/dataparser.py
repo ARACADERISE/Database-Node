@@ -90,7 +90,7 @@ if len(listed__) != 0:
 
 	for i in range(len(AddedFiles)):
 		with open(AddedFiles[i],'w') as AddedFile:
-			AddedFile.write(write_ % (era[i] if len(era) > 1 else era[0], era_data[i] if len(era_data) > 1 else era_data[0]))
+			AddedFile.write(write_ % (era[i-1] if len(era) > 1 else era[0], era_data[i-1] if len(era_data) > 1 else era_data[0]))
 			AddedFile.flush()
 			AddedFile.close()
 
@@ -117,6 +117,8 @@ if len(listed_) != 0:
 		IdNumber.append(node_names[i][index])
 		node_names[i] = node_names[i].replace('\n','')
 		node_names[i] = node_names[i].replace(IdNumber[i],'')
+		for i in range(len(IdNumber)):
+			IdNumber[i] = int(IdNumber[i])
 		for n in nums:
 			if n in node_names[i]:
 				ind = node_names[i].find(n)
@@ -124,7 +126,7 @@ if len(listed_) != 0:
 				IdNumber[i]+=n
 				if '12' in IdNumber:
 					IIndex = IdNumber.index('10')
-					IdNumber[IIndex+1]='11'
+					IdNumber[IIndex+1]=11
 		Action.append(node_names[i])
 		node_names[i] = node_names[i].replace('Added Database Node ','')
 
