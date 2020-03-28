@@ -7,6 +7,18 @@
 #include <string.h>
 #include "types.h"
 
+char *Action;
+char EraActions[10000][200];
+static int Index = 0;
+
+// A very very simple function that just stored the action made with the Era type
+void
+StoreEraAction(char *ActionMade) {
+	strcpy(EraActions[Index],ActionMade);
+
+	Index+=1;
+}
+
 // Writes data stored in struct EraSetup
 static void
 WriteFile(char *FileName,EraSetup *Era_Setup) {
@@ -19,7 +31,6 @@ WriteFile(char *FileName,EraSetup *Era_Setup) {
 	fclose(Data);
 }
 
-char *Action;
 // Gathers the Era name using the DefaultMainDbNode struct
 void *
 GatherEra(char *Era, DefaultMainDbNode * Db/*Used to go through all ERAS setup through the Default Node*/,DatabaseNodeset *DbNode) {
@@ -63,6 +74,7 @@ GatherEra(char *Era, DefaultMainDbNode * Db/*Used to go through all ERAS setup t
 	DbNode->CoreInfo.NodeEra.EraAction = Era_Setup->Action;
 
 	WriteFile(fileName,Era_Setup);
+	InitUpd++;
 
 	return 0;
 }
