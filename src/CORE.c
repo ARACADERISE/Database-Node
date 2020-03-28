@@ -102,7 +102,7 @@ CheckFile(char *FileName, char *LookFor) {
 	FILE *OpenCheck;
 	OpenCheck = fopen(FileName,"r");
 	if(OpenCheck == NULL) {
-		printf("Error finding file %s",FileName);
+		fprintf(stderr,"Error finding file %s",FileName);
 	} else {
 		fread(Read,1,sizeof(char)*40,OpenCheck);
 		fclose(OpenCheck);
