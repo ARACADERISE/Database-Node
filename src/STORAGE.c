@@ -10,11 +10,33 @@
 #include "CORE_types.h"
 
 extern int _CGE;
-//extern bool AllocatedData;
+extern bool AllocatedData;
 
 int ErrStatus;
 
 DatabaseNodeset *ResetStorage(DatabaseNodeset *Db, int SizeToIterate) {
+	static int Print_ = 0; // Meaning it prints once
+
+	if(AllocatedData) {
+		for(int i = 0; i < SizeToIterate; i++) {
+			if(Db->NodeId[i] == 2) {
+				if(Db->CoreInfo.StorageUsed.Total[i] != 0) {
+					Db->CoreInfo.StorageUsed.TotalFileStorageUsed[i]=0;
+					Db->CoreInfo.StorageUsed.TotalIntegerStorageUsed[i]=0;
+					Db->CoreInfo.StorageUsed.TotalStringStorageUsed[i]=0;
+					break;
+				}
+			} else {
+				ErrStatus = (_CGE == 0) ? ResetingStorageOfSizeZero : Failure;
+				if(Print_ == 0) {
+					RETURNERRINFO("\033[1;31m", ErrStatus);
+				}
+				Print_=1;
+				break;
+			}
+		}
+	}
+
 	return 0;
 }
 
