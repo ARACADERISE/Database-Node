@@ -15,6 +15,7 @@
 char *DatabaseNodeName;
 int _CGE;
 int ErrStatus;
+bool AllocatedData;
 // This is Default db names
 static char * DefDbNodeNames[] = {
 	// DEFAULT NAMES
@@ -119,7 +120,7 @@ void SetupDatabaseNode(
 	char *DatabaseNode,
 	bool CoreGenereatedErrs,
 	bool NodeCanRead,
-	bool AllocateData,
+	bool AllocateData_,
 	char *Era,
 	int FileSize,
 	int StringSize,
@@ -247,8 +248,13 @@ void SetupDatabaseNode(
 			sprintf(AddDetails,"Added Database Node %s",DbNames[InitUpd]);
 			strcpy(*Add_Info->NameOfNode,AddDetails);
 
-			++InitUpd;
-			++InitId;
+			// Allocating storage if true
+			if(AllocateData_) {
+				AllocatedData = true;
+				AllocateData(NodeSetup,InitUpd++,DatabaseNode);
+			}
+			InitUpd+=1;
+			InitId+=1;
 		}
 	} else {
 		fprintf(stderr,"You can only assign 4 default Database Nodes\n");
@@ -298,5 +304,7 @@ void SetupDatabaseNode(
 			InitUpd--;
 		}
 		SetupNodeStorage(NodeSetup, Sizes, InitUpd);
+
+		printf("%d",NodeSetup->CoreInfo.StorageUsed.Total[InitUpd]);
 	}
 }
