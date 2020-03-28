@@ -30,7 +30,7 @@ DatabaseNodeset *ResetStorage(DatabaseNodeset *Db, int SizeToIterate) {
 			} else {
 				ErrStatus = (_CGE == 0) ? ResetingStorageOfSizeZero : Failure;
 				if(Print_ == 0) {
-					RETURNERRINFO("\033[1;31m", ErrStatus);
+					RETURNERRINFO("\033[0;36m", ErrStatus);
 				}
 				Print_=1;
 				break;
@@ -50,7 +50,7 @@ AllocateData(DatabaseNodeset *Db, int SizeToIterate, const char *NodeName) {
 		if(Db->CoreInfo.StorageUsed.Total[i]==0) {
 			ErrStatus = (_CGE == 0) ? AllocatingStorageWithSizeZero : Failure;
 			if(Print_ < 1) {
-				RETURNERRINFO("\033[1;31m", ErrStatus);
+				RETURNERRINFO("\033[1;36m", ErrStatus);
 			}
 			Print_=1;
 			break;
