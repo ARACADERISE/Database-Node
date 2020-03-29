@@ -81,6 +81,14 @@ typedef struct {
 			int MaxStorageAllowed;
 			int MaxStorageUpgrade;
 		} NodeStorage;
+		bool Allocatedata;
+		// This is used to allocate data;
+		struct {
+			int AllocatedMaxFileSize[1000];
+			int AllocatedMaxStringSize[1000];
+			int AllocatedMaxIntegerSize[1000];
+			int AllocatedTotal[1000];
+		} AllocatedStorage;
 		struct {
 			int TotalFileStorageUsed[1000];
 			int TotalStringStorageUsed[1000];
