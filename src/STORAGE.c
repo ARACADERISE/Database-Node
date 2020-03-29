@@ -171,10 +171,9 @@ SetupNodeStorage(
 		if(SizeToIterate-1==i)
 			break;
 
-			/* 
+		/* 
 		*	DbNode->CoreInfo.NodeStorage.MaxStorageTotal:
-		*	This will be the total ammount of storage of all the   
-		* Storages combined
+		*	This will be the total ammount of storage of all the   Storages combined
 		*/
 		DbNode->CoreInfo.NodeStorage.MaxStorageTotal[i]=Sizes->MaxStorageTotal;
 
