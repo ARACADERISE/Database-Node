@@ -300,7 +300,7 @@ void SetupDatabaseNode(
 
 		// Finishing up the Default Database Node
 		SetupDbNodeStorage(FileSize,StringSize,IntegerSize, Sizes);
-		
+
 		// Sets up the storage
 		if(InitUpd > 1) {
 			InitUpd--;
