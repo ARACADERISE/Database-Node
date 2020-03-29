@@ -43,14 +43,16 @@ AllocateData(DatabaseNodeset *Db, int SizeToIterate, const char *NodeName) {
 	static int Print_ = 0; // Zero by default meaning the error prints once
 	static int UseIndex = 0;
 	
-	for(int i = 0; i < SizeToIterate+1; i++) {
+	for(int i = 0; i < SizeToIterate; i++) {
+		if(SizeToIterate-1==1)
+				break;
 		if(Db->CoreInfo.StorageUsed.Total[i]==0) {
 			ErrStatus = (_CGE == 0) ? AllocatingStorageWithSizeZero : Failure;
 			if(Print_ < 1) {
 				RETURNERRINFO("\033[1;36m", ErrStatus);
 			}
 			Print_=1;
-			break;
+			//break;
 		} else {
 			if(Db->CoreInfo.StorageUsed.Total[i+1]==0) {
 				UseIndex = i+1;
