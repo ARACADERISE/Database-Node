@@ -62,8 +62,8 @@ StoreInFile(
 
 // Finsishes setting up Default Database Node
 static int
-DefaultDbNode(
-	DefaultMainDbNode *DefDbMainMode, 
+SetupDbNodeStorage(
+	//DefaultMainDbNode *DefDbMainMode, 
 	int MaxFileSize, // INIT: 10000+
 	int MaxStringSize, // INIT: 20000+
 	int MaxIntegerSize, // INIT: 20000+
@@ -88,7 +88,8 @@ DefaultDbNode(
 	Sizes->MaxFileSize = MaxFileSize;
 	Sizes->MaxStringSize = MaxStringSize;
 	Sizes->MaxIntegerSize = MaxIntegerSize;
-	Sizes->MaxStorageTotal = 40000000; // 40 million! For ONE Database Node
+	Sizes->MaxStorageTotal = MaxFileSize + MaxStringSize + MaxIntegerSize;
+	Sizes->MaxStorageAllowed = 40000000; // 40 million! For ONE Database Node
 
 	return 0;
 }
@@ -191,8 +192,6 @@ void SetupDatabaseNode(
 			exit(ErrStatus);
 		}
 	}
-	// Finishing up the Default Database Node
-	DefaultDbNode(DefDbNode,FileSize,StringSize,IntegerSize, Sizes);
 	
 	if(DefDb != -1) {
 		if(strcmp(DatabaseNode,"default") == 0) {
@@ -250,8 +249,8 @@ void SetupDatabaseNode(
 
 			// Allocating storage if true
 			if(AllocateData_) {
-				AllocatedData = true;
-				AllocateData(NodeSetup,InitUpd++,DatabaseNode);
+				//AllocatedData = true;
+				//AllocateData(NodeSetup,InitUpd++,DatabaseNode);
 			}
 			InitUpd+=1;
 			InitId+=1;
@@ -298,11 +297,14 @@ void SetupDatabaseNode(
 	if(!(strcmp(DatabaseNode,"DefaultNodeSetup") == 0)) {
 		// Giving meaning to the Era
 		GatherEra(Era, DefDbNode, NodeSetup/*We give meaning to each ideal of the struct bit by bit*/);
+
+		// Finishing up the Default Database Node
+		SetupDbNodeStorage(FileSize,StringSize,IntegerSize, Sizes);
 		
 		// Sets up the storage
 		if(InitUpd > 1) {
 			InitUpd--;
 		}
-		SetupNodeStorage(NodeSetup, Sizes, InitUpd);
+		SetupNodeStorage(NodeSetup, Sizes, DbNames, InitUpd);
 	}
 }
