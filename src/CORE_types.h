@@ -34,7 +34,9 @@
 #  define StorageAddOverload                14
 #  define AllocatingStorageWithSizeZero     15
 #  define ResetingStorageOfSizeZero         16
-#  define MaxedAboveTotalStorageAllowed     17 // STORAGE.c argument error
+// STORAGE.c argument error
+#  define MaxedAboveTotalStorageAllowed     17
+#  define ChangingByAboveStorageAllowed     18
 // Regular success/fail errors
 #  define Failure                           1
 #  define Success                           0
@@ -49,8 +51,11 @@
 	else if(TYPE == FoundInOtherFile) {                                                                                                           \
 		printf("%sThe string/number/character was found in another file. \n\tReturn Exit status %d\n",COLOR,FoundInOtherFile);                \
 	}                                                                                                                                             \
+	else if(TYPE == ChangingByAboveStorageAllowed) { \
+		printf("%sYou cannot change the value by a size greater than 40000000.\n\t_WARNING_STATUS_%d\n\033[0;m",COLOR,ChangingByAboveStorageAllowed); \
+	} \
 	else if(TYPE == MaxedAboveTotalStorageAllowed) { \
-		printf("%sArgument Maxed cannot be set to any value above 40000000.\n\tERR_STATUS_%d",COLOR,MaxedAboveTotalStorageAllowed);\
+		printf("%sArgument Maxed cannot be set to any value above 40000000.\n\t_WARNING_STATUS_%d\n\033[0;m",COLOR,MaxedAboveTotalStorageAllowed);\
 	}\
 	else if(TYPE == DeclarationOfEraNun) {                                                                                                        \
 		printf("%sAttempt to set a Era type of NUN to your Database Node. \n\tERR_STATUS_%d\n",COLOR,DeclarationOfEraNun);                    \
@@ -74,7 +79,7 @@
 		printf("%sAttempted to assign an unexisting Era type to the Database node.\n\tERR_STATUS_%d\n",COLOR,NotAEraType);                    \
 	}                                                                                                                                             \
 	else if(TYPE == StorageAboveMax) {                                                                                                            \
-		printf("%sTotal storage ammount reached for the Database Node.\n\tERR_STATUS_%d\nReallocating memory for the Database Nodes storage...",COLOR,StorageAboveMax);                              \
+		printf("%sTotal storage ammount reached for the Database Node.\n\tERR_STATUS_%d\nReallocating memory for the Database Nodes storage...\033[0;m",COLOR,StorageAboveMax);                              \
 	}                                                                                                                                             \
 	else if(TYPE == StorageAddOverload) {                                                                                                         \
 		printf("%sAdding too much storage. Total of 50000 storage segments can be added at once.\n\tERR_STATUS_%d\n",COLOR,StorageAddOverload); \
