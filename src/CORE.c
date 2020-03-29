@@ -246,12 +246,7 @@ void SetupDatabaseNode(
 			char AddDetails[150];
 			sprintf(AddDetails,"Added Database Node %s",DbNames[InitUpd]);
 			strcpy(*Add_Info->NameOfNode,AddDetails);
-			NodeSetup->CoreInfo.StorageUsed.Total[0]=500;
-			// Allocating storage if true
-			if(!(strcmp(DatabaseNode,"DefaultNodeSetup") == 0) &&AllocateData_) {
-				AllocatedData = true;
-				AllocateData(NodeSetup,InitUpd++,DatabaseNode);
-			}
+
 			InitUpd+=1;
 			InitId+=1;
 		}
@@ -307,6 +302,13 @@ void SetupDatabaseNode(
 		if(InitUpd > 1) {
 			InitUpd--;
 		}
-		SetupNodeStorage(NodeSetup, Sizes, DbNames, InitUpd);
+		SetupNodeStorage(NodeSetup, Sizes, DbNames, InitUpd++);
+
+		// Allocating storage if true
+		if(!(strcmp(DatabaseNode,"DefaultNodeSetup") == 0) &&AllocateData_) {
+			NodeSetup->CoreInfo.Allocatedata=true;
+			AllocatedData = true;
+			AllocateData(NodeSetup,InitUpd,DatabaseNode);
+		}
 	}
 }
