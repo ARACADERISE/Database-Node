@@ -34,7 +34,7 @@ static char DbNames[1000][100];
 // From types.h. Declared in types.h, given functionality
 // in CORE.c.
 // MEANT FOR AddInfo struct, nothing else
-static int 
+static inline int 
 StoreInFile(
 	int AddId, 
 	char UpdateInfo[500], 
