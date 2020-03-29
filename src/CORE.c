@@ -95,7 +95,7 @@ SetupDbNodeStorage(
 }
 
 // Opens a file and checks for certain names in it
-static int
+static inline int
 CheckFile(char *FileName, char *LookFor) {
 	char Read[1000];
 	ErrStatus = (_CGE == 0) ? FoundInOtherFile : Failure;
