@@ -75,7 +75,7 @@ typedef struct {
 			int MaxIntegerSize[1000];
 			int MaxStorageTotal[1000];
 			/* 
-				*Sizes is freed in SetupDbNodeStorage, so we have to store the max storage allowed somewhere
+				* Sizes is freed in SetupDbNodeStorage, so we have to store the max storage allowed somewhere
 				* It will ALWAYS be 40000000
 			*/
 			int MaxStorageAllowed;
