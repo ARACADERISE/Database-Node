@@ -34,6 +34,7 @@
 #  define StorageAddOverload                14
 #  define AllocatingStorageWithSizeZero     15
 #  define ResetingStorageOfSizeZero         16
+#  define MaxedAboveTotalStorageAllowed     17 // STORAGE.c argument error
 // Regular success/fail errors
 #  define Failure                           1
 #  define Success                           0
@@ -48,6 +49,9 @@
 	else if(TYPE == FoundInOtherFile) {                                                                                                           \
 		printf("%sThe string/number/character was found in another file. \n\tReturn Exit status %d\n",COLOR,FoundInOtherFile);                \
 	}                                                                                                                                             \
+	else if(TYPE == MaxedAboveTotalStorageAllowed) { \
+		printf("%sArgument Maxed cannot be set to any value above 40000000.\n\tERR_STATUS_%d",COLOR,MaxedAboveTotalStorageAllowed);\
+	}\
 	else if(TYPE == DeclarationOfEraNun) {                                                                                                        \
 		printf("%sAttempt to set a Era type of NUN to your Database Node. \n\tERR_STATUS_%d\n",COLOR,DeclarationOfEraNun);                    \
 	}                                                                                                                                             \
