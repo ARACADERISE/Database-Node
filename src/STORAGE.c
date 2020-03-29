@@ -66,8 +66,8 @@ DatabaseNodeset *ResetStorage(DatabaseNodeset *Db, int SizeToIterate) {
 DatabaseNodeset *
 AllocateData(DatabaseNodeset *Db, int SizeToIterate, const char *NodeName) {
 	static int Print_ = 0; // Zero by default meaning the error prints once
-	char Info[450][100];
 	static int UseIndex = 0;
+	
 	for(int i = 0; i < SizeToIterate+1; i++) {
 		if(SizeToIterate-1==i)
 			break;
