@@ -105,6 +105,9 @@ UpdateStorage(DatabaseNodeset *Db,int *ToChange,int changeBy, int Maxed, int Siz
 			if(*ToChange > Maxed) {
 				int All;
 				for(int i = 0; i < SizeToIterate+1; i++) {
+					if(SizeToIterate-1==i)
+						break;
+					
 					All = Db->CoreInfo.NodeStorage.MaxFileSize[i] + Db->CoreInfo.NodeStorage.MaxStringSize[i] + Db->CoreInfo.NodeStorage.MaxIntegerSize[i];
 					if(All > Db->CoreInfo.NodeStorage.MaxStorageAllowed) {
 						ErrStatus = (_CGE == 0) ? StorageAboveMax : Failure;
