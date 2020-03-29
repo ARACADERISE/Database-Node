@@ -44,8 +44,9 @@ AllocateData(DatabaseNodeset *Db, int SizeToIterate, const char *NodeName) {
 	static int UseIndex = 0;
 	
 	for(int i = 0; i < SizeToIterate; i++) {
-		if(SizeToIterate-1==1)
-				break;
+		if(SizeToIterate-1==i)
+			break;
+
 		if(Db->CoreInfo.StorageUsed.Total[i]==0) {
 			ErrStatus = (_CGE == 0) ? AllocatingStorageWithSizeZero : Failure;
 			if(Print_ < 1) {
