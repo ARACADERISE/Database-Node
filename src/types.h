@@ -21,6 +21,7 @@ typedef struct {
 	int MaxStringSize;
 	int MaxIntegerSize;
 	int MaxStorageTotal;
+	int MaxStorageAllowed;
 } NodeSizes;
 
 // This will be for the Main Database Node, or for the Database Node that sets up the whole application
@@ -43,10 +44,9 @@ typedef struct {
 	char *Action;
 } EraSetup;
 
-// Will continue the work upon the DefaultMainDbNode
-// Return 0 if it is fully setup, else 1
+// Sets up primal storage for the Nodes
 static int
-DefaultDbNode(DefaultMainDbNode *DefDbMainNode, const int MaxFileSize, const int MaxStringSize, const int MaxIntegerSize, NodeSizes *Sizes);
+SetupDbNodeStorage(/*DefaultMainDbNode *DefDbMainNode,*/ const int MaxFileSize, const int MaxStringSize, const int MaxIntegerSize, NodeSizes *Sizes);
 
 // This is for AddedInfo
 static int
@@ -74,6 +74,11 @@ typedef struct {
 			int MaxStringSize[1000];
 			int MaxIntegerSize[1000];
 			int MaxStorageTotal[1000];
+			/* 
+				*Sizes is freed in SetupDbNodeStorage, so we have to store the max storage allowed somewhere
+				* It will ALWAYS be 40000000
+			*/
+			int MaxStorageAllowed;
 			int MaxStorageUpgrade;
 		} NodeStorage;
 		struct {
