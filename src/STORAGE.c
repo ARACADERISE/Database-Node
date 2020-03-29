@@ -156,12 +156,18 @@ SetupNodeStorage(
 
 	// Storage is factored into the Sizes struct in types.h, just not set to the Datbase Node
 	for(int i = 0; i < SizeToIterate+1; i++) {
+		if(SizeToIterate-1==i)
+			break;
+
 		DbNode->CoreInfo.NodeStorage.MaxFileSize[i] = Sizes->MaxFileSize;
 		DbNode->CoreInfo.NodeStorage.MaxStringSize[i] = Sizes->MaxStringSize;
 		DbNode->CoreInfo.NodeStorage.MaxIntegerSize[i] = Sizes->MaxIntegerSize;
 	}
 	DbNode->CoreInfo.NodeStorage.MaxStorageUpgrade=50000;
 	for(int i = 0; i < SizeToIterate+1; i++) {
+		if(SizeToIterate-1==i)
+			break;
+
 			/* 
 		*	DbNode->CoreInfo.NodeStorage.MaxStorageTotal:
 		*	This will be the total ammount of storage of all the   
@@ -184,6 +190,9 @@ SetupNodeStorage(
 
 	// Sets ammount of storage the Node can hold for each
 	for(int i = 0; i < SizeToIterate+1; i++) {
+		if(SizeToIterate-1==i)
+			break;
+		
 		sprintf(Update[i],"%s:\n\tFile Storage: %d\n\tString Storage: %d\n\tInteger Storage: %d\n", DbNames[i],DbNode->CoreInfo.NodeStorage.MaxFileSize[i],DbNode->CoreInfo.NodeStorage.MaxStringSize[i],DbNode->CoreInfo.NodeStorage.MaxIntegerSize[i]);
 	}
 	FILE * WriteData;
