@@ -34,7 +34,7 @@ static char DbNames[1000][100];
 // From types.h. Declared in types.h, given functionality
 // in CORE.c.
 // MEANT FOR AddInfo struct, nothing else
-static inline int 
+static int 
 StoreInFile(
 	int AddId, 
 	char UpdateInfo[500], 
@@ -246,11 +246,11 @@ void SetupDatabaseNode(
 			char AddDetails[150];
 			sprintf(AddDetails,"Added Database Node %s",DbNames[InitUpd]);
 			strcpy(*Add_Info->NameOfNode,AddDetails);
-
+			NodeSetup->CoreInfo.StorageUsed.Total[0]=500;
 			// Allocating storage if true
-			if(AllocateData_) {
-				//AllocatedData = true;
-				//AllocateData(NodeSetup,InitUpd++,DatabaseNode);
+			if(!(strcmp(DatabaseNode,"DefaultNodeSetup") == 0) &&AllocateData_) {
+				AllocatedData = true;
+				AllocateData(NodeSetup,InitUpd++,DatabaseNode);
 			}
 			InitUpd+=1;
 			InitId+=1;
@@ -264,8 +264,10 @@ void SetupDatabaseNode(
 	_CGE = (CoreGenereatedErrs) ? 0:1;
 
 	// Setting the Node Id
-	for(int i = 0; i < InitId; i++) {
-		NodeSetup->NodeId[i] = i+1;
+	for(int i = 1; i < InitId; i++) {
+		if(InitId-1==i)
+			break;
+		NodeSetup->NodeId[i] = i;
 	}
 
 	sprintf(FileName,"Node Information #%d",InitUpd);
