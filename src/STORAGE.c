@@ -69,8 +69,7 @@ UpdateStorage(DatabaseNodeset *Db,int *ToChange,int changeBy, int Maxed, int Siz
 
 	/*
 	 * Maxed: Set the Database Nodes storage to a maximum, so if the new storage amount is anywhere near Maxed
-	 * (500 below and or above),
-	 * it rounds it up. If it's above Maxed, it rounds it  down
+	 * (500 below and or above), it rounds it up. If it's above Maxed, it rounds it  down
 
 	 *	NOTE: If Maxed is greater than the Nodes total storage allowed it will throw a error
 	*/
