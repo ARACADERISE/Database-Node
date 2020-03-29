@@ -224,13 +224,13 @@ SetupNodeStorage(
 	free(Sizes);
 
 	// Sets ammount of storage the Node can hold for each
-	for(int i = 0; i < SizeToIterate; i++) {
+	for(int i = 0; i < SizeToIterate+1; i++) {
 		if(!(strcmp(DbNames[i],"DefaultNodeSetup")==0)) {
 			sprintf(Update[i],"%s:\n\tFile Storage: %d\n\tString Storage: %d\n\tInteger Storage: %d\n", DbNames[i],DbNode->CoreInfo.NodeStorage.MaxFileSize[i],DbNode->CoreInfo.NodeStorage.MaxStringSize[i],DbNode->CoreInfo.NodeStorage.MaxIntegerSize[i]);
 		}
 	}
+	
 	FILE * WriteData;
-
 	WriteData = fopen("STORAGEINFO","w");
 	for(int i = 0; i < SizeToIterate+1; i++) {
 		fputs(Update[i],WriteData);
