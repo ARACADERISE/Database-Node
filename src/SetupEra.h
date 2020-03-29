@@ -4,7 +4,7 @@
 
 #include <stdio.h>
 
-void
+inline void
 StoreEraAction(char *ActionMade);
 
 void *
