@@ -12,7 +12,7 @@ char EraActions[10000][200];
 static int Index = 0;
 
 // A very very simple function that just stored the action made with the Era type
-void
+inline void
 StoreEraAction(char *ActionMade) {
 	strcpy(EraActions[Index],ActionMade);
 
@@ -20,7 +20,7 @@ StoreEraAction(char *ActionMade) {
 }
 
 // Writes data stored in struct EraSetup
-static void
+static inline void
 WriteFile(char *FileName,EraSetup *Era_Setup) {
 	FILE *Data;
 
