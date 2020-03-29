@@ -49,7 +49,7 @@ static int
 SetupDbNodeStorage(/*DefaultMainDbNode *DefDbMainNode,*/ const int MaxFileSize, const int MaxStringSize, const int MaxIntegerSize, NodeSizes *Sizes);
 
 // This is for AddedInfo
-static int
+static inline int
 StoreInFile(int AddId, char UpdateInfo[500], char *StoreInFile, AddInfo *AddedInfo);
 
 // Used to keep track of reset information
