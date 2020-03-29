@@ -34,9 +34,10 @@
 #  define StorageAddOverload                14
 #  define AllocatingStorageWithSizeZero     15
 #  define ResetingStorageOfSizeZero         16
+#  define MaxAllowedStorageIsZero           17
 // STORAGE.c argument error
-#  define MaxedAboveTotalStorageAllowed     17
-#  define ChangingByAboveStorageAllowed     18
+#  define MaxedAboveTotalStorageAllowed     18
+#  define ChangingByAboveStorageAllowed     19
 // Regular success/fail errors
 #  define Failure                           1
 #  define Success                           0
@@ -45,6 +46,9 @@
 	if(TYPE == CoreConErr) {                                                                                                                      \
 		printf("%sError connection with core. \n\tReturn Exit status %d\n",COLOR,CoreConErr);                                                 \
 	}                                                                                                                                             \
+	else if(TYPE == MaxAllowedStorageIsZero) {\
+		printf("%sSetupNodeStorage function has not yet been ran.\nInstead UpdateStorage function was ran.\n\tERR_STATUS_%d\n",COLOR,MaxAllowedStorageIsZero);\
+	}\
 	else if(TYPE == FileConErr) {                                                                                                                 \
 		printf("%sError connecting/finding file. \n\tReturn Exit status %d\n",COLOR,FileConErr);                                              \
 	}                                                                                                                                             \
