@@ -127,7 +127,7 @@ void SetupDatabaseNode(
 	int StringSize,
 	int IntegerSize
 ) {
-	static int InitId = 1;
+	static int InitId = 0;
 	static int DefDb = 0;
 	static int InitUpd = 0;
 
@@ -152,9 +152,10 @@ void SetupDatabaseNode(
 		/* Going through DbNames to see if DefaultNodeSetup is in it more than once.
 		*/
 		int timesFound = 1;
-		for(int i = 0; i < InitUpd; i++) {
-			if(strcmp(DbNames[i],"DefaultNodeSetup") == 0)
+		for(;InitUpd;) {
+			if(strcmp(DbNames[InitUpd],"DefaultNodeSetup") == 0)
 				timesFound++;
+			break;
 		}
 		if(timesFound > 1) {
 			ErrStatus = (_CGE == 0) ? MoreThanOneDefaultNodeCreated : Failure;
@@ -210,6 +211,7 @@ void SetupDatabaseNode(
 					if(strcmp(DbNames[i],DatabaseNode) == 0) {
 						++Times;
 					}
+					break;
 				}
 				if(Times > 1) {
 					ErrStatus = (_CGE == 0) ? DatabaseNodeAlreadyCreated : Failure;
@@ -259,10 +261,9 @@ void SetupDatabaseNode(
 	_CGE = (CoreGenereatedErrs) ? 0:1;
 
 	// Setting the Node Id
-	for(int i = 1; i < InitId; i++) {
-		if(InitId-1==i)
-			break;
-		NodeSetup->NodeId[i] = i;
+	for(;InitId;) {
+		NodeSetup->NodeId[InitId] = InitId;
+		break;
 	}
 
 	sprintf(FileName,"Node Information #%d",InitUpd);
@@ -270,10 +271,11 @@ void SetupDatabaseNode(
 
 	// Going through all the appended Database Node names to see if DefaultNodeSetup is in it
 	// Other errors will be raised before this, such as "Assigning Database Node to Era type NUN"
-	static int times;
+	static int times=0;
 	for(int i = 0; i < InitUpd; i++) {
-		if(strcmp(DbNames[i],"DefaultNodeSetup") == 0)
+		if(strcmp(DbNames[i],"DefaultNodeSetup")==0)
 			times++;
+		break;
 	}
 	if(times < 1) {
 		if(times != 1) {
@@ -302,7 +304,6 @@ void SetupDatabaseNode(
 		if(InitUpd > 1) {
 			InitUpd--;
 		}
-		SetupNodeStorage(NodeSetup, Sizes, DbNames, InitUpd++);
 
 		// Allocating storage if true
 		if(!(strcmp(DatabaseNode,"DefaultNodeSetup") == 0) &&AllocateData_) {
@@ -310,5 +311,7 @@ void SetupDatabaseNode(
 			AllocatedData = true;
 			AllocateData(NodeSetup,InitUpd,DatabaseNode);
 		}
+
+		SetupNodeStorage(NodeSetup, Sizes, DbNames, DatabaseNode,InitUpd++);
 	}
 }
