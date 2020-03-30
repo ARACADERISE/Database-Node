@@ -26,8 +26,9 @@
 	GENERATED = [
 		"EraData.json -> Python/dataparser.py",
 		"CreateDefaultNode -> Generated -> CORE.c, Edited -> Python/dataparser.py",
+		"DefaultNodeSetupERROR -> Generated(If error with Default Node) -> CORE.c",
 		"NodeData.json -> Python/dataparser.py",
 		"NodeInformation -> Generated -> CORE.c, Edited -> Python/dataparser.py",
 		"EraSetup -> Generated -> CORE.c, Edited -> Python/dataparser.py",
-		"STORAGEINFO -> Generated -> STORAGE.c"
+		"STORAGE -> Generated -> STORAGE.c"
 	]
