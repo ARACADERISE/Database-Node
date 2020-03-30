@@ -229,11 +229,16 @@ SetupNodeStorage(
 		
 		FILE * WriteData;
 		
-		WriteData = fopen("STORAGEINFO","w");
-		for(int i = 0; i < SizeToIterate+1; i++) {
-			fputs(Update[i],WriteData);
-		}
+		char FileName[1000][50];
+		if(!(strcmp(RecentNodeName,"DefaultNodeSetup")==0))
+			sprintf(FileName[SizeToIterate],"STORAGE-%s",RecentNodeName);
 		
+		WriteData = fopen(FileName[SizeToIterate],"w");
+		for(;SizeToIterate;) {
+			if(!(strcmp(RecentNodeName,"DefaultNodeSetup")==0))
+				fputs(Update[SizeToIterate],WriteData);
+			break;
+		}
 		fclose(WriteData);
 	}
 
