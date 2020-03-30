@@ -19,45 +19,43 @@ DatabaseNodeset *ResetStorage(DatabaseNodeset *Db, int SizeToIterate) {
 
 	// Freeing up allocated data
 	if(AllocatedData) {
-		for(int i = 0; i < SizeToIterate; i++) {
-			if(SizeToIterate-1==i)
-				break;
-			if(Db->CoreInfo.AllocatedStorage.AllocatedTotal[i]!=0 &&
-				Db->CoreInfo.AllocatedStorage.AllocatedMaxFileSize[i]!=0 &&
-				Db->CoreInfo.AllocatedStorage.AllocatedMaxStringSize[i]!=0 &&
-				Db->CoreInfo.AllocatedStorage.AllocatedMaxIntegerSize[i]!=0
+		for(;SizeToIterate;) {
+
+			if(Db->CoreInfo.AllocatedStorage.AllocatedTotal[SizeToIterate]!=0 &&
+				Db->CoreInfo.AllocatedStorage.AllocatedMaxFileSize[SizeToIterate]!=0 &&
+				Db->CoreInfo.AllocatedStorage.AllocatedMaxStringSize[SizeToIterate]!=0 &&
+				Db->CoreInfo.AllocatedStorage.AllocatedMaxIntegerSize[SizeToIterate]!=0
 			) {
-				Db->CoreInfo.AllocatedStorage.AllocatedTotal[i]=0;
-				Db->CoreInfo.AllocatedStorage.AllocatedMaxFileSize[i]=0;
-				Db->CoreInfo.AllocatedStorage.AllocatedMaxStringSize[i]=0;
-				Db->CoreInfo.AllocatedStorage.AllocatedMaxIntegerSize[i]=0;
-				break;
+				Db->CoreInfo.AllocatedStorage.AllocatedTotal[SizeToIterate]=0;
+				Db->CoreInfo.AllocatedStorage.AllocatedMaxFileSize[SizeToIterate]=0;
+				Db->CoreInfo.AllocatedStorage.AllocatedMaxStringSize[SizeToIterate]=0;
+				Db->CoreInfo.AllocatedStorage.AllocatedMaxIntegerSize[SizeToIterate]=0;
 			} else {
 				ErrStatus = (_CGE == 0) ? ResetingStorageOfSizeZero : Failure;
 				if(Print_ == 0) {
 					RETURNERRINFO("\033[0;36m", ErrStatus);
 				}
 				Print_=1;
-				break;
 			}
+			break;
 		}
 	}
 
 	// Freeing up regular storage
-	for(int i = 0; i < SizeToIterate; i++) {
-		if(SizeToIterate-1==i)
-			break;
+	for(;SizeToIterate;) {
 		
-		if(Db->CoreInfo.StorageUsed.Total[i]!=0 &&
-			 Db->CoreInfo.StorageUsed.TotalFileStorageUsed[i]!=0 &&
-			 Db->CoreInfo.StorageUsed.TotalStringStorageUsed[i]!=0 &&
-			 Db->CoreInfo.StorageUsed.TotalIntegerStorageUsed[i]!=0
+		if(Db->CoreInfo.StorageUsed.Total[SizeToIterate]!=0 &&
+			 Db->CoreInfo.StorageUsed.TotalFileStorageUsed[SizeToIterate]!=0 &&
+			 Db->CoreInfo.StorageUsed.TotalStringStorageUsed[SizeToIterate]!=0 &&
+			 Db->CoreInfo.StorageUsed.TotalIntegerStorageUsed[SizeToIterate]!=0
 		) {
-			Db->CoreInfo.StorageUsed.Total[i]=0;
-			Db->CoreInfo.StorageUsed.TotalFileStorageUsed[i]=0;
-			Db->CoreInfo.StorageUsed.TotalStringStorageUsed[i]=0;
-			Db->CoreInfo.StorageUsed.TotalIntegerStorageUsed[i]=0;
+			Db->CoreInfo.StorageUsed.Total[SizeToIterate]=0;
+			Db->CoreInfo.StorageUsed.TotalFileStorageUsed[SizeToIterate]=0;
+			Db->CoreInfo.StorageUsed.TotalStringStorageUsed[SizeToIterate]=0;
+			Db->CoreInfo.StorageUsed.TotalIntegerStorageUsed[SizeToIterate]=0;
 		}
+
+		break;
 	}
 
 	return 0;
@@ -68,14 +66,12 @@ AllocateData(DatabaseNodeset *Db, int SizeToIterate, const char *NodeName) {
 	static int Print_ = 0; // Zero by default meaning the error prints once
 	//static int UseIndex = 0;
 
-	for(int i = 0; i < SizeToIterate+1; i++) {
-		if(SizeToIterate-1==i)
-			break;
+	for(;SizeToIterate;) {
 		if(
-			Db->CoreInfo.StorageUsed.Total[i]==0 ||
-			Db->CoreInfo.StorageUsed.TotalFileStorageUsed[i]==0 ||
-			Db->CoreInfo.StorageUsed.TotalStringStorageUsed[i]==0 ||
-			Db->CoreInfo.StorageUsed.TotalIntegerStorageUsed[i]==0
+			Db->CoreInfo.StorageUsed.Total[SizeToIterate]==0 ||
+			Db->CoreInfo.StorageUsed.TotalFileStorageUsed[SizeToIterate]==0 ||
+			Db->CoreInfo.StorageUsed.TotalStringStorageUsed[SizeToIterate]==0 ||
+			Db->CoreInfo.StorageUsed.TotalIntegerStorageUsed[SizeToIterate]==0
 			) {
 			ErrStatus = (_CGE == 0) ? AllocatingStorageWithSizeZero : Failure;
 			if(Print_ < 1) {
@@ -84,16 +80,17 @@ AllocateData(DatabaseNodeset *Db, int SizeToIterate, const char *NodeName) {
 			Print_=1;
 			//break;
 		} else {
-			if(Db->CoreInfo.AllocatedStorage.AllocatedTotal[i+1]==0) {
+			if(Db->CoreInfo.AllocatedStorage.AllocatedTotal[SizeToIterate]==0) {
 
 				//UseIndex = i+1;
-				Db->CoreInfo.AllocatedStorage.AllocatedMaxFileSize[i]=Db->CoreInfo.StorageUsed.TotalFileStorageUsed[i];
-				Db->CoreInfo.AllocatedStorage.AllocatedMaxStringSize[i]=Db->CoreInfo.StorageUsed.TotalStringStorageUsed[i];
-				Db->CoreInfo.AllocatedStorage.AllocatedMaxIntegerSize[i]=Db->CoreInfo.StorageUsed.TotalIntegerStorageUsed[i];
-				Db->CoreInfo.AllocatedStorage.AllocatedTotal[i]=Db->CoreInfo.StorageUsed.Total[i];
-				//printf("%d\n",Db->CoreInfo.AllocatedStorage.AllocatedTotal[i]);
+				Db->CoreInfo.AllocatedStorage.AllocatedMaxFileSize[SizeToIterate]=Db->CoreInfo.StorageUsed.TotalFileStorageUsed[SizeToIterate];
+				Db->CoreInfo.AllocatedStorage.AllocatedMaxStringSize[SizeToIterate]=Db->CoreInfo.StorageUsed.TotalStringStorageUsed[SizeToIterate];
+				Db->CoreInfo.AllocatedStorage.AllocatedMaxIntegerSize[SizeToIterate]=Db->CoreInfo.StorageUsed.TotalIntegerStorageUsed[SizeToIterate];
+				Db->CoreInfo.AllocatedStorage.AllocatedTotal[SizeToIterate]=Db->CoreInfo.StorageUsed.Total[SizeToIterate];
+				//printf("%d->%d\n",SizeToIterate,Db->CoreInfo.AllocatedStorage.AllocatedTotal[SizeToIterate]);
 			}
 		}
+		break;
 	}
 
 	return Db;
@@ -137,20 +134,19 @@ UpdateStorage(DatabaseNodeset *Db,int *ToChange,int changeBy, int Maxed, int Siz
 		{
 			if(*ToChange > Maxed) {
 				int All;
-				for(int i = 0; i < SizeToIterate+1; i++) {
-					if(SizeToIterate-1==i)
-						break;
+				for(;SizeToIterate;) {
 					
-					All = Db->CoreInfo.NodeStorage.MaxFileSize[i] + Db->CoreInfo.NodeStorage.MaxStringSize[i] + Db->CoreInfo.NodeStorage.MaxIntegerSize[i];
+					All = Db->CoreInfo.NodeStorage.MaxFileSize[SizeToIterate] + Db->CoreInfo.NodeStorage.MaxStringSize[SizeToIterate] + Db->CoreInfo.NodeStorage.MaxIntegerSize[SizeToIterate];
 					if(All > Db->CoreInfo.NodeStorage.MaxStorageAllowed) {
 						ErrStatus = (_CGE == 0) ? StorageAboveMax : Failure;
 						RETURNERRINFO("\033[1;33m", ErrStatus);
 
-						Db->CoreInfo.NodeStorage.MaxFileSize[i] = 40000000/3;
-						Db->CoreInfo.NodeStorage.MaxStringSize[i] = 40000000/3;
-						Db->CoreInfo.NodeStorage.MaxIntegerSize[i]=40000000/3;
+						Db->CoreInfo.NodeStorage.MaxFileSize[SizeToIterate] = 40000000/3;
+						Db->CoreInfo.NodeStorage.MaxStringSize[SizeToIterate] = 40000000/3;
+						Db->CoreInfo.NodeStorage.MaxIntegerSize[SizeToIterate]=40000000/3;
 
 						system("clear"); // We don't want to keep all that information printed
+						break;
 					}
 				}
 				
@@ -184,6 +180,7 @@ SetupNodeStorage(
 	DatabaseNodeset *DbNode,
 	NodeSizes *Sizes,
 	char DbNames[1000][100],
+	char *RecentNodeName,
 	int SizeToIterate
 ) {
 
@@ -191,51 +188,54 @@ SetupNodeStorage(
 	char Info[2000][150];
 
 	// Storage is factored into the Sizes struct in types.h, just not set to the Datbase Node
-	for(int i = 0; i < SizeToIterate+1; i++) {
-		if(SizeToIterate-1==i)
+	if(!(strcmp(RecentNodeName,"DefaultNodeSetup")==0)) {
+		for(;SizeToIterate;) {
+			DbNode->CoreInfo.NodeStorage.MaxFileSize[SizeToIterate] = Sizes->MaxFileSize;
+			DbNode->CoreInfo.NodeStorage.MaxStringSize[SizeToIterate] = Sizes->MaxStringSize;
+			DbNode->CoreInfo.NodeStorage.MaxIntegerSize[SizeToIterate] = Sizes->MaxIntegerSize;
 			break;
-
-		DbNode->CoreInfo.NodeStorage.MaxFileSize[i] = Sizes->MaxFileSize;
-		DbNode->CoreInfo.NodeStorage.MaxStringSize[i] = Sizes->MaxStringSize;
-		DbNode->CoreInfo.NodeStorage.MaxIntegerSize[i] = Sizes->MaxIntegerSize;
-	}
-	DbNode->CoreInfo.NodeStorage.MaxStorageUpgrade=50000;
-	for(int i = 0; i < SizeToIterate+1; i++) {
-		if(SizeToIterate-1==i)
-			break;
-
-		/* 
-		*	DbNode->CoreInfo.NodeStorage.MaxStorageTotal:
-		*	This will be the total ammount of storage of all the Storages combined
-		*/
-		DbNode->CoreInfo.NodeStorage.MaxStorageTotal[i]=Sizes->MaxStorageTotal;
-
-		// This needs to be done in SetupNodeStorage, sets all of them to zero since no storage is being used as 
-		// of thus far
-		DbNode->CoreInfo.StorageUsed.TotalFileStorageUsed[i]=0;
-		DbNode->CoreInfo.StorageUsed.TotalStringStorageUsed[i]=0;
-		DbNode->CoreInfo.StorageUsed.TotalIntegerStorageUsed[i]=0;
-	}
-
-	// Signing of the value of 40000000 stored in sizes to CoreInfo.NodeStorage.MaxStorageAllowed
-	DbNode->CoreInfo.NodeStorage.MaxStorageAllowed=Sizes->MaxStorageAllowed;
-
-	// Sizes aren't needed anymore
-	free(Sizes);
-
-	// Sets ammount of storage the Node can hold for each
-	for(int i = 0; i < SizeToIterate+1; i++) {
-		if(!(strcmp(DbNames[i],"DefaultNodeSetup")==0)) {
-			sprintf(Update[i],"%s:\n\tFile Storage: %d\n\tString Storage: %d\n\tInteger Storage: %d\n", DbNames[i],DbNode->CoreInfo.NodeStorage.MaxFileSize[i],DbNode->CoreInfo.NodeStorage.MaxStringSize[i],DbNode->CoreInfo.NodeStorage.MaxIntegerSize[i]);
 		}
+		DbNode->CoreInfo.NodeStorage.MaxStorageUpgrade=50000;
+		for(;SizeToIterate;) {
+
+			/* 
+			*	DbNode->CoreInfo.NodeStorage.MaxStorageTotal:
+			*	This will be the total ammount of storage of all the Storages combined
+			*/
+			DbNode->CoreInfo.NodeStorage.MaxStorageTotal[SizeToIterate]=Sizes->MaxStorageTotal;
+
+			// This needs to be done in SetupNodeStorage, sets all of them to zero since no storage is being used as 
+			// of thus far
+			DbNode->CoreInfo.StorageUsed.TotalFileStorageUsed[SizeToIterate]=0;
+			DbNode->CoreInfo.StorageUsed.TotalStringStorageUsed[SizeToIterate]=0;
+			DbNode->CoreInfo.StorageUsed.TotalIntegerStorageUsed[SizeToIterate]=0;
+
+			break;
+		}
+
+		// Signing of the value of 40000000 stored in sizes to CoreInfo.NodeStorage.MaxStorageAllowed
+		DbNode->CoreInfo.NodeStorage.MaxStorageAllowed=Sizes->MaxStorageAllowed;
+
+		// Sizes aren't needed anymore
+		free(Sizes);
+
+		// Sets ammount of storage the Node can hold for each
+		for(;SizeToIterate;) {
+			if(!(strcmp(RecentNodeName,"DefaultNodeSetup")==0)) {
+				sprintf(Update[SizeToIterate],"%s:\n\tFile Storage: %d\n\tString Storage: %d\n\tInteger Storage: %d\n", DbNames[SizeToIterate],DbNode->CoreInfo.NodeStorage.MaxFileSize[SizeToIterate],DbNode->CoreInfo.NodeStorage.MaxStringSize[SizeToIterate],DbNode->CoreInfo.NodeStorage.MaxIntegerSize[SizeToIterate]);
+				break;
+			}
+		}
+		
+		FILE * WriteData;
+		
+		WriteData = fopen("STORAGEINFO","w");
+		for(int i = 0; i < SizeToIterate+1; i++) {
+			fputs(Update[i],WriteData);
+		}
+		
+		fclose(WriteData);
 	}
-	
-	FILE * WriteData;
-	WriteData = fopen("STORAGEINFO","w");
-	for(int i = 0; i < SizeToIterate+1; i++) {
-		fputs(Update[i],WriteData);
-	}
-	fclose(WriteData);
 
 	return 0;
 }
