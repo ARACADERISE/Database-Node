@@ -22,5 +22,6 @@ SetupNodeStorage(
 	DatabaseNodeset *DbNode,
 	NodeSizes *Sizes,
 	char DbNames[1000][100],
+	char *RecentNodeName,
 	int SizeToIterate
 );
