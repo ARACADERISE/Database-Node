@@ -35,6 +35,14 @@ AddedFiles = []
 files = []
 SaveFiles = []
 
+# Default node storage Storage
+StorageFiles = []
+storageData = []
+storageAmmounts = [10000,20000, 20000]
+titles = ['File Storage','String Storage','Integer Storage']
+UpdateStorageFile = ''
+DATA_ = {}
+
 for i in os.listdir(os.path.abspath('.')):
 	# This will parse files made for setting up the Database Nodes
 	if 'Node Information #' in i:
@@ -43,6 +51,47 @@ for i in os.listdir(os.path.abspath('.')):
 	# This will parse files made for setting up the Era
 	if 'Era Setup #' in i:
 		listed__.append(i)
+	
+	if 'STORAGE-' in i:
+		StorageFiles.append(i)
+	
+	if 'UPDATESTORAGE' in i:
+		UpdateStorageFile = i
+
+
+# This is useless but oh well
+if len(StorageFiles) != 0:
+	for i in range(len(StorageFiles)):
+		openStorageFile = open(StorageFiles[i],'r').read()
+		storageData.append(openStorageFile)
+
+	for i in range(len(storageData)):
+		storageData[i] = storageData[i].replace('\n','')
+	copy = storageData
+
+	for i in range(len(storageData)):
+		for b in titles:
+			storageData[i] = storageData[i].replace(b,'')
+		for x in storageAmmounts:
+			storageData[i] = storageData[i].replace(': '+str(x),'')
+			storageData[i] = storageData[i].replace('\t','')
+			#break
+
+	for i in range(len(storageData)):
+		DATA_.update({storageData[i]:['FILE STORAGE -> %d' % storageAmmounts[0],'STRING STORAGE -> %d' % storageAmmounts[1], 'INTEGER STORAGE -> %d' % storageAmmounts[1]]})
+	
+	if len(UpdateStorageFile) != 0:
+		info = open(UpdateStorageFile,'r').read()
+		
+		index = None
+		for d in storageAmmounts:
+			if str(d) in info:
+				numberFound = d
+				info = info.replace(str(d),'')
+				info = info.replace('to','')
+				index = storageAmmounts.index(d)
+		
+		#for x in DATA_[]
 
 if len(listed__) != 0:
 	for i in range(len(listed__)):
@@ -136,7 +185,7 @@ if len(listed_) != 0:
 			Action[i] = {'Default Node Added:':Action[i]}
 		
 		AllAddedFiles.append(listed_[i].replace(' ',''))
-		data_ = {'Actions':Action,'NodeNames':node_names,'NodeIds':IdNumber,'DataFiles':AllAddedFiles}
+		data_ = {'Actions':Action,'NodeNames':node_names,'StorageData':DATA_,'NodeIds':IdNumber,'DataFiles':AllAddedFiles}
 
 		d = d+1
 	
