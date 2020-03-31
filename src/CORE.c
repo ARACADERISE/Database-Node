@@ -246,7 +246,8 @@ void SetupDatabaseNode(
 			Add_Info->AddId = InitUpd+1;
 			char AddDetails[150];
 			sprintf(AddDetails,"Added Database Node %s",DbNames[InitUpd]);
-			strcpy(*Add_Info->NameOfNode,AddDetails);
+			strcpy(Add_Info->Action[InitUpd],AddDetails);
+			strcpy(Add_Info->NameOfNode[InitUpd], DatabaseNode);
 
 			InitUpd+=1;
 			InitId+=1;
