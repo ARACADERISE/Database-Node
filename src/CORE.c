@@ -206,12 +206,11 @@ void SetupDatabaseNode(
 			strcpy(DbNames[InitUpd],DatabaseNode);
 
 			if(!(strcmp(DatabaseNode,"DefaultNodeSetup") == 0)) {
-				int Times = 1;
+				static int Times = 1;
 				for(int i = 0; i < InitUpd; i++) {
 					if(strcmp(DbNames[i],DatabaseNode) == 0) {
 						++Times;
 					}
-					break;
 				}
 				if(Times > 1) {
 					ErrStatus = (_CGE == 0) ? DatabaseNodeAlreadyCreated : Failure;
