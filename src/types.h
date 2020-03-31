@@ -12,8 +12,8 @@
 // Keeps track of Database Nodes added
 typedef struct {
 	int AddId;
-	char Action[1000][100];
-	char NameOfNode[1000][100];
+	char Action;
+	char NameOfNode;
 } AddInfo;
 
 // This will store sizes the Database Nodes have
