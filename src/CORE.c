@@ -246,8 +246,8 @@ void SetupDatabaseNode(
 			Add_Info->AddId = InitUpd+1;
 			char AddDetails[150];
 			sprintf(AddDetails,"Added Database Node %s",DbNames[InitUpd]);
-			strcpy(Add_Info->Action[InitUpd],AddDetails);
-			strcpy(Add_Info->NameOfNode[InitUpd], DatabaseNode);
+			strcpy(&Add_Info->Action,AddDetails);
+			strcpy(&Add_Info->NameOfNode, DatabaseNode);
 
 			InitUpd+=1;
 			InitId+=1;
@@ -267,7 +267,7 @@ void SetupDatabaseNode(
 	}
 
 	sprintf(FileName,"Node Information #%d",InitUpd);
-	StoreInFile(Add_Info->AddId,*Add_Info->NameOfNode,FileName,Add_Info);
+	StoreInFile(Add_Info->AddId[InitUpd],*Add_Info->NameOfNode,FileName,Add_Info);
 
 	// Going through all the appended Database Node names to see if DefaultNodeSetup is in it
 	// Other errors will be raised before this, such as "Assigning Database Node to Era type NUN"
