@@ -96,9 +96,25 @@ AllocateData(DatabaseNodeset *Db, int SizeToIterate, const char *NodeName) {
 	return Db;
 }
 
+// Simple function that writes info about updated storage
+static inline int
+UpdateStorageFile(char *FileName, const int From, const int To) {
+	FILE *UpdStgFile;
+
+	char Info[100];
+	sprintf(Info,"%d to %d", From, To);
+
+	UpdStgFile = fopen(FileName,"w");
+	fputs(Info,UpdStgFile);
+	fclose(UpdStgFile);
+	
+	return 0;
+}
+
 DatabaseNodeset *
 UpdateStorage(DatabaseNodeset *Db,int *ToChange,int changeBy, int Maxed, int SizeToIterate){
 	int AmmountLeft;
+	int from = *ToChange;
 
 	/*
 	 * Maxed: Set the Database Nodes storage to a maximum, so if the new storage amount is anywhere near Maxed
@@ -146,8 +162,8 @@ UpdateStorage(DatabaseNodeset *Db,int *ToChange,int changeBy, int Maxed, int Siz
 						Db->CoreInfo.NodeStorage.MaxIntegerSize[SizeToIterate]=40000000/3;
 
 						system("clear"); // We don't want to keep all that information printed
-						break;
 					}
+					break;
 				}
 				
 				int Sub = Maxed-*ToChange;
@@ -170,6 +186,11 @@ UpdateStorage(DatabaseNodeset *Db,int *ToChange,int changeBy, int Maxed, int Siz
 		RETURNERRINFO("\033[0;31m", ErrStatus);
 		exit(ErrStatus);
 	}
+
+	char Filename[100];
+	sprintf(Filename, "UPDATESTORAGE-%d",SizeToIterate);
+	
+	UpdateStorageFile(Filename,from, *ToChange);
 
 	return 0;
 }
