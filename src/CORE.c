@@ -29,7 +29,7 @@ static char * DefDbNodeNames[] = {
 // To DefDbNodeNames, it appends all user created names
 // To the begginning. So instead, we create a list of strings
 // that can hold 1000 Database Node names with a length of 100
-static char DbNames[1000][100];
+char DbNames[1000][100];
 
 // From types.h. Declared in types.h, given functionality
 // in CORE.c.
@@ -300,10 +300,11 @@ void SetupDatabaseNode(
 		// Finishing up the Default Database Node
 		SetupDbNodeStorage(FileSize,StringSize,IntegerSize, Sizes);
 
-		// Sets up the storage
-		if(InitUpd > 1) {
-			InitUpd--;
-		}
+		//Sets up the storage
+		  if(InitUpd > 1) {
+		   //InitUpd--;
+		  }
+		 
 
 		// Allocating storage if true
 		if(!(strcmp(DatabaseNode,"DefaultNodeSetup") == 0) &&AllocateData_) {
@@ -312,6 +313,10 @@ void SetupDatabaseNode(
 			AllocateData(NodeSetup,InitUpd,DatabaseNode);
 		}
 
-		SetupNodeStorage(NodeSetup, Sizes, DbNames, DatabaseNode,InitUpd++);
+		SetupNodeStorage(NodeSetup, Sizes, DbNames, DatabaseNode,InitUpd-1);
+
+		if(NodeSetup->CoreInfo.NodeStorage.MaxIntegerSize[1]!=0)
+			UpdateStorage(NodeSetup, &NodeSetup->CoreInfo.NodeStorage.MaxIntegerSize[1],20000,40000,InitUpd);
+		//UpdateStorage(NodeSetup, &NodeSetup->CoreInfo.NodeStorage.MaxFileSize[0],10000,10000,InitUpd);
 	}
 }
