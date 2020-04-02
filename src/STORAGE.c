@@ -246,11 +246,7 @@ SetupNodeStorage(
 }
 
 // Prints storage ammounts
-void CheckStorage(DatabaseNodeset *Db, int SizeToIterate, char *NodeName, bool WriteToFile) {
-
-	// Function ideals for writing into a file if WriteToFile is true
-	char AllocateStorageInfo[1500];
-	char StorageInfo[1500];
+void CheckStorage(DatabaseNodeset *Db, int SizeToIterate, char *NodeName) {
 
 	if(AllocatedData) {
 		printf("====ALLOCATED_STORAGE->%s====\n",NodeName);
