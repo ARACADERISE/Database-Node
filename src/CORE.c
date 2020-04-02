@@ -245,8 +245,8 @@ void SetupDatabaseNode(
 			 * }
 			 */
 
-			InitUpd+=1;
-			InitId+=1;
+			InitUpd++;
+			InitId++;
 		}
 	} else {
 		fprintf(stderr,"\033[0;31mYou can only assign 4 default Database Nodes\n");
