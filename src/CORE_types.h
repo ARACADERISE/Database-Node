@@ -12,6 +12,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+// Update types
+#define INTEGER_STORAGE "INTEGER STORAGE"
+#define FILE_STORAGE "FILE STORAGE"
+#define STRING_STORAGE "STRING STORAGE"
+
 //extern int _CGE;
 
 // Default Errors
