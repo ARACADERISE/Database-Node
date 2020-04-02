@@ -267,7 +267,7 @@ void SetupDatabaseNode(
 	}
 
 	sprintf(FileName,"Node Information #%d",InitUpd);
-	StoreInFile(Add_Info->AddId[InitUpd],*Add_Info->NameOfNode,FileName,Add_Info);
+		StoreInFile(Add_Info->AddId,&Add_Info->NameOfNode,FileName,Add_Info);
 
 	// Going through all the appended Database Node names to see if DefaultNodeSetup is in it
 	// Other errors will be raised before this, such as "Assigning Database Node to Era type NUN"
@@ -304,14 +304,23 @@ void SetupDatabaseNode(
 		  if(InitUpd > 1) {
 		   //InitUpd--;
 		  }
+		
+		for(;InitUpd;) {
+			NodeSetup->CoreInfo.StorageUsed.Total[InitUpd]=100;
+			NodeSetup->CoreInfo.StorageUsed.TotalStringStorageUsed[InitUpd]=100;
+			NodeSetup->CoreInfo.StorageUsed.TotalFileStorageUsed[InitUpd]=100;
+			NodeSetup->CoreInfo.StorageUsed.TotalIntegerStorageUsed[InitUpd]=100;
+			break;
+		}
 		 
 
 		// Allocating storage if true
 		if(!(strcmp(DatabaseNode,"DefaultNodeSetup") == 0) &&AllocateData_) {
 			NodeSetup->CoreInfo.Allocatedata=true;
 			AllocatedData = true;
-			AllocateData(NodeSetup,InitUpd,DatabaseNode);
+			AllocateData(NodeSetup,InitUpd/*DatabaseNode*/);
 		}
+		printf("%d",NodeSetup->CoreInfo.AllocatedStorage.AllocatedMaxFileSize[InitUpd]);
 
 		SetupNodeStorage(NodeSetup, Sizes, DbNames, DatabaseNode,InitUpd-1);
 
