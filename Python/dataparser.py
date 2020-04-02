@@ -42,6 +42,7 @@ storageAmmounts = [10000,20000, 20000]
 titles = ['File Storage','String Storage','Integer Storage']
 UpdateStorageFile = ''
 DATA_ = {}
+UpdateStorageFile = []
 
 for i in os.listdir(os.path.abspath('.')):
 	# This will parse files made for setting up the Database Nodes
@@ -52,12 +53,11 @@ for i in os.listdir(os.path.abspath('.')):
 	if 'Era Setup #' in i:
 		listed__.append(i)
 	
-	if 'STORAGE-' in i:
+	if not 'UPDATE' in i and 'STORAGE' in i:
 		StorageFiles.append(i)
 	
 	if 'UPDATESTORAGE' in i:
-		UpdateStorageFile = i
-
+		UpdateStorageFile.append(i)
 
 # This is useless but oh well
 if len(StorageFiles) != 0:
@@ -67,7 +67,7 @@ if len(StorageFiles) != 0:
 
 	for i in range(len(storageData)):
 		storageData[i] = storageData[i].replace('\n','')
-	copy = storageData
+	#copy = storageData
 
 	for i in range(len(storageData)):
 		for b in titles:
@@ -76,22 +76,51 @@ if len(StorageFiles) != 0:
 			storageData[i] = storageData[i].replace(': '+str(x),'')
 			storageData[i] = storageData[i].replace('\t','')
 			#break
-
-	for i in range(len(storageData)):
-		DATA_.update({storageData[i]:['FILE STORAGE -> %d' % storageAmmounts[0],'STRING STORAGE -> %d' % storageAmmounts[1], 'INTEGER STORAGE -> %d' % storageAmmounts[1]]})
 	
 	if len(UpdateStorageFile) != 0:
-		info = open(UpdateStorageFile,'r').read()
+		info = []
+		foundSize = []
+		lookFor = ['INTEGER STORAGE','FILE STORAGE','STRING STORAGE']
+		appendFound = []
+		for i in UpdateStorageFile:
+			info.append(open(i,'r').read())
 		
-		index = None
-		for d in storageAmmounts:
-			if str(d) in info:
-				numberFound = d
-				info = info.replace(str(d),'')
-				info = info.replace('to','')
-				index = storageAmmounts.index(d)
+		for i in range(len(UpdateStorageFile)):
+			UpdateStorageFile[i] = UpdateStorageFile[i].replace('UPDATESTORAGE-','')
 		
-		#for x in DATA_[]
+		for x in info:
+			for d in storageAmmounts:
+				if str(d) in x:
+					foundSize.append(str(d))
+					break
+		for i in range(len(info)):
+			info[i] = info[i].replace(foundSize[i],'')
+			info[i] = info[i].replace(' to ','')
+			for x in lookFor:
+				if x in info[i]:
+					info[i] = info[i].replace(x,'')
+					appendFound.append(x)
+		
+		for i in storageData:
+			i = i.replace(':','')
+			DATA_.update({i:['FILE STORAGE -> %d' % storageAmmounts[0], 'STRING STORAGE -> %d' % storageAmmounts[1], 'INTEGER STORAGE -> %d' % storageAmmounts[2]]})
+
+		for i in UpdateStorageFile:
+			if i in DATA_:
+				for x in range(len(DATA_[i])):
+					for d_ in appendFound:
+						if d_ in DATA_[i][x]:
+							DATA_[i][x] = DATA_[i][x].replace(foundSize[0],info[0])
+		print(DATA_)
+		
+		#index = None
+		#for d in storageAmmounts:
+		#	if str(d) in info:
+		#		numberFound = d
+		#		info = info.replace(str(d),'')
+		#		info = info.replace('to','')
+		#		index = storageAmmounts.index(d)
+		
 
 if len(listed__) != 0:
 	for i in range(len(listed__)):
@@ -172,7 +201,7 @@ if len(listed_) != 0:
 			if n in node_names[i]:
 				ind = node_names[i].find(n)
 				node_names[i] = node_names[i].replace(node_names[i][ind],'')
-				IdNumber[i]+=n
+				IdNumber[i]+=int(n)
 				if 12 in IdNumber:
 					IIndex = IdNumber.index(10)
 					IdNumber[IIndex+1]=11
