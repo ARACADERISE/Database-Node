@@ -152,8 +152,8 @@ void SetupDatabaseNode(
 		/* Going through DbNames to see if DefaultNodeSetup is in it more than once.
 		*/
 		int timesFound = 1;
-		for(;InitUpd;) {
-			if(strcmp(DbNames[InitUpd],"DefaultNodeSetup") == 0)
+		for(int i = 0; i < InitUpd; i++) {
+			if(strcmp(DbNames[i],"DefaultNodeSetup") == 0)
 				timesFound++;
 			break;
 		}
@@ -250,7 +250,8 @@ void SetupDatabaseNode(
 			strcpy(&Add_Info->NameOfNode, DatabaseNode);
 
 			InitUpd+=1;
-			InitId+=1;
+			if(!(strcmp(DatabaseNode,"DefaultNodeSetup")==0))
+				InitId+=1;
 		}
 	} else {
 		fprintf(stderr,"You can only assign 4 default Database Nodes\n");
@@ -260,11 +261,8 @@ void SetupDatabaseNode(
 	DatabaseNodeName = DatabaseNode;
 	_CGE = (CoreGenereatedErrs) ? 0:1;
 
-	// Setting the Node Id
-	for(;InitId;) {
-		NodeSetup->NodeId[InitId] = InitId;
-		break;
-	}
+	// Setting the Node Id, DefaultNodeSetup does not get one
+	NodeSetup->NodeId[InitId] = InitId;
 
 	sprintf(FileName,"Node Information #%d",InitUpd);
 		StoreInFile(Add_Info->AddId,&Add_Info->NameOfNode,FileName,Add_Info);
@@ -301,17 +299,14 @@ void SetupDatabaseNode(
 		SetupDbNodeStorage(FileSize,StringSize,IntegerSize, Sizes);
 
 		//Sets up the storage
-		  if(InitUpd > 1) {
-		   //InitUpd--;
-		  }
-		
-		for(;InitUpd;) {
-			NodeSetup->CoreInfo.StorageUsed.Total[InitUpd]=100;
-			NodeSetup->CoreInfo.StorageUsed.TotalStringStorageUsed[InitUpd]=100;
-			NodeSetup->CoreInfo.StorageUsed.TotalFileStorageUsed[InitUpd]=100;
-			NodeSetup->CoreInfo.StorageUsed.TotalIntegerStorageUsed[InitUpd]=100;
-			break;
+		if(InitUpd > 1) {
+		  //InitUpd--;
 		}
+
+		NodeSetup->CoreInfo.StorageUsed.Total[InitUpd]=100;
+		NodeSetup->CoreInfo.StorageUsed.TotalStringStorageUsed[InitUpd]=100;
+		NodeSetup->CoreInfo.StorageUsed.TotalFileStorageUsed[InitUpd]=1000+InitUpd;
+		NodeSetup->CoreInfo.StorageUsed.TotalIntegerStorageUsed[InitUpd]=100;
 		 
 
 		// Allocating storage if true
@@ -319,13 +314,13 @@ void SetupDatabaseNode(
 			NodeSetup->CoreInfo.Allocatedata=true;
 			AllocatedData = true;
 			AllocateData(NodeSetup,InitUpd/*DatabaseNode*/);
-		}
-		printf("%d",NodeSetup->CoreInfo.AllocatedStorage.AllocatedMaxFileSize[InitUpd]);
+		} else {AllocatedData=false;/*Needs to be set to false else it will stay at true*/}
 
 		SetupNodeStorage(NodeSetup, Sizes, DbNames, DatabaseNode,InitUpd-1);
 
 		if(NodeSetup->CoreInfo.NodeStorage.MaxIntegerSize[1]!=0)
 			UpdateStorage(NodeSetup, &NodeSetup->CoreInfo.NodeStorage.MaxIntegerSize[1],20000,40000,InitUpd);
-		//UpdateStorage(NodeSetup, &NodeSetup->CoreInfo.NodeStorage.MaxFileSize[0],10000,10000,InitUpd);
+
+		CheckStorage(NodeSetup, InitUpd,DatabaseNode);
 	}
 }
