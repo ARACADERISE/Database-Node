@@ -66,31 +66,33 @@ AllocateData(DatabaseNodeset *Db, int SizeToIterate, const char *NodeName) {
 	static int Print_ = 0; // Zero by default meaning the error prints once
 	//static int UseIndex = 0;
 
-	for(;SizeToIterate;) {
-		if(
-			Db->CoreInfo.StorageUsed.Total[SizeToIterate]==0 ||
-			Db->CoreInfo.StorageUsed.TotalFileStorageUsed[SizeToIterate]==0 ||
-			Db->CoreInfo.StorageUsed.TotalStringStorageUsed[SizeToIterate]==0 ||
-			Db->CoreInfo.StorageUsed.TotalIntegerStorageUsed[SizeToIterate]==0
-			) {
-			ErrStatus = (_CGE == 0) ? AllocatingStorageWithSizeZero : Failure;
-			if(Print_ < 1) {
-				RETURNERRINFO("\033[1;36m", ErrStatus);
-			}
-			Print_=1;
-			//break;
-		} else {
-			if(Db->CoreInfo.AllocatedStorage.AllocatedTotal[SizeToIterate]==0) {
+	if(!(strcmp(NodeName,"DefaultNodeSetup")==0)) {
+		for(;SizeToIterate;) {
+			if(
+				Db->CoreInfo.StorageUsed.Total[SizeToIterate]==0 ||
+				Db->CoreInfo.StorageUsed.TotalFileStorageUsed[SizeToIterate]==0 ||
+				Db->CoreInfo.StorageUsed.TotalStringStorageUsed[SizeToIterate]==0 ||
+				Db->CoreInfo.StorageUsed.TotalIntegerStorageUsed[SizeToIterate]==0
+				) {
+				ErrStatus = (_CGE == 0) ? AllocatingStorageWithSizeZero : Failure;
+				if(Print_ < 1) {
+					RETURNERRINFO("\033[1;36m", ErrStatus);
+				}
+				Print_=1;
+				//break;
+			} else {
+				if(Db->CoreInfo.AllocatedStorage.AllocatedTotal[SizeToIterate]==0) {
 
-				//UseIndex = i+1;
-				memcpy(&Db->CoreInfo.AllocatedStorage.AllocatedMaxFileSize[SizeToIterate],& Db->CoreInfo.StorageUsed.TotalFileStorageUsed[SizeToIterate], sizeof(Db->CoreInfo.StorageUsed.TotalFileStorageUsed[SizeToIterate]));
-				memcpy(&Db->CoreInfo.AllocatedStorage.AllocatedMaxStringSize[SizeToIterate],&Db->CoreInfo.StorageUsed.TotalStringStorageUsed[SizeToIterate],sizeof(Db->CoreInfo.AllocatedStorage.AllocatedMaxStringSize[SizeToIterate]));
-				memcpy(&Db->CoreInfo.AllocatedStorage.AllocatedMaxIntegerSize[SizeToIterate],&Db->CoreInfo.StorageUsed.TotalIntegerStorageUsed[SizeToIterate],sizeof(Db->CoreInfo.AllocatedStorage.AllocatedMaxIntegerSize[SizeToIterate]));
-				memcpy(&Db->CoreInfo.AllocatedStorage.AllocatedTotal[SizeToIterate],&Db->CoreInfo.StorageUsed.Total[SizeToIterate],sizeof(Db->CoreInfo.AllocatedStorage.AllocatedTotal[SizeToIterate]));
-				//printf("%d->%d\n",SizeToIterate,Db->CoreInfo.AllocatedStorage.AllocatedTotal[SizeToIterate]);
+					//UseIndex = i+1;
+					memcpy(&Db->CoreInfo.AllocatedStorage.AllocatedMaxFileSize[SizeToIterate],& Db->CoreInfo.StorageUsed.TotalFileStorageUsed[SizeToIterate], sizeof(Db->CoreInfo.StorageUsed.TotalFileStorageUsed[SizeToIterate]));
+					memcpy(&Db->CoreInfo.AllocatedStorage.AllocatedMaxStringSize[SizeToIterate],&Db->CoreInfo.StorageUsed.TotalStringStorageUsed[SizeToIterate],sizeof(Db->CoreInfo.AllocatedStorage.AllocatedMaxStringSize[SizeToIterate]));
+					memcpy(&Db->CoreInfo.AllocatedStorage.AllocatedMaxIntegerSize[SizeToIterate],&Db->CoreInfo.StorageUsed.TotalIntegerStorageUsed[SizeToIterate],sizeof(Db->CoreInfo.AllocatedStorage.AllocatedMaxIntegerSize[SizeToIterate]));
+					memcpy(&Db->CoreInfo.AllocatedStorage.AllocatedTotal[SizeToIterate],&Db->CoreInfo.StorageUsed.Total[SizeToIterate],sizeof(Db->CoreInfo.AllocatedStorage.AllocatedTotal[SizeToIterate]));
+					//printf("%d->%d\n",SizeToIterate,Db->CoreInfo.AllocatedStorage.AllocatedTotal[SizeToIterate]);
+				}
 			}
+			break;
 		}
-		break;
 	}
 
 	return Db;
