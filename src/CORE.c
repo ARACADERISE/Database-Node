@@ -307,11 +307,6 @@ void SetupDatabaseNode(
 		if(InitUpd > 1) {
 		  //InitUpd--;
 		}
-
-		NodeSetup->CoreInfo.StorageUsed.Total[InitUpd]=100;
-		NodeSetup->CoreInfo.StorageUsed.TotalStringStorageUsed[InitUpd]=100;
-		NodeSetup->CoreInfo.StorageUsed.TotalFileStorageUsed[InitUpd]=1000+InitUpd;
-		NodeSetup->CoreInfo.StorageUsed.TotalIntegerStorageUsed[InitUpd]=100;
 		 
 
 		// Allocating storage if true
@@ -321,11 +316,11 @@ void SetupDatabaseNode(
 			AllocateData(NodeSetup,InitUpd/*DatabaseNode*/);
 		} else {AllocatedData=false;/*Needs to be set to false else it will stay at true*/}
 
-		SetupNodeStorage(NodeSetup, Sizes, DbNames, DatabaseNode,InitUpd-1);
-		NodeSetup->CoreInfo.NodeStorage.MaxStringSize[1]=10000;
-		if(NodeSetup->CoreInfo.NodeStorage.MaxStringSize[1]!=0)
-			UpdateStorage(NodeSetup, &NodeSetup->CoreInfo.NodeStorage.MaxStringSize[1],20000,40000,InitUpd,STRING_STORAGE);
+		SetupNodeStorage(NodeSetup, Sizes, DbNames, DatabaseNode,InitUpd);
 
-		CheckStorage(NodeSetup, InitUpd,DatabaseNode);
+		if(NodeSetup->CoreInfo.NodeStorage.MaxStringSize[2]!=0)
+			UpdateStorage(NodeSetup, &NodeSetup->CoreInfo.NodeStorage.MaxStringSize[2],20000,40000,InitUpd,STRING_STORAGE);
+
+		//CheckStorage(NodeSetup, InitUpd,DatabaseNode);
 	}
 }
