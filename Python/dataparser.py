@@ -84,6 +84,9 @@ if len(StorageFiles) != 0:
 		appendFound = []
 		for i in UpdateStorageFile:
 			info.append(open(i,'r').read())
+
+		for i in range(len(UpdateStorageFile)):
+			os.remove(UpdateStorageFile[i])
 		
 		for i in range(len(UpdateStorageFile)):
 			UpdateStorageFile[i] = UpdateStorageFile[i].replace('UPDATESTORAGE-','')
@@ -111,7 +114,13 @@ if len(StorageFiles) != 0:
 					for d_ in appendFound:
 						if d_ in DATA_[i][x]:
 							DATA_[i][x] = DATA_[i][x].replace(foundSize[0],info[0])
-		print(DATA_)
+
+		for i in range(len(UpdateStorageFile)):
+			name = UpdateStorageFile[i]
+			UpdateStorageFile[i] = UpdateStorageFile[i]+'UPDSTG'
+
+			with open(UpdateStorageFile[i],'w') as UpdStg:
+				UpdStg.write('NODE: %s\n\tFROM %d\n\tTO %d' % (name,int(foundSize[i]),int(info[i])))
 		
 		#index = None
 		#for d in storageAmmounts:
