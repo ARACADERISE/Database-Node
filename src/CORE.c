@@ -19,8 +19,8 @@ bool AllocatedData;
 // This is Default db names
 static char * DefDbNodeNames[] = {
 	// DEFAULT NAMES
-	"Default01", // Default db, user can assign era type
-	"Tyme7", // Default db, user can assign era type
+	"DefaultDbNode", // Default db, user can assign era type
+	"Tyme", // Default db, user can assign era type
 	"FileReader", // Defaut db, can only read files
 	"FileWriter" // Default db, can only write files
 };
@@ -318,8 +318,7 @@ void SetupDatabaseNode(
 		} else {AllocatedData=false;/*Needs to be set to false else it will stay at true*/}
 
 		SetupNodeStorage(NodeSetup, Sizes, DbNames, DatabaseNode,InitUpd-1);
-
-		NodeSetup->CoreInfo.NodeStorage.MaxStringSize[1]=NodeSetup->CoreInfo.NodeStorage.MaxStringSize[0];
+		NodeSetup->CoreInfo.NodeStorage.MaxStringSize[1]=10000;
 		if(NodeSetup->CoreInfo.NodeStorage.MaxStringSize[1]!=0)
 			UpdateStorage(NodeSetup, &NodeSetup->CoreInfo.NodeStorage.MaxStringSize[1],20000,40000,InitUpd,STRING_STORAGE);
 
