@@ -201,6 +201,9 @@ void SetupDatabaseNode(
 				DefDb++;
 			else
 				DefDb = -1;
+			
+			InitUpd++;
+			InitId++;
 		} else {
 			FILE *Created;
 			strcpy(DbNames[InitUpd],DatabaseNode);
@@ -253,7 +256,7 @@ void SetupDatabaseNode(
 	if(!(strcmp(DatabaseNode,"DefaultNodeSetup")==0)) {
 
 		// Add Info
-		Add_Info->AddId = InitUpd+1;
+		Add_Info->AddId = InitUpd;
 		char AddDetails[150];
 		sprintf(AddDetails,"Added Database Node %s",DbNames[InitUpd]);
 		strcpy(&Add_Info->Action,AddDetails);
@@ -264,6 +267,7 @@ void SetupDatabaseNode(
 
 		// Setting the Node Id, DefaultNodeSetup does not get one
 		NodeSetup->NodeId[InitId] = InitId;
+
 		sprintf(FileName,"Node Information #%d",InitUpd);
 		StoreInFile(Add_Info->AddId,&Add_Info->NameOfNode,FileName,Add_Info);
 
