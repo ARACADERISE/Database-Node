@@ -12,7 +12,7 @@ DatabaseNodeset *
 UpdateStorage(DatabaseNodeset *Db,int *ToChange,int changeBy, int Maxed, int SizeToIterate);
 
 DatabaseNodeset *
-AllocateData(DatabaseNodeset *Db, int SizeToIterate,const char *NodeName);
+AllocateData(DatabaseNodeset *Db, int SizeToIterate /*const char *NodeName*/);
 
 DatabaseNodeset *ResetStorage(DatabaseNodeset *Db, int SizeToIterate);
 
