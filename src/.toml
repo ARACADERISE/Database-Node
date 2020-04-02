@@ -30,5 +30,6 @@
 		"NodeData.json -> Python/dataparser.py",
 		"NodeInformation -> Generated -> CORE.c, Edited -> Python/dataparser.py",
 		"EraSetup -> Generated -> CORE.c, Edited -> Python/dataparser.py",
-		"STORAGE -> Generated -> STORAGE.c"
+		"STORAGE -> Generated -> STORAGE.c",
+		"UPDATESTORAGE -> Generated -> STORAGE.c, EDITED -> Python/dataparser.py"
 	]
