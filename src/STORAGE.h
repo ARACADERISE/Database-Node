@@ -1,6 +1,5 @@
 /* 
 	Source code of the Database Nodes storage.
-
 	Basically, the STORAGE.c file works with the Database Nodes storage, and handles it
 */
 
@@ -9,7 +8,7 @@
 
 // Updates the Database Nodes storage
 DatabaseNodeset *
-UpdateStorage(DatabaseNodeset *Db,int *ToChange,int changeBy, int Maxed, int SizeToIterate);
+UpdateStorage(DatabaseNodeset *Db,int *ToChange,int changeBy, int Maxed, int SizeToIterate, char *StorageType);
 
 DatabaseNodeset *
 AllocateData(DatabaseNodeset *Db, int SizeToIterate /*const char *NodeName*/);
