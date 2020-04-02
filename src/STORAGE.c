@@ -11,6 +11,7 @@
 
 extern int _CGE;
 extern bool AllocatedData;
+extern char *DatabaseNodeName;
 
 int ErrStatus;
 
@@ -94,7 +95,7 @@ AllocateData(DatabaseNodeset *Db, int SizeToIterate /*const char *NodeName*/) {
 
 // Simple function that writes info about updated storage
 static inline int
-UpdateStorageFile(char *FileName, const int From, const int To) {
+UpdateStorageFile(char *FileName, const int From, char *StorageType, const int To) {
 	FILE *UpdStgFile;
 
 	char Info[100];
@@ -102,13 +103,14 @@ UpdateStorageFile(char *FileName, const int From, const int To) {
 
 	UpdStgFile = fopen(FileName,"w");
 	fputs(Info,UpdStgFile);
+	fputs(StorageType,UpdStgFile);
 	fclose(UpdStgFile);
 	
 	return 0;
 }
 
 DatabaseNodeset *
-UpdateStorage(DatabaseNodeset *Db,int *ToChange,int changeBy, int Maxed, int SizeToIterate){
+UpdateStorage(DatabaseNodeset *Db,int *ToChange,int changeBy, int Maxed, int SizeToIterate, char *StorageType){
 	int AmmountLeft;
 	int from = *ToChange;
 
@@ -181,9 +183,8 @@ UpdateStorage(DatabaseNodeset *Db,int *ToChange,int changeBy, int Maxed, int Siz
 	}
 
 	char Filename[100];
-	sprintf(Filename, "UPDATESTORAGE-%d",SizeToIterate);
-	
-	UpdateStorageFile(Filename,from, *ToChange);
+	sprintf(Filename, "UPDATESTORAGE-%s",DatabaseNodeName);
+	UpdateStorageFile(Filename,from, StorageType,*ToChange);
 
 	return 0;
 }
@@ -198,7 +199,7 @@ SetupNodeStorage(
 	int SizeToIterate
 ) {
 
-	char Update[2000][150];
+	char Update[2000];
 	char Info[2000][150];
 
 	// Storage is factored into the Sizes struct in types.h, just not set to the Datbase Node
@@ -228,19 +229,17 @@ SetupNodeStorage(
 
 	// Sets ammount of storage the Node can hold for each
 	if(!(strcmp(RecentNodeName,"DefaultNodeSetup")==0)) {
-		sprintf(Update[SizeToIterate],"%s:\n\tFile Storage: %d\n\tString Storage: %d\n\tInteger Storage: %d\n", DbNames[SizeToIterate],DbNode->CoreInfo.NodeStorage.MaxFileSize[SizeToIterate],DbNode->CoreInfo.NodeStorage.MaxStringSize[SizeToIterate],DbNode->CoreInfo.NodeStorage.MaxIntegerSize[SizeToIterate]);
+		sprintf(Update,"%s:\n\tFile Storage: %d\n\tString Storage: %d\n\tInteger Storage: %d\n", RecentNodeName,DbNode->CoreInfo.NodeStorage.MaxFileSize[SizeToIterate],DbNode->CoreInfo.NodeStorage.MaxStringSize[SizeToIterate],DbNode->CoreInfo.NodeStorage.MaxIntegerSize[SizeToIterate]);
 	}
-		
-	FILE * WriteData;
-		
-	char FileName[1000][50];
-	if(!(strcmp(RecentNodeName,"DefaultNodeSetup")==0))
-		sprintf(FileName[SizeToIterate],"STORAGE-%s",RecentNodeName);
-		
-	WriteData = fopen(FileName[SizeToIterate],"w");
-	if(!(strcmp(RecentNodeName,"DefaultNodeSetup")==0))
-		fputs(Update[SizeToIterate],WriteData);
-	fclose(WriteData);
+
+	FILE *Write;
+
+	char FileName[1000];
+	sprintf(FileName,"STORAGE-%s",RecentNodeName);
+
+	Write = fopen(FileName,"w");
+	fputs(Update,Write);
+	fclose(Write);
 
 	return 0;
 }
