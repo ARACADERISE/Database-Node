@@ -148,7 +148,9 @@ if len(listed__) != 0:
 
 		era_data[i] = era_data[i].replace(era[i],'')
 		era_data[i] = era_data[i].replace('\n','')
-	
+		if 'ta' in era_data[i]:
+			era_data[i] = era_data[i].replace('ta','data')
+		
 	if len(era_data) > 1:
 		MoreThanOnce = False # False by defult
 		for i in range(len(era_data)):
@@ -157,13 +159,13 @@ if len(listed__) != 0:
 			if MoreThanOnce:
 				del(era_data[i+1])
 				del(era[i+1])
-				break
+			break
 	
-	data = {'Era Types':era,'Era Used For':era_data}
+	data___ = {'Era Types':era,'Era Used For':era_data}
 	
 	with open('EraData.json','w') as EraSetup:
 		EraSetup.write(json.dumps(
-			data,
+			data___,
 			indent=2,
 			sort_keys=False
 		))
@@ -208,6 +210,9 @@ if len(listed_) != 0:
 		node_names[i] = node_names[i].replace(IdNumber[i],'')
 		for i in range(len(IdNumber)):
 			IdNumber[i] = int(IdNumber[i])
+
+		ActionS = []
+
 		for n in nums:
 			if n in node_names[i]:
 				ind = node_names[i].find(n)
@@ -225,9 +230,12 @@ if len(listed_) != 0:
 			Action[i] = {'Default Node Added:':Action[i]}
 		
 		AllAddedFiles.append(listed_[i].replace(' ',''))
-		data_ = {'Actions':Action,'NodeNames':node_names,'StorageData':DATA_,'NodeIds':IdNumber,'DataFiles':AllAddedFiles}
-
 		d = d+1
+	for x in range(len(data___['Era Types'])):
+		ActionS.append(data___['Era Types'][x])
+	
+	data_ = {'Actions':ActionS,'NodeNames':node_names,'StorageData':DATA_,'NodeIds':IdNumber,'DataFiles':AllAddedFiles}
+
 	
 	for i in range(len(node_names)):
 		DATA.append('[AddedDatabaseNode]\n\t\t!Node name!\t~\t%s\n\t\t!Node Id!\t~\t%s' % (node_names[i],IdNumber[i]))
