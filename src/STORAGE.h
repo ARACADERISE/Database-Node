@@ -25,3 +25,5 @@ SetupNodeStorage(
 	char *RecentNodeName,
 	int SizeToIterate
 );
+
+void CheckStorage(DatabaseNodeset *Db, int SizeToIterate, char *NodeName);
