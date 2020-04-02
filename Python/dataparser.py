@@ -114,6 +114,7 @@ if len(StorageFiles) != 0:
 					for d_ in appendFound:
 						if d_ in DATA_[i][x]:
 							DATA_[i][x] = DATA_[i][x].replace(foundSize[0],info[0])
+							break
 
 		for i in range(len(UpdateStorageFile)):
 			name = UpdateStorageFile[i]
