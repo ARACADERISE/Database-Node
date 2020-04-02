@@ -242,51 +242,52 @@ void SetupDatabaseNode(
 			 * }
 			 */
 
-			// Add Info
-			Add_Info->AddId = InitUpd+1;
-			char AddDetails[150];
-			sprintf(AddDetails,"Added Database Node %s",DbNames[InitUpd]);
-			strcpy(&Add_Info->Action,AddDetails);
-			strcpy(&Add_Info->NameOfNode, DatabaseNode);
-
 			InitUpd+=1;
-			if(!(strcmp(DatabaseNode,"DefaultNodeSetup")==0))
-				InitId+=1;
+			InitId+=1;
 		}
 	} else {
 		fprintf(stderr,"\033[0;31mYou can only assign 4 default Database Nodes\n");
 		exit(EXIT_FAILURE);
 	}
 
-	DatabaseNodeName = DatabaseNode;
-	_CGE = (CoreGenereatedErrs) ? 0:1;
+	if(!(strcmp(DatabaseNode,"DefaultNodeSetup")==0)) {
 
-	// Setting the Node Id, DefaultNodeSetup does not get one
-	NodeSetup->NodeId[InitId] = InitId;
+		// Add Info
+		Add_Info->AddId = InitUpd+1;
+		char AddDetails[150];
+		sprintf(AddDetails,"Added Database Node %s",DbNames[InitUpd]);
+		strcpy(&Add_Info->Action,AddDetails);
+		strcpy(&Add_Info->NameOfNode, DatabaseNode);
 
-	sprintf(FileName,"Node Information #%d",InitUpd);
+		DatabaseNodeName = DatabaseNode;
+		_CGE = (CoreGenereatedErrs) ? 0:1;
+
+		// Setting the Node Id, DefaultNodeSetup does not get one
+		NodeSetup->NodeId[InitId] = InitId;
+		sprintf(FileName,"Node Information #%d",InitUpd);
 		StoreInFile(Add_Info->AddId,&Add_Info->NameOfNode,FileName,Add_Info);
 
-	// Going through all the appended Database Node names to see if DefaultNodeSetup is in it
-	// Other errors will be raised before this, such as "Assigning Database Node to Era type NUN"
-	static int times=0;
-	for(int i = 0; i < InitUpd; i++) {
-		if(strcmp(DbNames[i],"DefaultNodeSetup")==0)
-			times++;
-		break;
-	}
-	if(times < 1) {
-		if(times != 1) {
-			ErrStatus = (_CGE == 0) ? DefaultNodeSetupNotFound : Failure;
-			RETURNERRINFO("\033[1;31m", ErrStatus);
-			FILE *Error;
+		// Going through all the appended Database Node names to see if DefaultNodeSetup is in it
+		// Other errors will be raised before this, such as "Assigning Database Node to Era type NUN"
+		static int times=0;
+		for(int i = 0; i < InitUpd; i++) {
+			if(strcmp(DbNames[i],"DefaultNodeSetup")==0)
+				times++;
+			break;
+		}
+		if(times < 1) {
+			if(times != 1) {
+				ErrStatus = (_CGE == 0) ? DefaultNodeSetupNotFound : Failure;
+				RETURNERRINFO("\033[1;31m", ErrStatus);
+				FILE *Error;
 
-			// Writing error to DefaultNodeSetup ERROR
-			Error = fopen("DefaultNodeSetup ERROR","w");
-			fputs("Error with setting up/finding Database Node: DatabaseNodeSetup",Error);
-			fclose(Error);
+				// Writing error to DefaultNodeSetup ERROR
+				Error = fopen("DefaultNodeSetup ERROR","w");
+				fputs("Error with setting up/finding Database Node: DatabaseNodeSetup",Error);
+				fclose(Error);
 
-			exit(ErrStatus);
+				exit(ErrStatus);
+			}
 		}
 	}
 
@@ -318,8 +319,9 @@ void SetupDatabaseNode(
 
 		SetupNodeStorage(NodeSetup, Sizes, DbNames, DatabaseNode,InitUpd-1);
 
-		if(NodeSetup->CoreInfo.NodeStorage.MaxIntegerSize[1]!=0)
-			UpdateStorage(NodeSetup, &NodeSetup->CoreInfo.NodeStorage.MaxIntegerSize[1],20000,40000,InitUpd);
+		NodeSetup->CoreInfo.NodeStorage.MaxStringSize[1]=NodeSetup->CoreInfo.NodeStorage.MaxStringSize[0];
+		if(NodeSetup->CoreInfo.NodeStorage.MaxStringSize[1]!=0)
+			UpdateStorage(NodeSetup, &NodeSetup->CoreInfo.NodeStorage.MaxStringSize[1],20000,40000,InitUpd,STRING_STORAGE);
 
 		CheckStorage(NodeSetup, InitUpd,DatabaseNode);
 	}
