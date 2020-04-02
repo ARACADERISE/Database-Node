@@ -6,8 +6,8 @@
 	DESCRIPTION_ = "Database-Node is a C project that creates Database Nodes, or Databases that do specific tasks"
 
 [RUN]
-	_ = "gcc -c main.c"
-	COMPILER = "./main"
+	_ = "clang-7 -pthread -lm -o main main.c src/CORE.c src/STORAGE.c src/SetupEra.c"
+	#COMPILER = "./main"
 
 [FILES]
 	MAIN_FILE = "./main.c"
