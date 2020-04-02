@@ -121,6 +121,8 @@ if len(StorageFiles) != 0:
 
 			with open(UpdateStorageFile[i],'w') as UpdStg:
 				UpdStg.write('NODE: %s\n\tFROM %d\n\tTO %d' % (name,int(foundSize[i]),int(info[i])))
+				UpdStg.flush()
+				UpdStg.close()
 		
 		#index = None
 		#for d in storageAmmounts:
