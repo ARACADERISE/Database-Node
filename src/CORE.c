@@ -64,9 +64,9 @@ StoreInFile(
 static int
 SetupDbNodeStorage(
 	//DefaultMainDbNode *DefDbMainMode, 
-	int MaxFileSize, // INIT: 10000+
-	int MaxStringSize, // INIT: 20000+
-	int MaxIntegerSize, // INIT: 20000+
+	size_t MaxFileSize, // INIT: 10000+
+	size_t MaxStringSize, // INIT: 20000+
+	size_t MaxIntegerSize, // INIT: 20000+
 	NodeSizes *Sizes
  ) {
 	
@@ -123,9 +123,9 @@ void SetupDatabaseNode(
 	bool NodeCanRead,
 	bool AllocateData_,
 	char *Era,
-	int FileSize,
-	int StringSize,
-	int IntegerSize
+	size_t FileSize,
+	size_t StringSize,
+	size_t IntegerSize
 ) {
 	static int InitId = 0;
 	static int DefDb = 0;
@@ -307,20 +307,31 @@ void SetupDatabaseNode(
 		if(InitUpd > 1) {
 		  //InitUpd--;
 		}
-		 
 
+		NodeSetup->CoreInfo.StorageUsed.Total[InitUpd]=InitId;
+		NodeSetup->CoreInfo.StorageUsed.TotalFileStorageUsed[InitUpd]=InitId;
+		NodeSetup->CoreInfo.StorageUsed.TotalStringStorageUsed[InitUpd]=InitId;
+		NodeSetup->CoreInfo.StorageUsed.TotalIntegerStorageUsed[InitUpd]=InitId;
+
+		
 		// Allocating storage if true
 		if(!(strcmp(DatabaseNode,"DefaultNodeSetup") == 0) &&AllocateData_) {
 			NodeSetup->CoreInfo.Allocatedata=true;
-			AllocatedData = true;
-			AllocateData(NodeSetup,InitUpd/*DatabaseNode*/);
+			if(AllocatedData==true) {
+				fprintf(stderr,"\033[0;43mCannot allocate storage from allocated storage.\n\tError on %s\t\033[0;32mReassigned\033[0;0m\n",DatabaseNode);
+				AllocatedData=false;
+			}
+			else {
+				AllocatedData = true;
+				AllocateData(NodeSetup,InitUpd/*DatabaseNode*/);
+			}
 		} else {AllocatedData=false;/*Needs to be set to false else it will stay at true*/}
 
 		SetupNodeStorage(NodeSetup, Sizes, DbNames, DatabaseNode,InitUpd);
 
-		if(NodeSetup->CoreInfo.NodeStorage.MaxStringSize[2]!=0)
+		if(NodeSetup->CoreInfo.NodeStorage.MaxStringSize[InitUpd]!=0)
 			UpdateStorage(NodeSetup, &NodeSetup->CoreInfo.NodeStorage.MaxStringSize[2],20000,40000,InitUpd,STRING_STORAGE);
 
-		//CheckStorage(NodeSetup, InitUpd,DatabaseNode);
+		CheckStorage(NodeSetup, InitUpd,DatabaseNode);
 	}
 }
