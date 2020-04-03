@@ -76,7 +76,7 @@ AllocateData(DatabaseNodeset *Db, int SizeToIterate /*const char *NodeName*/) {
 			if(Db->CoreInfo.AllocatedStorage.AllocatedTotal[SizeToIterate]==0) {
 
 				//UseIndex = i+1;
-				memcpy(&Db->CoreInfo.AllocatedStorage.AllocatedMaxFileSize[SizeToIterate],& Db->CoreInfo.StorageUsed.TotalFileStorageUsed[SizeToIterate], sizeof(Db->CoreInfo.StorageUsed.TotalFileStorageUsed[SizeToIterate]));
+				memcpy(&Db->CoreInfo.AllocatedStorage.AllocatedMaxFileSize[SizeToIterate], &Db->CoreInfo.StorageUsed.TotalFileStorageUsed[SizeToIterate], sizeof(Db->CoreInfo.StorageUsed.TotalFileStorageUsed[SizeToIterate]));
 				memcpy(&Db->CoreInfo.AllocatedStorage.AllocatedMaxStringSize[SizeToIterate],&Db->CoreInfo.StorageUsed.TotalStringStorageUsed[SizeToIterate],sizeof(Db->CoreInfo.AllocatedStorage.AllocatedMaxStringSize[SizeToIterate]));
 				memcpy(&Db->CoreInfo.AllocatedStorage.AllocatedMaxIntegerSize[SizeToIterate],&Db->CoreInfo.StorageUsed.TotalIntegerStorageUsed[SizeToIterate],sizeof(Db->CoreInfo.AllocatedStorage.AllocatedMaxIntegerSize[SizeToIterate]));
 				memcpy(&Db->CoreInfo.AllocatedStorage.AllocatedTotal[SizeToIterate],&Db->CoreInfo.StorageUsed.Total[SizeToIterate],sizeof(Db->CoreInfo.AllocatedStorage.AllocatedTotal[SizeToIterate]));
@@ -95,11 +95,11 @@ AllocateData(DatabaseNodeset *Db, int SizeToIterate /*const char *NodeName*/) {
 
 // Simple function that writes info about updated storage
 static inline int
-UpdateStorageFile(char *FileName, const int From, char *StorageType, const int To) {
+UpdateStorageFile(char *FileName, const size_t From, char *StorageType, const size_t To) {
 	FILE *UpdStgFile;
 
 	char Info[100];
-	sprintf(Info,"%d to %d", From, To);
+	sprintf(Info,"%ld to %ld", From, To);
 
 	UpdStgFile = fopen(FileName,"w");
 	fputs(Info,UpdStgFile);
@@ -110,7 +110,7 @@ UpdateStorageFile(char *FileName, const int From, char *StorageType, const int T
 }
 
 DatabaseNodeset *
-UpdateStorage(DatabaseNodeset *Db,int *ToChange,int changeBy, int Maxed, int SizeToIterate, char *StorageType){
+UpdateStorage(DatabaseNodeset *Db,size_t *ToChange,size_t changeBy, size_t Maxed, int SizeToIterate, char *StorageType){
 	int AmmountLeft;
 	int from = *ToChange;
 
@@ -229,7 +229,7 @@ SetupNodeStorage(
 
 	// Sets ammount of storage the Node can hold for each
 	if(!(strcmp(RecentNodeName,"DefaultNodeSetup")==0)) {
-		sprintf(Update,"%s:\n\tFile Storage: %d\n\tString Storage: %d\n\tInteger Storage: %d\n", RecentNodeName,DbNode->CoreInfo.NodeStorage.MaxFileSize[SizeToIterate],DbNode->CoreInfo.NodeStorage.MaxStringSize[SizeToIterate],DbNode->CoreInfo.NodeStorage.MaxIntegerSize[SizeToIterate]);
+		sprintf(Update,"%s:\n\tFile Storage: %ld\n\tString Storage: %ld\n\tInteger Storage: %ld\n", RecentNodeName,DbNode->CoreInfo.NodeStorage.MaxFileSize[SizeToIterate],DbNode->CoreInfo.NodeStorage.MaxStringSize[SizeToIterate],DbNode->CoreInfo.NodeStorage.MaxIntegerSize[SizeToIterate]);
 	}
 
 	FILE *Write;
@@ -249,11 +249,11 @@ void CheckStorage(DatabaseNodeset *Db, int SizeToIterate, char *NodeName) {
 
 	if(AllocatedData) {
 		printf("====ALLOCATED_STORAGE->%s====\n",NodeName);
-		printf("\tTOTAL-%d\n\tFILE-%d\n\tSTRING-%d\n\tINTEGER-%d\n",Db->CoreInfo.AllocatedStorage.AllocatedTotal[SizeToIterate],Db->CoreInfo.AllocatedStorage.AllocatedMaxFileSize[SizeToIterate],Db->CoreInfo.AllocatedStorage.AllocatedMaxStringSize[SizeToIterate],Db->CoreInfo.AllocatedStorage.AllocatedMaxIntegerSize[SizeToIterate]);
+		printf("\tTOTAL-%ld\n\tFILE-%ld\n\tSTRING-%ld\n\tINTEGER-%ld\n",Db->CoreInfo.AllocatedStorage.AllocatedTotal[SizeToIterate],Db->CoreInfo.AllocatedStorage.AllocatedMaxFileSize[SizeToIterate],Db->CoreInfo.AllocatedStorage.AllocatedMaxStringSize[SizeToIterate],Db->CoreInfo.AllocatedStorage.AllocatedMaxIntegerSize[SizeToIterate]);
 		printf("====END====\n\n");
 	} else {
 		printf("====STORAGE->%s====\n",NodeName);
-		printf("\tTOTAL-%d\n\tFILE-%d\n\tSTRING-%d\n\tINTEGER-%d\n",Db->CoreInfo.StorageUsed.Total[SizeToIterate],Db->CoreInfo.StorageUsed.TotalFileStorageUsed[SizeToIterate],Db->CoreInfo.StorageUsed.TotalStringStorageUsed[SizeToIterate],Db->CoreInfo.StorageUsed.TotalIntegerStorageUsed[SizeToIterate]);
+		printf("\tTOTAL-%ld\n\tFILE-%ld\n\tSTRING-%ld\n\tINTEGER-%ld\n",Db->CoreInfo.StorageUsed.Total[SizeToIterate],Db->CoreInfo.StorageUsed.TotalFileStorageUsed[SizeToIterate],Db->CoreInfo.StorageUsed.TotalStringStorageUsed[SizeToIterate],Db->CoreInfo.StorageUsed.TotalIntegerStorageUsed[SizeToIterate]);
 		printf("====END====\n\n");
 	}
 }
