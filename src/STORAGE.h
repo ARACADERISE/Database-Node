@@ -8,7 +8,7 @@
 
 // Updates the Database Nodes storage
 DatabaseNodeset *
-UpdateStorage(DatabaseNodeset *Db,int *ToChange,int changeBy, int Maxed, int SizeToIterate, char *StorageType);
+UpdateStorage(DatabaseNodeset *Db,size_t *ToChange,size_t changeBy, size_t Maxed, int SizeToIterate, char *StorageType);
 
 DatabaseNodeset *
 AllocateData(DatabaseNodeset *Db, int SizeToIterate /*const char *NodeName*/);
