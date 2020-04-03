@@ -18,11 +18,11 @@ typedef struct {
 
 // This will store sizes the Database Nodes have
 typedef struct {
-	int MaxFileSize;
-	int MaxStringSize;
-	int MaxIntegerSize;
-	int MaxStorageTotal;
-	int MaxStorageAllowed;
+	size_t MaxFileSize;
+	size_t MaxStringSize;
+	size_t MaxIntegerSize;
+	size_t MaxStorageTotal;
+	size_t MaxStorageAllowed;
 } NodeSizes;
 
 // This will be for the Main Database Node, or for the Database Node that sets up the whole application
@@ -47,7 +47,7 @@ typedef struct {
 
 // Sets up primal storage for the Nodes
 static int
-SetupDbNodeStorage(/*DefaultMainDbNode *DefDbMainNode,*/ const int MaxFileSize, const int MaxStringSize, const int MaxIntegerSize, NodeSizes *Sizes);
+SetupDbNodeStorage(/*DefaultMainDbNode *DefDbMainNode,*/ size_t MaxFileSize, size_t MaxStringSize, size_t MaxIntegerSize, NodeSizes *Sizes);
 
 // This is for AddedInfo
 static inline int
@@ -71,30 +71,30 @@ typedef struct {
 			char *EraAction; // We need this so we don't waste code in other files
 		} NodeEra;
 		struct {
-			int MaxFileSize[1000];
-			int MaxStringSize[1000];
-			int MaxIntegerSize[1000];
-			int MaxStorageTotal[1000];
+			size_t MaxFileSize[1000];
+			size_t MaxStringSize[1000];
+			size_t MaxIntegerSize[1000];
+			size_t MaxStorageTotal[1000];
 			/* 
 				* Sizes is freed in SetupNodeStorage, so we have to store the max storage allowed somewhere
 				* It will ALWAYS be 40000000
 			*/
-			int MaxStorageAllowed;
-			int MaxStorageUpgrade;
+			size_t MaxStorageAllowed;
+			size_t MaxStorageUpgrade;
 		} NodeStorage;
 		bool Allocatedata;
 		// This is used to allocate data;
 		struct {
-			int AllocatedMaxFileSize[1000];
-			int AllocatedMaxStringSize[1000];
-			int AllocatedMaxIntegerSize[1000];
-			int AllocatedTotal[1000];
+			size_t AllocatedMaxFileSize[1000];
+			size_t AllocatedMaxStringSize[1000];
+			size_t AllocatedMaxIntegerSize[1000];
+			size_t AllocatedTotal[1000];
 		} AllocatedStorage;
 		struct {
-			int TotalFileStorageUsed[1000];
-			int TotalStringStorageUsed[1000];
-			int TotalIntegerStorageUsed[1000];
-			int Total[1000];
+			size_t TotalFileStorageUsed[1000];
+			size_t TotalStringStorageUsed[1000];
+			size_t TotalIntegerStorageUsed[1000];
+			size_t Total[1000];
 		} StorageUsed;
 		char NodeName[1000][100]; // Storing a thousand Node Names
 	} CoreInfo;
