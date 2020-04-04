@@ -34,7 +34,7 @@ char DbNames[1000][100];
 // From types.h. Declared in types.h, given functionality
 // in CORE.c.
 // MEANT FOR AddInfo struct, nothing else
-static int 
+static inline void 
 StoreInFile(
 	int AddId, 
 	char UpdateInfo[500], 
@@ -56,8 +56,6 @@ StoreInFile(
 	
 	// We want to free up the memory for the next added Database Node
 	free(AddedInfo);
-
-	return 0;
 };
 
 // Finsishes setting up Default Database Node
