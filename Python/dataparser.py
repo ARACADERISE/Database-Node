@@ -53,9 +53,11 @@ for i in os.listdir(os.path.abspath('.')):
 	if 'Era Setup #' in i:
 		listed__.append(i)
 	
+	# This will parse files that set up the Nodes storage
 	if not 'UPDATE' in i and 'STORAGE' in i:
 		StorageFiles.append(i)
 	
+	# This will parse files that update the ndes storage
 	if 'UPDATESTORAGE' in i:
 		UpdateStorageFile.append(i)
 
