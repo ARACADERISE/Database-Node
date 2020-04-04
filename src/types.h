@@ -46,11 +46,11 @@ typedef struct {
 } EraSetup;
 
 // Sets up primal storage for the Nodes
-static int
+static inline void
 SetupDbNodeStorage(/*DefaultMainDbNode *DefDbMainNode,*/ size_t MaxFileSize, size_t MaxStringSize, size_t MaxIntegerSize, NodeSizes *Sizes);
 
 // This is for AddedInfo
-static inline int
+static inline void
 StoreInFile(int AddId, char UpdateInfo[500], char *StoreInFile, AddInfo *AddedInfo);
 
 // Used to keep track of reset information
