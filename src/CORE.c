@@ -59,7 +59,7 @@ StoreInFile(
 };
 
 // Finsishes setting up Default Database Node
-static int
+static inline void
 SetupDbNodeStorage(
 	//DefaultMainDbNode *DefDbMainMode, 
 	size_t MaxFileSize, // INIT: 10000+
@@ -88,8 +88,6 @@ SetupDbNodeStorage(
 	Sizes->MaxIntegerSize = MaxIntegerSize;
 	Sizes->MaxStorageTotal = MaxFileSize + MaxStringSize + MaxIntegerSize;
 	Sizes->MaxStorageAllowed = 40000000; // 40 million! For ONE Database Node
-
-	return 0;
 }
 
 // Opens a file and checks for certain names in it
