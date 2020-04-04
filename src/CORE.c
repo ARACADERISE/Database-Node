@@ -194,16 +194,20 @@ void SetupDatabaseNode(
 		}
 	}
 	
-	if(DefDb != -1) {
+	if(DefDb!=-1) {
 		if(strcmp(DatabaseNode,"default") == 0) {
+	
 			DatabaseNode = DefDbNodeNames[DefDb];
-			if(DefDb != 3)
-				DefDb++;
-			else
-				DefDb = -1;
+			if(!(DefDb == 4))DefDb++;
+			else {
+				fprintf(stderr,"\033[0;31mYou can only assign 4 default Database Nodes\n");
+				exit(EXIT_FAILURE);
+			}
 			
 			InitUpd++;
 			InitId++;
+
+			strcpy(DbNames[InitUpd],DatabaseNode);
 		} else {
 			FILE *Created;
 			strcpy(DbNames[InitUpd],DatabaseNode);
@@ -248,9 +252,6 @@ void SetupDatabaseNode(
 			InitUpd++;
 			InitId++;
 		}
-	} else {
-		fprintf(stderr,"\033[0;31mYou can only assign 4 default Database Nodes\n");
-		exit(EXIT_FAILURE);
 	}
 
 	if(!(strcmp(DatabaseNode,"DefaultNodeSetup")==0)) {
@@ -308,10 +309,10 @@ void SetupDatabaseNode(
 		  //InitUpd--;
 		}
 
-		NodeSetup->CoreInfo.StorageUsed.Total[InitUpd]=InitId;
-		NodeSetup->CoreInfo.StorageUsed.TotalFileStorageUsed[InitUpd]=InitId;
-		NodeSetup->CoreInfo.StorageUsed.TotalStringStorageUsed[InitUpd]=InitId;
-		NodeSetup->CoreInfo.StorageUsed.TotalIntegerStorageUsed[InitUpd]=InitId;
+		NodeSetup->CoreInfo.StorageUsed.Total[InitUpd]=3000000+InitId;
+		NodeSetup->CoreInfo.StorageUsed.TotalFileStorageUsed[InitUpd]=10000+InitId;
+		NodeSetup->CoreInfo.StorageUsed.TotalStringStorageUsed[InitUpd]=20000+InitId;
+		NodeSetup->CoreInfo.StorageUsed.TotalIntegerStorageUsed[InitUpd]=500000+InitId;
 
 		
 		// Allocating storage if true
@@ -323,14 +324,12 @@ void SetupDatabaseNode(
 			}
 			else {
 				AllocatedData = true;
-				AllocateData(NodeSetup,InitUpd/*DatabaseNode*/);
 			}
 		} else {AllocatedData=false;/*Needs to be set to false else it will stay at true*/}
 
-		SetupNodeStorage(NodeSetup, Sizes, DbNames, DatabaseNode,InitUpd);
+		AllocateData(NodeSetup, InitUpd);
 
-		if(NodeSetup->CoreInfo.NodeStorage.MaxStringSize[InitUpd]!=0)
-			UpdateStorage(NodeSetup, &NodeSetup->CoreInfo.NodeStorage.MaxStringSize[2],20000,40000,InitUpd,STRING_STORAGE);
+		SetupNodeStorage(NodeSetup, Sizes, DbNames, DatabaseNode,InitUpd);
 
 		CheckStorage(NodeSetup, InitUpd,DatabaseNode);
 	}
