@@ -58,7 +58,20 @@ DatabaseNodeset *ResetStorage(DatabaseNodeset *Db, int SizeToIterate) {
 DatabaseNodeset *
 AllocateData(DatabaseNodeset *Db, int SizeToIterate /*const char *NodeName*/) {
 	static int Print_ = 0; // Zero by default meaning the error prints once
+	//static int Amm = 0; // Zero by default
 	//static int UseIndex = 0;
+
+	if(SizeToIterate == 2 && AllocatedData) {
+		ErrStatus = (_CGE == 0) ? CannotAllocateFromDefaultDbNode : Failure;
+		RETURNERRINFO("\033[0;31m", ErrStatus);
+		exit(ErrStatus);
+	}
+
+	if(AllocatedData) {
+	Db->CoreInfo.StorageUsed.Total[SizeToIterate]-=1;
+	Db->CoreInfo.StorageUsed.TotalFileStorageUsed[SizeToIterate]-=1;
+	Db->CoreInfo.StorageUsed.TotalStringStorageUsed[SizeToIterate]-=1;
+	Db->CoreInfo.StorageUsed.TotalIntegerStorageUsed[SizeToIterate]-=1;
 
 	if(
 		Db->CoreInfo.StorageUsed.Total[SizeToIterate]==0 ||
@@ -80,14 +93,11 @@ AllocateData(DatabaseNodeset *Db, int SizeToIterate /*const char *NodeName*/) {
 				memcpy(&Db->CoreInfo.AllocatedStorage.AllocatedMaxStringSize[SizeToIterate],&Db->CoreInfo.StorageUsed.TotalStringStorageUsed[SizeToIterate],sizeof(Db->CoreInfo.AllocatedStorage.AllocatedMaxStringSize[SizeToIterate]));
 				memcpy(&Db->CoreInfo.AllocatedStorage.AllocatedMaxIntegerSize[SizeToIterate],&Db->CoreInfo.StorageUsed.TotalIntegerStorageUsed[SizeToIterate],sizeof(Db->CoreInfo.AllocatedStorage.AllocatedMaxIntegerSize[SizeToIterate]));
 				memcpy(&Db->CoreInfo.AllocatedStorage.AllocatedTotal[SizeToIterate],&Db->CoreInfo.StorageUsed.Total[SizeToIterate],sizeof(Db->CoreInfo.AllocatedStorage.AllocatedTotal[SizeToIterate]));
-				//printf("%d->%d\n",SizeToIterate,Db->CoreInfo.AllocatedStorage.AllocatedTotal[SizeToIterate]);
+				//printf("%d->%ld\n",SizeToIterate,Db->CoreInfo.AllocatedStorage.AllocatedTotal[SizeToIterate]);
 			}
 
-			// Reseting StorageUsed sizes to zero
-			Db->CoreInfo.StorageUsed.Total[SizeToIterate]=0;
-			Db->CoreInfo.StorageUsed.TotalFileStorageUsed[SizeToIterate]=0;
-			Db->CoreInfo.StorageUsed.TotalStringStorageUsed[SizeToIterate]=0;
-			Db->CoreInfo.StorageUsed.TotalIntegerStorageUsed[SizeToIterate]=0;
+			//Amm+=1;
+	}
 	}
 
 	return Db;
@@ -215,8 +225,20 @@ SetupNodeStorage(
 	*/
 	DbNode->CoreInfo.NodeStorage.MaxStorageTotal[SizeToIterate]=Sizes->MaxStorageTotal;
 
+	/* 
+		There cannot be any allocating data going on before SetupNodeStorage is used
+	*/
+	if(AllocatedData) {
+		if(DbNode->CoreInfo.AllocatedStorage.AllocatedTotal[3]!=0) {
+			ErrStatus = (_CGE == 0) ? CannotHaveAllocatedStorageYet : Failure;
+			fprintf(stderr,"\033[1;31mCannot have allocated data when there is no storage saved.\033[0;0m\033[3;31m\n\tEXIT_STATUS_%d\n",ErrStatus);
+			exit(ErrStatus);
+		}
+	}
+
 	// This needs to be done in SetupNodeStorage, sets all of them to zero since no storage is being used as 
 	// of thus far
+	DbNode->CoreInfo.StorageUsed.Total[SizeToIterate]=0;
 	DbNode->CoreInfo.StorageUsed.TotalFileStorageUsed[SizeToIterate]=0;
 	DbNode->CoreInfo.StorageUsed.TotalStringStorageUsed[SizeToIterate]=0;
 	DbNode->CoreInfo.StorageUsed.TotalIntegerStorageUsed[SizeToIterate]=0;
