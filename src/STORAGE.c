@@ -104,7 +104,7 @@ AllocateData(DatabaseNodeset *Db, int SizeToIterate /*const char *NodeName*/) {
 }
 
 // Simple function that writes info about updated storage
-static inline int
+static inline void
 UpdateStorageFile(char *FileName, const size_t From, char *StorageType, const size_t To) {
 	FILE *UpdStgFile;
 
@@ -115,8 +115,6 @@ UpdateStorageFile(char *FileName, const size_t From, char *StorageType, const si
 	fputs(Info,UpdStgFile);
 	fputs(StorageType,UpdStgFile);
 	fclose(UpdStgFile);
-	
-	return 0;
 }
 
 DatabaseNodeset *
