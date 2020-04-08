@@ -142,9 +142,6 @@ void SetupDatabaseNode(
 
 	// Default values
 	SETDEFAULT(NodeSetup);
-	strcpy(NodeSetup->CoreInfo.NodeName[999],"AIDAN");
-
-	BuffAmmount(NodeSetup);
 
 	// Specifiers for functions
 	char FileName[50];
