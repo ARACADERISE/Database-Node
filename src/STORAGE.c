@@ -1,5 +1,8 @@
 /* 
-	Source code of all storage of the Database Node
+	Source code of all storage of the Database Node.
+
+	This is all hard coded storage, yes, it still has bytes due to being size_t and type of int, but it cannot
+	be anywhere above 40 million
 */
 
 #include <stdio.h>
@@ -67,38 +70,47 @@ AllocateData(DatabaseNodeset *Db, int SizeToIterate /*const char *NodeName*/) {
 		exit(ErrStatus);
 	}
 
-	if(AllocatedData) {
+	if(AllocatedData && (
+		Db->CoreInfo.StorageUsed.Total[SizeToIterate]!=0 &&
+		Db->CoreInfo.StorageUsed.TotalFileStorageUsed[SizeToIterate]!=0 &&
+		Db->CoreInfo.StorageUsed.TotalStringStorageUsed[SizeToIterate]!=0 &&
+		Db->CoreInfo.StorageUsed.TotalIntegerStorageUsed[SizeToIterate]!=0
+	)) {
 		Db->CoreInfo.StorageUsed.Total[SizeToIterate]-=1;
 		Db->CoreInfo.StorageUsed.TotalFileStorageUsed[SizeToIterate]-=1;
 		Db->CoreInfo.StorageUsed.TotalStringStorageUsed[SizeToIterate]-=1;
 		Db->CoreInfo.StorageUsed.TotalIntegerStorageUsed[SizeToIterate]-=1;
 
-		if(
-			Db->CoreInfo.StorageUsed.Total[SizeToIterate]==0 ||
-			Db->CoreInfo.StorageUsed.TotalFileStorageUsed[SizeToIterate]==0 ||
-			Db->CoreInfo.StorageUsed.TotalStringStorageUsed[SizeToIterate]==0 ||
-			Db->CoreInfo.StorageUsed.TotalIntegerStorageUsed[SizeToIterate]==0
-			){
-				ErrStatus = (_CGE == 0) ? AllocatingStorageWithSizeZero : Failure;
-				if(Print_ < 1) {
-					RETURNERRINFO("\033[1;36m", ErrStatus);
-				}
-				Print_=1;
-				//break;
-			} else {
-				if(Db->CoreInfo.AllocatedStorage.AllocatedTotal[SizeToIterate]==0) {
+		if(Db->CoreInfo.AllocatedStorage.AllocatedTotal[SizeToIterate]==0) {
 
-					//UseIndex = i+1;
-					memcpy(&Db->CoreInfo.AllocatedStorage.AllocatedMaxFileSize[SizeToIterate], &Db->CoreInfo.StorageUsed.TotalFileStorageUsed[SizeToIterate], sizeof(Db->CoreInfo.StorageUsed.TotalFileStorageUsed[SizeToIterate]));
-					memcpy(&Db->CoreInfo.AllocatedStorage.AllocatedMaxStringSize[SizeToIterate],&Db->CoreInfo.StorageUsed.TotalStringStorageUsed[SizeToIterate],sizeof(Db->CoreInfo.AllocatedStorage.AllocatedMaxStringSize[SizeToIterate]));
-					memcpy(&Db->CoreInfo.AllocatedStorage.AllocatedMaxIntegerSize[SizeToIterate],&Db->CoreInfo.StorageUsed.TotalIntegerStorageUsed[SizeToIterate],sizeof(Db->CoreInfo.AllocatedStorage.AllocatedMaxIntegerSize[SizeToIterate]));
-					memcpy(&Db->CoreInfo.AllocatedStorage.AllocatedTotal[SizeToIterate],&Db->CoreInfo.StorageUsed.Total[SizeToIterate],sizeof(Db->CoreInfo.AllocatedStorage.AllocatedTotal[SizeToIterate]));
-					//printf("%d->%ld\n",SizeToIterate,Db->CoreInfo.AllocatedStorage.AllocatedTotal[SizeToIterate]);
-				}
+			//UseIndex = i+1;
+			memcpy(&Db->CoreInfo.AllocatedStorage.AllocatedMaxFileSize[SizeToIterate], &Db->CoreInfo.StorageUsed.TotalFileStorageUsed[SizeToIterate], sizeof(Db->CoreInfo.StorageUsed.TotalFileStorageUsed[SizeToIterate]));
+			memcpy(&Db->CoreInfo.AllocatedStorage.AllocatedMaxStringSize[SizeToIterate],&Db->CoreInfo.StorageUsed.TotalStringStorageUsed[SizeToIterate],sizeof(Db->CoreInfo.AllocatedStorage.AllocatedMaxStringSize[SizeToIterate]));
+			memcpy(&Db->CoreInfo.AllocatedStorage.AllocatedMaxIntegerSize[SizeToIterate],&Db->CoreInfo.StorageUsed.TotalIntegerStorageUsed[SizeToIterate],sizeof(Db->CoreInfo.AllocatedStorage.AllocatedMaxIntegerSize[SizeToIterate]));
+			memcpy(&Db->CoreInfo.AllocatedStorage.AllocatedTotal[SizeToIterate],&Db->CoreInfo.StorageUsed.Total[SizeToIterate],sizeof(Db->CoreInfo.AllocatedStorage.AllocatedTotal[SizeToIterate]));
+			//printf("%d->%ld\n",SizeToIterate,Db->CoreInfo.AllocatedStorage.AllocatedTotal[SizeToIterate]);
+		}
 
-				//Amm+=1;
+		//Amm+=1;
+	} else {
+		if(AllocatedData) {
+			goto ERROR;
 		}
 	}
+
+	/* This will stop the application from allocating size of zero */
+	ERROR:
+	ErrStatus = (_CGE == 0) ? AllocatingStorageWithSizeZero : Failure;
+	if(Print_==0){
+		RETURNERRINFO("\033[3;38m", ErrStatus);
+	}
+	Print_=1; /* PRINTED ONLY ONCE */
+	// RESETING ALL SIZES
+	Db->CoreInfo.StorageUsed.Total[SizeToIterate]=0;
+	Db->CoreInfo.StorageUsed.TotalFileStorageUsed[SizeToIterate]=0;
+	Db->CoreInfo.StorageUsed.TotalStringStorageUsed[SizeToIterate]=0;
+	Db->CoreInfo.StorageUsed.TotalIntegerStorageUsed[SizeToIterate]=0;
+	AllocatedData=false;
 
 	return Db;
 }
