@@ -13,9 +13,39 @@
 #include <stdlib.h>
 
 // Update types
-#define INTEGER_STORAGE "INTEGER STORAGE"
-#define FILE_STORAGE "FILE STORAGE"
-#define STRING_STORAGE "STRING STORAGE"
+#define INTEGER_STORAGE     "INTEGER STORAGE"
+#define FILE_STORAGE        "FILE STORAGE"
+#define STRING_STORAGE      "STRING STORAGE"
+
+// Initital file buffer size
+#define InitFileBufferSize         250
+// Update file buffer size
+#define UpdateFileBufferSize       1200
+// Ammount of node names/ids to add if maxed 1000 is reached
+#define MaxIdealsToAdd             500
+
+/* 
+	* Needed for default values of the Node struct 
+*/
+#define SETDEFAULT(Db) \
+	memset(Db->CoreInfo.NodeName,'_',sizeof(Db->CoreInfo.NodeName)); memset(Db->NodeId,0,sizeof(Db->NodeId)); \
+	memset(Db->CoreInfo.NodeStorage.MaxStorageTotal, 0, sizeof(Db->CoreInfo.NodeStorage.MaxStorageTotal));
+
+/* 
+	* Needed for adding space if 1000 is reached 
+	* No matter what index anything else is at, if Node names
+	* is at a thousand it will switch over to ExtraDatabaseNodeSet
+
+	EVERYTHING IN DatabaseNodeSet WILL BE SAVED!
+*/
+#define BuffAmmount(Db) \
+	for(int i = 0; i < 1000/*Only a thousand indexes*/; i++) {\
+		if(!(strcmp(Db->CoreInfo.NodeName[i],"_")==0)&& strlen(Db->CoreInfo.NodeName[999])>1) {\
+			/* Setting value of ExtraNodeSetNeeded to true */\
+			Db->ExtraNodeSetNeeded=true;\
+		}\
+	}
+	
 
 //extern int _CGE;
 
