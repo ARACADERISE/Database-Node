@@ -25,22 +25,29 @@
 #define MaxIdealsToAdd             500
 
 /* 
-	* Needed for default values of the Node struct 
+	* Needed for default values of the Node struct,
+	* long very basic function but is needed!
 */
 #define SETDEFAULT(Db) \
 	memset(Db->CoreInfo.NodeName,'_',sizeof(Db->CoreInfo.NodeName)); memset(Db->NodeId,0,sizeof(Db->NodeId)); \
-	memset(Db->CoreInfo.NodeStorage.MaxStorageTotal, 0, sizeof(Db->CoreInfo.NodeStorage.MaxStorageTotal));
+	memset(Db->CoreInfo.NodeStorage.MaxStorageTotal, 0, sizeof(Db->CoreInfo.NodeStorage.MaxStorageTotal)); \
+	memset(Db->CoreInfo.NodeStorage.MaxFileSize,0,sizeof(Db->CoreInfo.NodeStorage.MaxFileSize)); memset(Db->CoreInfo.NodeStorage.MaxStringSize,0,sizeof(Db->CoreInfo.NodeStorage.MaxStringSize)); \
+	memset(Db->CoreInfo.NodeStorage.MaxIntegerSize,0,sizeof(Db->CoreInfo.NodeStorage.MaxIntegerSize)); memset(Db->CoreInfo.StorageUsed.Total,0,sizeof(Db->CoreInfo.StorageUsed.Total)); \
+	memset(Db->CoreInfo.StorageUsed.TotalFileStorageUsed,0,sizeof(Db->CoreInfo.StorageUsed.TotalFileStorageUsed)); memset(Db->CoreInfo.StorageUsed.TotalStringStorageUsed,0,sizeof(Db->CoreInfo.StorageUsed.TotalStringStorageUsed)); \
+	memset(Db->CoreInfo.StorageUsed.TotalIntegerStorageUsed,0,sizeof(Db->CoreInfo.StorageUsed.TotalIntegerStorageUsed))
+
 
 /* 
 	* Needed for adding space if 1000 is reached 
 	* No matter what index anything else is at, if Node names
-	* is at a thousand it will switch over to ExtraDatabaseNodeSet
+	* is at a thousand it will switch over to ExtraDatabaseNodeSet.
+	* Yet another simple, very simple, function, yet again...very much needed
 
 	EVERYTHING IN DatabaseNodeSet WILL BE SAVED!
 */
 #define BuffAmmount(Db) \
 	for(int i = 0; i < 1000/*Only a thousand indexes*/; i++) {\
-		if(!(strcmp(Db->CoreInfo.NodeName[i],"_")==0)&& strlen(Db->CoreInfo.NodeName[999])>1) {\
+		if(!(strcmp(Db->CoreInfo.NodeName[999],"_")==0)) {\
 			/* Setting value of ExtraNodeSetNeeded to true */\
 			Db->ExtraNodeSetNeeded=true;\
 		}\
