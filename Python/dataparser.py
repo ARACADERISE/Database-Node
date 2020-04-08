@@ -139,13 +139,15 @@ if len(StorageFiles) != 0:
 if len(listed__) != 0:
 	for i in range(len(listed__)):
 		open_ = open(listed__[i],'r').read()
-		era_data.append(open_)
+		if open_ in era_data:pass
+		else:era_data.append(open_)
 	
 	for i in range(len(era_data)):
 		if era_data[i][0] != 'w':
 			for x in era_types:
 				if x in era_data[i]:
-					era.append(x)
+					if x in era:pass
+					else:era.append(x)
 		else:
 			era.append('wro')
 
@@ -154,15 +156,7 @@ if len(listed__) != 0:
 		if 'ta' in era_data[i]:
 			era_data[i] = era_data[i].replace('ta','data')
 		
-	if len(era_data) > 1:
-		MoreThanOnce = False # False by defult
-		for i in range(len(era_data)):
-			if era_data[i] == era_data[i+1]:
-				MoreThanOnce = True
-			if MoreThanOnce:
-				del(era_data[i+1])
-				del(era[i+1])
-			break
+		
 	
 	data___ = {'Era Types':era,'Era Used For':era_data}
 	
@@ -181,10 +175,12 @@ if len(listed__) != 0:
 			AddedFiles.append(i.replace(' ',''))
 
 	write_ = '[EraSetupInformation]\n\t\t!Era Name!\t~\t%s\n\t\t!Action!\t~\t%s'
-
 	for i in range(len(AddedFiles)):
 		with open(AddedFiles[i],'wb') as AddedFile:
-			AddedFile.write(write_ % (era[i-1] if len(era) > 1 else era[0], era_data[i-1] if len(era_data) > 1 else era_data[0]))
+			if len(era)>2:
+				AddedFile.write(write_ % (era[i-1], era_data[i-1]))
+			else:
+				AddedFile.write(write_ % (era[0],era_data[0]))
 			AddedFile.flush()
 			AddedFile.close()
 
