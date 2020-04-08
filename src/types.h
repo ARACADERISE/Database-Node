@@ -90,4 +90,15 @@ typedef struct {
 		} StorageUsed;
 		char NodeName[1000][100]; // Storing a thousand Node Names
 	} CoreInfo;
+
+	// This will lead to using ExtraDatabaseNodeSet
+	bool ExtraNodeSetNeeded;
 } DatabaseNodeset;
+
+/* 
+	* Secondary holder for node information 
+	* a thousand more of pretty much everything
+*/
+typedef struct {
+	DatabaseNodeset *ExtraDb;
+} ExtraDatabaseNodeSet;
