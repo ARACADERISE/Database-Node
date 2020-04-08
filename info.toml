@@ -1,0 +1,36 @@
+[AUTHOR]
+	AUTHOR_NAME = "ARACADERISE(GetStuffDone)"
+[TITLE]
+	TITLE_NAME = "Database Nodes"
+[DESCRIPTION]
+	DESCRIPTION_ = "Database-Node is a C project that creates Database Nodes, or Databases that do specific tasks"
+
+[RUN]
+	HARDRUN = "clang-7 -pthread -lm -o main main.c src/CORE.c src/STORAGE.c src/SetupEra.c"
+	EASYRUN = "bash run.sh main main.c src/CORE.c src/STORAGE.c src/SetupEra.c"
+
+[FILES]
+	MAIN_FILE = "./main.c"
+	OTHERS = [
+		"./src/CORE.c",
+		"./src/CORE.h",
+		"./src/types.h",
+		"./src/CORE_types.h",
+		"./Python/DefaultNode.py",
+		"./Python/dataparser.py",
+		"./src/SetupEra.c",
+		"./src/SetupEra.h",
+		"./src/STORAGE.c",
+		"./src/STORAGE.h",
+		"./src/.toml"
+	]
+	GENERATED = [
+		"EraData.json -> Python/dataparser.py",
+		"CreateDefaultNode -> Generated -> CORE.c, Edited -> Python/dataparser.py",
+		"DefaultNodeSetupERROR -> Generated(If error with Default Node) -> CORE.c",
+		"NodeData.json -> Python/dataparser.py",
+		"NodeInformation -> Generated -> CORE.c, Edited -> Python/dataparser.py",
+		"EraSetup -> Generated -> CORE.c, Edited -> Python/dataparser.py",
+		"STORAGE -> Generated -> STORAGE.c",
+		"UPDATESTORAGE -> Generated -> STORAGE.c, EDITED -> Python/dataparser.py"
+	]
