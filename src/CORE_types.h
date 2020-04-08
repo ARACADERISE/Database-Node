@@ -21,8 +21,6 @@
 #define InitFileBufferSize         250
 // Update file buffer size
 #define UpdateFileBufferSize       1200
-// Ammount of node names/ids to add if maxed 1000 is reached
-#define MaxIdealsToAdd             500
 
 /* 
 	* Needed for default values of the Node struct,
