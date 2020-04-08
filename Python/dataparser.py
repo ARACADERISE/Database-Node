@@ -1,4 +1,4 @@
-import os, json, struct
+import os, json, #struct
 
 # will be used later on when bigger files are generated
 #try:
