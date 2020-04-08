@@ -7,7 +7,7 @@
 
 [RUN]
 	HARDRUN = "clang-7 -pthread -lm -o main main.c src/CORE.c src/STORAGE.c src/SetupEra.c"
-	EASYRUN = "bash run.sh main main.c src/CORE.c src/STORAGE.c src/SetupEra.c"
+	EASYRUN = "bash run.sh"
 
 [FILES]
 	MAIN_FILE = "./main.c"
