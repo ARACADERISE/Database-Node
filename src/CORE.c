@@ -19,7 +19,7 @@ bool AllocatedData;
 // This is Default db names
 static char * DefDbNodeNames[] = {
 	// DEFAULT NAMES
-	"DefaultDbNode", // Default db, user can assign era type
+	"DbNodeDef", // Default db, user can assign era type
 	"Tyme", // Default db, user can assign era type
 	"FileReader", // Defaut db, can only read files
 	"FileWriter" // Default db, can only write files
@@ -138,6 +138,13 @@ void SetupDatabaseNode(
 	strcpy(DefDbNode->ERAS[1],"ro"); // Read only type of Node
 	strcpy(DefDbNode->ERAS[2],"wo"); // Write only type of node
 	strcpy(DefDbNode->ERAS[3],"da"); // Checker type of Database. Read only type, but can do more with the data
+
+
+	// Default values
+	SETDEFAULT(NodeSetup);
+	strcpy(NodeSetup->CoreInfo.NodeName[999],"AIDAN");
+
+	BuffAmmount(NodeSetup);
 
 	// Specifiers for functions
 	char FileName[50];
@@ -322,8 +329,6 @@ void SetupDatabaseNode(
 				AllocatedData = true;
 			}
 		} else {AllocatedData=false;/*Needs to be set to false else it will stay at true*/}
-
-		AllocateData(NodeSetup, InitUpd);
 
 		SetupNodeStorage(NodeSetup, Sizes, DbNames, DatabaseNode,InitUpd);
 
