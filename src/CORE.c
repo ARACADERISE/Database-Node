@@ -366,21 +366,15 @@ SetupNode() {
 	bool AlocData, CanRead_, __CGE;
 	int FileSize, StringSize, IntegerSize;
 
-	// Confusing, but here is some documentation of the arguments to pass to the terminal:
-	/* 
-	PLEASE PUT SPACES BETWEEN EACH ONE,
-	EXAMPLE: default yes yes no wro 0 0 0
-
-	* 1st arg: Node Name
-	* 2th arg: CGE(Core Generated Errors): yes/no
-	* 3th arg: Can Read: yes/no
-	* 4rd arg: Allocate Data(Does the Db Node take storage ammount from last Db Node?): yes/no
-	* 5nd arg: Node Era Type(wro,wo,ro,da)
-	* 6th arg: FileSize(if empty defaults to 10000)
-	* 7th arg: StringSize(if empty defaults to 20000)
-	* 8th arg: IntegerSize(if empty defaults to 20000)
-	*/
-	scanf("%s %s %s %s %s %d %d %d",NodeName,CGE,CanRead,AllocData,EraType,&FileSize, &StringSize, &IntegerSize);
+	//scanf("%s %s %s %s %s %d %d %d",NodeName,CGE,CanRead,AllocData,EraType,&FileSize, &StringSize, &IntegerSize);
+	printf("Node Name: "); scanf("%s",NodeName);
+	printf("Core Generated Errors(yes/no): "); scanf("%s",CGE);
+	printf("Can Read(yes/no): "); scanf("%s",CanRead);
+	printf("Allocate Data(yes/no): "); scanf("%s",AllocData);
+	printf("Era Type(wro(Write/read), ro(Read only) wo (Write Only), da(Works with the information)): "); scanf("%s",EraType);
+	printf("FileSize(must be 10000+): "); scanf("%d",&FileSize);
+	printf("StringSize(must be 20000+): "); scanf("%d",&StringSize);
+	printf("IntegerSize(must be 20000+): "); scanf("%d",&IntegerSize);
 	system("clear");
 
 	if(strcmp(AllocData,"yes")==0)AlocData=true;
