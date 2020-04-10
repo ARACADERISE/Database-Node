@@ -1,4 +1,6 @@
 # Easy run for the application
+# Run bash run.sh to enable ./run on Linux terminal
 clang-7 -pthread -lm -o main main.c src/CORE.c src/STORAGE.c src/SetupEra.c
 
-./main
+# making run runnable by typing ./run
+chmod +x run
