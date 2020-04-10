@@ -352,7 +352,7 @@ SetupNode() {
 	char NodeName[150], EraType[4];
 	char AllocData[4], CanRead[4], CGE[4];
 	bool AlocData, CanRead_, __CGE;
-	int FileSize, StringSize, IntegerSize;
+	size_t FileSize, StringSize, IntegerSize;
 
 	//scanf("%s %s %s %s %s %d %d %d",NodeName,CGE,CanRead,AllocData,EraType,&FileSize, &StringSize, &IntegerSize);
 	printf("Node Name: "); scanf("%s",NodeName);
@@ -360,9 +360,9 @@ SetupNode() {
 	printf("Can Read(yes/no): "); scanf("%s",CanRead);
 	printf("Allocate Data(yes/no): "); scanf("%s",AllocData);
 	printf("Era Type(wro(Write/read), ro(Read only) wo (Write Only), da(Works with the information)): "); scanf("%s",EraType);
-	printf("FileSize(must be 10000+): "); scanf("%d",&FileSize);
-	printf("StringSize(must be 20000+): "); scanf("%d",&StringSize);
-	printf("IntegerSize(must be 20000+): "); scanf("%d",&IntegerSize);
+	printf("FileSize(must be 10000+): "); scanf("%ld",&FileSize);
+	printf("StringSize(must be 20000+): "); scanf("%ld",&StringSize);
+	printf("IntegerSize(must be 20000+): "); scanf("%ld",&IntegerSize);
 	system("clear");
 
 	if(strcmp(AllocData,"yes")==0)AlocData=true;
