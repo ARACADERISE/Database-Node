@@ -279,13 +279,19 @@ SetupNodeStorage(
 // Prints storage ammounts
 void CheckStorage(DatabaseNodeset *Db, int SizeToIterate, char *NodeName) {
 
-	if(AllocatedData) {
-		printf("====ALLOCATED_STORAGE->%s====\n",NodeName);
-		printf("\tTOTAL-%ld\n\tFILE-%ld\n\tSTRING-%ld\n\tINTEGER-%ld\n",Db->CoreInfo.AllocatedStorage.AllocatedTotal[SizeToIterate],Db->CoreInfo.AllocatedStorage.AllocatedMaxFileSize[SizeToIterate],Db->CoreInfo.AllocatedStorage.AllocatedMaxStringSize[SizeToIterate],Db->CoreInfo.AllocatedStorage.AllocatedMaxIntegerSize[SizeToIterate]);
-		printf("====END====\n\n");
+	if(AllocatedData && Db->CoreInfo.AllocatedStorage.AllocatedTotal[SizeToIterate]==0) {
+		fprintf(stderr, "No storage has been allocated");
+	} else if(!(AllocatedData) && Db->CoreInfo.StorageUsed.Total[SizeToIterate]==0) {
+		fprintf(stderr, "No storage has been used yet");
 	} else {
-		printf("====STORAGE->%s====\n",NodeName);
-		printf("\tTOTAL-%ld\n\tFILE-%ld\n\tSTRING-%ld\n\tINTEGER-%ld\n",Db->CoreInfo.StorageUsed.Total[SizeToIterate],Db->CoreInfo.StorageUsed.TotalFileStorageUsed[SizeToIterate],Db->CoreInfo.StorageUsed.TotalStringStorageUsed[SizeToIterate],Db->CoreInfo.StorageUsed.TotalIntegerStorageUsed[SizeToIterate]);
-		printf("====END====\n\n");
+		if(AllocatedData) {
+			printf("====ALLOCATED_STORAGE->%s====\n",NodeName);
+			printf("\tTOTAL-%ld\n\tFILE-%ld\n\tSTRING-%ld\n\tINTEGER-%ld\n",Db->CoreInfo.AllocatedStorage.AllocatedTotal[SizeToIterate],Db->CoreInfo.AllocatedStorage.AllocatedMaxFileSize[SizeToIterate],Db->CoreInfo.AllocatedStorage.AllocatedMaxStringSize[SizeToIterate],Db->CoreInfo.AllocatedStorage.AllocatedMaxIntegerSize[SizeToIterate]);
+			printf("====END====\n\n");
+		} else {
+			printf("====STORAGE->%s====\n",NodeName);
+			printf("\tTOTAL-%ld\n\tFILE-%ld\n\tSTRING-%ld\n\tINTEGER-%ld\n",Db->CoreInfo.StorageUsed.Total[SizeToIterate],Db->CoreInfo.StorageUsed.TotalFileStorageUsed[SizeToIterate],Db->CoreInfo.StorageUsed.TotalStringStorageUsed[SizeToIterate],Db->CoreInfo.StorageUsed.TotalIntegerStorageUsed[SizeToIterate]);
+			printf("====END====\n\n");
+		}
 	}
 }
