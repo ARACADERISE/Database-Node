@@ -1,6 +1,5 @@
 /* 
 	Sets up the core of the users Database Node.
-
 	Basically, it does all of the backend work of setting
 	up what the Database Node does, what it can and cannot
 	do, and the functionalities going into it
@@ -15,13 +14,16 @@
 char *DatabaseNodeName;
 int _CGE;
 
+void
+SetupNode();
+
 void SetupDatabaseNode(
 	char *DatabaseNode,
 	bool CoreGenereatedErrs,
 	bool NodeCanRead,
 	bool AllocateData_,
 	char *Era,
-	int FileSize,
-	int StringSize,
-	int IntegerSize
+	size_t FileSize,
+	size_t StringSize,
+	size_t IntegerSize
 );
