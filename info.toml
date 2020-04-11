@@ -6,7 +6,7 @@
 	DESCRIPTION_ = "Database-Node is a C project that creates Database Nodes, or Databases that do specific tasks"
 
 [RUN]
-	HARDRUN = "clang-7 -pthread -lm -o main main.c src/CORE.c src/STORAGE.c src/SetupEra.c"
+	HARDRUN = "clang-7 -pthread -lm -o main main.c src/CORE.c src/Node.c src/STORAGE.c src/SetupEra.c"
 	[EASYRUN]
 		SETUP = "bash run.sh"
 		# bash run.sh sets up ./run, so you only have to type bash run.sh once, then type ./run to run the application
