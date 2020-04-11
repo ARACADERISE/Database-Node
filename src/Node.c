@@ -1,6 +1,6 @@
 /*
     * KEY FILE FOR WORKING WITH THE NODES
-    * This file is also is used to create the Database Node
+    * This file is also used to create the Database Node
 */
 
 #include <stdio.h>
