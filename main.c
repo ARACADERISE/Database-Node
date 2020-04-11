@@ -1,16 +1,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "src/CORE.h"
+#include "src/Node.h" // Source for setting up the Node
 
 int main(void) {
-	// The program will go off of this
-	SetupDatabaseNode("DefaultNodeSetup", true, true, false, "NUN", 0, 0, 0);
+    // The program will go off of this
+    SetupDatabaseNode("DefaultNodeSetup", true, true, false, "NUN", 0, 0, 0);
 
-	char AddNode[4];
-	printf("Add Node?[yes/no]: ");
-	scanf("%s",AddNode);
-	if(strcmp(AddNode,"yes")==0)SetupNode();
+    int Times;
+    printf("How many nodes to add? ");
+    scanf("%d",&Times);
 
-	// Final step of setting up Database Nodes
-	system("python Python/dataparser.py");
+    for(int i = 0; i < Times; i++)SetupNode();
+
+    // Final step of setting up Database Nodes
+    system("python Python/dataparser.py");
 }
