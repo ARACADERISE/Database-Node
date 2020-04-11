@@ -8,7 +8,6 @@
 #include "CORE.h"
 
 static int Times;
-extern char DbNames[1000][100];
 
 void
 SetupNode() {
