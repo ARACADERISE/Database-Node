@@ -341,36 +341,3 @@ void SetupDatabaseNode(
 		CheckStorage(NodeSetup, InitUpd,DatabaseNode);
 	}
 }
-
-/* 
-	I hate these types of function where it is pure input.
-	Don't know why, just do, but this is needed, otherwise we would waist another 200 lines of code in CORE.c
-	figuring out how to add another Database Node. So this is overall the easier choice
-*/
-void
-SetupNode() {
-	char NodeName[150], EraType[4];
-	char AllocData[4], CanRead[4], CGE[4];
-	bool AlocData, CanRead_, __CGE;
-	size_t FileSize, StringSize, IntegerSize;
-
-	//scanf("%s %s %s %s %s %d %d %d",NodeName,CGE,CanRead,AllocData,EraType,&FileSize, &StringSize, &IntegerSize);
-	printf("Node Name: "); scanf("%s",NodeName);
-	printf("Core Generated Errors(yes/no): "); scanf("%s",CGE);
-	printf("Can Read(yes/no): "); scanf("%s",CanRead);
-	printf("Allocate Data(yes/no): "); scanf("%s",AllocData);
-	printf("Era Type(wro(Write/read), ro(Read only) wo (Write Only), da(Works with the information)): "); scanf("%s",EraType);
-	printf("FileSize(must be 10000+): "); scanf("%ld",&FileSize);
-	printf("StringSize(must be 20000+): "); scanf("%ld",&StringSize);
-	printf("IntegerSize(must be 20000+): "); scanf("%ld",&IntegerSize);
-	system("clear");
-
-	if(strcmp(AllocData,"yes")==0)AlocData=true;
-	else AlocData=false;
-	if(strcmp(CanRead,"YES")==0)CanRead_=true;
-	else CanRead_=false;
-	if(strcmp(CGE,"yes")==0)__CGE=true;
-	else __CGE=false;
-
-	SetupDatabaseNode(NodeName,__CGE,CanRead_,AlocData,EraType,FileSize,StringSize,IntegerSize);
-}
