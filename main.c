@@ -10,8 +10,8 @@ int main(void) {
     int Times;
     printf("How many nodes to add? ");
     scanf("%d",&Times);
-
-    for(int i = 0; i < Times; i++)SetupNode();
+    
+    if(!(Times==0))for(int i = 0; i < Times; i++)SetupNode();
 
     // Final step of setting up Database Nodes
     system("python Python/dataparser.py");
