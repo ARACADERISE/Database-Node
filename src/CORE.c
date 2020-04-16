@@ -302,18 +302,10 @@ void SetupDatabaseNode(
 		// Giving meaning to the Era
 		GatherEra(Era, DefDbNode, NodeSetup/*We give meaning to each ideal of the struct bit by bit*/);
 
-		// Finishing up the Default Database Node
-		SetupDbNodeStorage(FileSize,StringSize,IntegerSize, Sizes);
-
 		//Sets up the storage
 		if(InitUpd > 1) {
 		  //InitUpd--;
 		}
-
-		NodeSetup->CoreInfo.StorageUsed.Total[InitUpd]=3000000+InitId;
-		NodeSetup->CoreInfo.StorageUsed.TotalFileStorageUsed[InitUpd]=10000+InitId;
-		NodeSetup->CoreInfo.StorageUsed.TotalStringStorageUsed[InitUpd]=20000+InitId;
-		NodeSetup->CoreInfo.StorageUsed.TotalIntegerStorageUsed[InitUpd]=500000+InitId;
 
 		/* 
 			* DefaultNodeSetup has an NodeId of 1, meaning if the Nodes Id is 2, and AllocateData_ is true
@@ -334,10 +326,15 @@ void SetupDatabaseNode(
 			else {
 				AllocatedData = true;
 			}
-		} else {AllocatedData=false;/*Needs to be set to false else it will stay at true*/}
+		} else {
+      NodeSetup->CoreInfo.Allocatedata=false;
+      AllocatedData=false;/*Needs to be set to false else it will stay at true*/
+    }
 
 		SetupNodeStorage(NodeSetup, Sizes, DbNames, DatabaseNode,InitUpd);
 
 		CheckStorage(NodeSetup, InitUpd,DatabaseNode);
 	}
+
+  #undef SETDEFAULT
 }
