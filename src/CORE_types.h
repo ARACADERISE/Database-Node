@@ -43,7 +43,7 @@
 
     EVERYTHING IN DatabaseNodeSet WILL BE SAVED!
 */
-#define BuffAmmount(Db) \
+#define BuffAmmount(Db,ExtraDb) \
     for(int i = 0; i < 1000/*Only a thousand indexes*/; i++) {\
         if(!(strcmp(Db->CoreInfo.NodeName[999],"_")==0)) {\
             /* 
@@ -51,14 +51,6 @@
             then setting values of ExtraDatabaseNodeSet to a default value of 0 and _ 
             */\
             Db->ExtraNodeSetNeeded=true;\
-            ExtraDatabaseNodeSet *Extra = (ExtraDatabaseNodeSet *) malloc(sizeof(ExtraDatabaseNodeSet)); \
-
-            // SETTING UP EXTRA NODE INFO \
-            memset(Extra->ExtraDb.NodeId,0,sizeof(Extra->ExtraDb->NodeId)); memset(Extra->ExtraDb->CoreInfo.NodeName,'_',sizeof(Extra->ExtraDb->CoreInfo.NodeName));\
-            memset(Extra->ExtraDb->CoreInfo.NodeStorage.MaxStorageTotal,0,sizeof(Extra->ExtraDb->CoreInfo.NodeStorage.MaxStorage));memset(Extra->ExtraDb.CoreInfo.NodeStorage.MaxFileSize,0,sizeof(Extra->ExtraDb->CoreInfo.NodeStorage.MaxFileSize));\
-            memset(Extra->ExtraDb->CoreInfo.NodeStorage.MaxStringSize,0,sizeof(Extra->ExtraDb->CoreInfo.NodeStorage.MaxStringSize)); memset(Extra->ExtraDb->CoreInfo.NodeStorage.MaxIntegerSize,0,sizeof(Extra->ExtraDb->CoreInfo.NodeStorage.MaxIntegerSize));\
-            memset(Extra->ExtraDb->CoreInfo.StorageUsed.Total,0,sizeof(Extra->ExtraDb->CoreInfo.StorageUsed.Total));memset(Extras->ExtraDb->CoreInfo.StorageUsed.TotalFileStorageUsed,0,sizeof(Extras->ExtraDb->CoreInfo.StorageUsed.TotalFileStorageUsed));\
-            memset(Extras->ExtraDb->CoreInfo.StorageUsed.TotalStringStorageUsed,0,sizeof(Extras->ExtraDb->CoreInfo.StorageUsed.TotalStringStorageUsed));memset(Extra->ExtraDb->CoreInfo.StorageUsed.TotalIntegerStorageUsed,0,sizeof(Extra->ExtraDb->CoreInfo.StorageUsed.TotalIntegerStorageUsed));\
         }\
     }
 
