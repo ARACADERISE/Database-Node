@@ -60,15 +60,17 @@ DatabaseNodeset *ResetStorage(DatabaseNodeset *Db, int SizeToIterate) {
 
 DatabaseNodeset *
 AllocateData(DatabaseNodeset *Db, int SizeToIterate /*const char *NodeName*/) {
-	static int Print_ = 0; // Zero by default meaning the error prints once
+	//static int Print_ = 0; // Zero by default meaning the error prints once
 	//static int Amm = 0; // Zero by default
 	//static int UseIndex = 0;
 
-	if(SizeToIterate == 2 && AllocatedData) {
+	/* may need it for later on if we run into an error allocating from default node
+
+  if(SizeToIterate == 2 && AllocatedData) {
 		ErrStatus = (_CGE == 0) ? CannotAllocateFromDefaultDbNode : Failure;
 		RETURNERRINFO("\033[0;31m", ErrStatus);
 		exit(ErrStatus);
-	}
+	}*/
 
 	if(AllocatedData && (
 		Db->CoreInfo.StorageUsed.Total[SizeToIterate]!=0 &&
@@ -93,24 +95,28 @@ AllocateData(DatabaseNodeset *Db, int SizeToIterate /*const char *NodeName*/) {
 
 		//Amm+=1;
 	} else {
-		if(AllocatedData) {
-			goto ERROR;
-		}
+		goto ERROR;
 	}
 
 	/* This will stop the application from allocating size of zero */
 	ERROR:
-	ErrStatus = (_CGE == 0) ? AllocatingStorageWithSizeZero : Failure;
-	if(Print_==0){
-		RETURNERRINFO("\033[3;38m", ErrStatus);
-	}
-	Print_=1; /* PRINTED ONLY ONCE */
-	// RESETING ALL SIZES
-	Db->CoreInfo.StorageUsed.Total[SizeToIterate]=0;
-	Db->CoreInfo.StorageUsed.TotalFileStorageUsed[SizeToIterate]=0;
-	Db->CoreInfo.StorageUsed.TotalStringStorageUsed[SizeToIterate]=0;
-	Db->CoreInfo.StorageUsed.TotalIntegerStorageUsed[SizeToIterate]=0;
-	AllocatedData=false;
+  if(
+    AllocatedData &&
+    (Db->CoreInfo.StorageUsed.Total[SizeToIterate]==0 ||
+    Db->CoreInfo.StorageUsed.TotalFileStorageUsed[SizeToIterate]==0 ||
+    Db->CoreInfo.StorageUsed.TotalStringStorageUsed[SizeToIterate]==0 ||
+    Db->CoreInfo.StorageUsed.TotalIntegerStorageUsed[SizeToIterate]==0)
+  ) {
+    ErrStatus = (_CGE == 0) ? AllocatingStorageWithSizeZero : Failure;
+    RETURNERRINFO("\033[3;31m", ErrStatus);
+
+    // RESETING ALL SIZES
+    Db->CoreInfo.StorageUsed.Total[SizeToIterate]=0;
+    Db->CoreInfo.StorageUsed.TotalFileStorageUsed[SizeToIterate]=0;
+    Db->CoreInfo.StorageUsed.TotalStringStorageUsed[SizeToIterate]=0;
+    Db->CoreInfo.StorageUsed.TotalIntegerStorageUsed[SizeToIterate]=0;
+    AllocatedData=false;
+  }
 
 	return Db;
 }
@@ -236,8 +242,11 @@ SetupNodeStorage(
 	DbNode->CoreInfo.NodeStorage.MaxStorageTotal[SizeToIterate]=Sizes->MaxStorageTotal;
 
 	/* 
-		There cannot be any allocating data going on before SetupNodeStorage is used
-	*/
+		There cannot be any allocating data going on before SetupNodeStorage is used.
+
+    This section is commented out due to the fact this error should be taken cared of
+    in CORE.c, but just in case for later references, we'll keep it commented out
+	
 	if(AllocatedData) {
 		if(DbNode->CoreInfo.AllocatedStorage.AllocatedTotal[3]!=0) {
 			ErrStatus = (_CGE == 0) ? CannotHaveAllocatedStorageYet : Failure;
@@ -245,6 +254,7 @@ SetupNodeStorage(
 			exit(ErrStatus);
 		}
 	}
+  */
 
 	// This needs to be done in SetupNodeStorage, sets all of them to zero since no storage is being used as 
 	// of thus far
@@ -279,19 +289,29 @@ SetupNodeStorage(
 // Prints storage ammounts
 void CheckStorage(DatabaseNodeset *Db, int SizeToIterate, char *NodeName) {
 
+  /*
+      Beta version of printing storage ammounts,
+      keeping commented out printf statements just in case I want to use them later on instead of the
+      printf statement I have right now.
+  */
+
 	if(AllocatedData && Db->CoreInfo.AllocatedStorage.AllocatedTotal[SizeToIterate]==0) {
-		fprintf(stderr, "No storage has been allocated");
+		fprintf(stderr, "\n\n\t\033[0;34mChecked allocated storage of %s,\n\tNo storage has been allocated\033[0;0m\n\n",NodeName);
 	} else if(!(AllocatedData) && Db->CoreInfo.StorageUsed.Total[SizeToIterate]==0) {
-		fprintf(stderr, "No storage has been used yet");
+		fprintf(stderr, "\n\n\033[0;34m\tChecked storage of %s,\n\tNo storage has been used yet\n\033[0;0m\n\n",NodeName);
 	} else {
 		if(AllocatedData) {
-			printf("====ALLOCATED_STORAGE->%s====\n",NodeName);
-			printf("\tTOTAL-%ld\n\tFILE-%ld\n\tSTRING-%ld\n\tINTEGER-%ld\n",Db->CoreInfo.AllocatedStorage.AllocatedTotal[SizeToIterate],Db->CoreInfo.AllocatedStorage.AllocatedMaxFileSize[SizeToIterate],Db->CoreInfo.AllocatedStorage.AllocatedMaxStringSize[SizeToIterate],Db->CoreInfo.AllocatedStorage.AllocatedMaxIntegerSize[SizeToIterate]);
-			printf("====END====\n\n");
+			//printf("====ALLOCATED_STORAGE->%s====\n",NodeName);
+			//printf("\tTOTAL-%ld\n\tFILE-%ld\n\tSTRING-%ld\n\tINTEGER-%ld\n",Db->CoreInfo.AllocatedStorage.AllocatedTotal[SizeToIterate],Db->CoreInfo.AllocatedStorage.AllocatedMaxFileSize[SizeToIterate],Db->CoreInfo.AllocatedStorage.AllocatedMaxStringSize[SizeToIterate],Db->CoreInfo.AllocatedStorage.AllocatedMaxIntegerSize[SizeToIterate]);
+      //printf("====END====\n\n");
+
+      printf("NODE_NAME: %s | TYPE: ALLOCATED | TOTAL: %ld | FILE: %ld | STRING: %ld | INTEGER: %ld",NodeName,Db->CoreInfo.AllocatedStorage.AllocatedTotal[SizeToIterate],Db->CoreInfo.AllocatedStorage.AllocatedMaxFileSize[SizeToIterate],Db->CoreInfo.AllocatedStorage.AllocatedMaxStringSize[SizeToIterate],Db->CoreInfo.AllocatedStorage.AllocatedMaxIntegerSize[SizeToIterate]);
 		} else {
-			printf("====STORAGE->%s====\n",NodeName);
-			printf("\tTOTAL-%ld\n\tFILE-%ld\n\tSTRING-%ld\n\tINTEGER-%ld\n",Db->CoreInfo.StorageUsed.Total[SizeToIterate],Db->CoreInfo.StorageUsed.TotalFileStorageUsed[SizeToIterate],Db->CoreInfo.StorageUsed.TotalStringStorageUsed[SizeToIterate],Db->CoreInfo.StorageUsed.TotalIntegerStorageUsed[SizeToIterate]);
-			printf("====END====\n\n");
+      //printf("====STORAGE->%s====\n",NodeName);
+			//printf("\tTOTAL-%ld\n\tFILE-%ld\n\tSTRING-%ld\n\tINTEGER-%ld\n",Db->CoreInfo.StorageUsed.Total[SizeToIterate],Db->CoreInfo.StorageUsed.TotalFileStorageUsed[SizeToIterate],Db->CoreInfo.StorageUsed.TotalStringStorageUsed[SizeToIterate],Db->CoreInfo.StorageUsed.TotalIntegerStorageUsed[SizeToIterate]);
+			//printf("====END====\n\n");
+
+      printf("NODE_NAME: %s | TYPE: Regular | TOTAL: %ld | FILE: %ld | STRING: %ld | INTEGER: %ld",NodeName,Db->CoreInfo.StorageUsed.Total[SizeToIterate],Db->CoreInfo.StorageUsed.TotalFileStorageUsed[SizeToIterate],Db->CoreInfo.StorageUsed.TotalStringStorageUsed[SizeToIterate],Db->CoreInfo.StorageUsed.TotalIntegerStorageUsed[SizeToIterate]);
 		}
 	}
 }
