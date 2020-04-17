@@ -101,23 +101,23 @@ AllocateData(DatabaseNodeset *Db, int SizeToIterate /*const char *NodeName*/) {
 
 	/* This will stop the application from allocating size of zero */
 	ERROR:
-  if(
-    AllocatedData &&
-    (Db->CoreInfo.StorageUsed.Total[SizeToIterate]==0 ||
-    Db->CoreInfo.StorageUsed.TotalFileStorageUsed[SizeToIterate]==0 ||
-    Db->CoreInfo.StorageUsed.TotalStringStorageUsed[SizeToIterate]==0 ||
-    Db->CoreInfo.StorageUsed.TotalIntegerStorageUsed[SizeToIterate]==0)
-  ) {
-    ErrStatus = (_CGE == 0) ? AllocatingStorageWithSizeZero : Failure;
-    RETURNERRINFO("\033[3;31m", ErrStatus);
+  	if(
+    		AllocatedData &&
+    		(Db->CoreInfo.StorageUsed.Total[SizeToIterate]==0 ||
+    		Db->CoreInfo.StorageUsed.TotalFileStorageUsed[SizeToIterate]==0 ||
+    		Db->CoreInfo.StorageUsed.TotalStringStorageUsed[SizeToIterate]==0 ||
+    		Db->CoreInfo.StorageUsed.TotalIntegerStorageUsed[SizeToIterate]==0)
+  	) {
+    		ErrStatus = (_CGE == 0) ? AllocatingStorageWithSizeZero : Failure;
+    		RETURNERRINFO("\033[3;31m", ErrStatus);
 
-    // RESETING ALL SIZES
-    Db->CoreInfo.StorageUsed.Total[SizeToIterate]=0;
-    Db->CoreInfo.StorageUsed.TotalFileStorageUsed[SizeToIterate]=0;
-    Db->CoreInfo.StorageUsed.TotalStringStorageUsed[SizeToIterate]=0;
-    Db->CoreInfo.StorageUsed.TotalIntegerStorageUsed[SizeToIterate]=0;
-    AllocatedData=false;
-  }
+    		// RESETING ALL SIZES
+    		Db->CoreInfo.StorageUsed.Total[SizeToIterate]=0;
+    		Db->CoreInfo.StorageUsed.TotalFileStorageUsed[SizeToIterate]=0;
+    		Db->CoreInfo.StorageUsed.TotalStringStorageUsed[SizeToIterate]=0;
+    		Db->CoreInfo.StorageUsed.TotalIntegerStorageUsed[SizeToIterate]=0;
+    		AllocatedData=false;
+  	}
 
 	return Db;
 }
