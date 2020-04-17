@@ -54,7 +54,7 @@ typedef struct {
 // Used when setting up the core of the Database Node
 // All data stored before this struct will be freed after being assigned to in this struct
 typedef struct {
-	int NodeId[1000];
+	int *NodeId;
 	struct {
 		bool Core_Generated_Errs;
 		bool CanRead;
@@ -63,10 +63,10 @@ typedef struct {
 			char *EraAction; // We need this so we don't waste code in other files
 		} NodeEra;
 		struct {
-			size_t MaxFileSize[1000];
-			size_t MaxStringSize[1000];
-			size_t MaxIntegerSize[1000];
-			size_t MaxStorageTotal[1000];
+			size_t *MaxFileSize;
+			size_t *MaxStringSize;
+			size_t *MaxIntegerSize;
+			size_t *MaxStorageTotal;
 			/* 
 				* Sizes is freed in SetupNodeStorage, so we have to store the max storage allowed somewhere
 				* It will ALWAYS be 40000000
@@ -77,18 +77,18 @@ typedef struct {
 		bool Allocatedata;
 		// This is used to allocate data;
 		struct {
-			size_t AllocatedMaxFileSize[1000];
-			size_t AllocatedMaxStringSize[1000];
-			size_t AllocatedMaxIntegerSize[1000];
-			size_t AllocatedTotal[1000];
+			size_t *AllocatedMaxFileSize;
+			size_t *AllocatedMaxStringSize;
+			size_t *AllocatedMaxIntegerSize;
+			size_t *AllocatedTotal;
 		} AllocatedStorage;
 		struct {
-			size_t TotalFileStorageUsed[1000];
-			size_t TotalStringStorageUsed[1000];
-			size_t TotalIntegerStorageUsed[1000];
-			size_t Total[1000];
+			size_t *TotalFileStorageUsed;
+			size_t *TotalStringStorageUsed;
+			size_t *TotalIntegerStorageUsed;
+			size_t *Total;
 		} StorageUsed;
-		char NodeName[1000][100]; // Storing a thousand Node Names
+		char *NodeName; // Storing a thousand Node Names
 	} CoreInfo;
 
 	// This will lead to using ExtraDatabaseNodeSet
