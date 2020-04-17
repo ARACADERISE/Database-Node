@@ -135,15 +135,15 @@ void SetupDatabaseNode(
 	NodeSizes * Sizes = (NodeSizes *) malloc(sizeof(NodeSizes));
 
   	// Setting up default sizes to 1000
-  	// Id/Name
-  	NodeSetup->NodeId = calloc(1000,sizeof(int));
-  	NodeSetup->CoreInfo.NodeName = (char *) calloc(1000,sizeof(char)*50);
+	// Id/Name
+	NodeSetup->NodeId = calloc(1000,sizeof(int));
+	NodeSetup->CoreInfo.NodeName = (char *) calloc(1000,sizeof(char)*50);
 
-  	// Node storage
-  	NodeSetup->CoreInfo.NodeStorage.MaxStorageTotal = calloc(1000,sizeof(size_t));
-  	NodeSetup->CoreInfo.NodeStorage.MaxFileSize = calloc(1000,sizeof(size_t));
-  	NodeSetup->CoreInfo.NodeStorage.MaxStringSize = calloc(1000,sizeof(size_t));
-  	NodeSetup->CoreInfo.NodeStorage.MaxIntegerSize = calloc(1000,sizeof(size_t));
+	// Node storage
+	NodeSetup->CoreInfo.NodeStorage.MaxStorageTotal = calloc(1000,sizeof(size_t));
+	NodeSetup->CoreInfo.NodeStorage.MaxFileSize = calloc(1000,sizeof(size_t));
+	NodeSetup->CoreInfo.NodeStorage.MaxStringSize = calloc(1000,sizeof(size_t));
+	NodeSetup->CoreInfo.NodeStorage.MaxIntegerSize = calloc(1000,sizeof(size_t));
 
   	// Allocated storage
   	NodeSetup->CoreInfo.AllocatedStorage.AllocatedTotal = calloc(1000,sizeof(size_t));
@@ -157,14 +157,11 @@ void SetupDatabaseNode(
   	NodeSetup->CoreInfo.StorageUsed.TotalStringStorageUsed = calloc(1000,sizeof(size_t));
   	NodeSetup->CoreInfo.StorageUsed.TotalIntegerStorageUsed = calloc(1000,sizeof(size_t));
 
-
-
 	// 4 default ERAS
 	strcpy(DefDbNode->ERAS[0],"wro"); // Read/Write files
 	strcpy(DefDbNode->ERAS[1],"ro"); // Read only type of Node
 	strcpy(DefDbNode->ERAS[2],"wo"); // Write only type of node
 	strcpy(DefDbNode->ERAS[3],"da"); // Checker type of Database. Read only type, but can do more with the data
-
 
 	// Default values
 	SETDEFAULT(NodeSetup);
