@@ -304,15 +304,15 @@ void CheckStorage(DatabaseNodeset *Db, int SizeToIterate, char *NodeName) {
 		if(AllocatedData) {
 			//printf("====ALLOCATED_STORAGE->%s====\n",NodeName);
 			//printf("\tTOTAL-%ld\n\tFILE-%ld\n\tSTRING-%ld\n\tINTEGER-%ld\n",Db->CoreInfo.AllocatedStorage.AllocatedTotal[SizeToIterate],Db->CoreInfo.AllocatedStorage.AllocatedMaxFileSize[SizeToIterate],Db->CoreInfo.AllocatedStorage.AllocatedMaxStringSize[SizeToIterate],Db->CoreInfo.AllocatedStorage.AllocatedMaxIntegerSize[SizeToIterate]);
-      //printf("====END====\n\n");
+      			//printf("====END====\n\n");
 
-      printf("NODE_NAME: %s | TYPE: ALLOCATED | TOTAL: %ld | FILE: %ld | STRING: %ld | INTEGER: %ld",NodeName,Db->CoreInfo.AllocatedStorage.AllocatedTotal[SizeToIterate],Db->CoreInfo.AllocatedStorage.AllocatedMaxFileSize[SizeToIterate],Db->CoreInfo.AllocatedStorage.AllocatedMaxStringSize[SizeToIterate],Db->CoreInfo.AllocatedStorage.AllocatedMaxIntegerSize[SizeToIterate]);
+      			printf("NODE_NAME: %s | TYPE: ALLOCATED | TOTAL: %ld | FILE: %ld | STRING: %ld | INTEGER: %ld",NodeName,Db->CoreInfo.AllocatedStorage.AllocatedTotal[SizeToIterate],Db->CoreInfo.AllocatedStorage.AllocatedMaxFileSize[SizeToIterate],Db->CoreInfo.AllocatedStorage.AllocatedMaxStringSize[SizeToIterate],Db->CoreInfo.AllocatedStorage.AllocatedMaxIntegerSize[SizeToIterate]);
 		} else {
-      //printf("====STORAGE->%s====\n",NodeName);
+      			//printf("====STORAGE->%s====\n",NodeName);
 			//printf("\tTOTAL-%ld\n\tFILE-%ld\n\tSTRING-%ld\n\tINTEGER-%ld\n",Db->CoreInfo.StorageUsed.Total[SizeToIterate],Db->CoreInfo.StorageUsed.TotalFileStorageUsed[SizeToIterate],Db->CoreInfo.StorageUsed.TotalStringStorageUsed[SizeToIterate],Db->CoreInfo.StorageUsed.TotalIntegerStorageUsed[SizeToIterate]);
 			//printf("====END====\n\n");
 
-      printf("NODE_NAME: %s | TYPE: Regular | TOTAL: %ld | FILE: %ld | STRING: %ld | INTEGER: %ld",NodeName,Db->CoreInfo.StorageUsed.Total[SizeToIterate],Db->CoreInfo.StorageUsed.TotalFileStorageUsed[SizeToIterate],Db->CoreInfo.StorageUsed.TotalStringStorageUsed[SizeToIterate],Db->CoreInfo.StorageUsed.TotalIntegerStorageUsed[SizeToIterate]);
+      			printf("NODE_NAME: %s | TYPE: Regular | TOTAL: %ld | FILE: %ld | STRING: %ld | INTEGER: %ld",NodeName,Db->CoreInfo.StorageUsed.Total[SizeToIterate],Db->CoreInfo.StorageUsed.TotalFileStorageUsed[SizeToIterate],Db->CoreInfo.StorageUsed.TotalStringStorageUsed[SizeToIterate],Db->CoreInfo.StorageUsed.TotalIntegerStorageUsed[SizeToIterate]);
 		}
 	}
 }
