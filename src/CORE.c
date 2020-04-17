@@ -349,14 +349,13 @@ void SetupDatabaseNode(
 				AllocatedData = true;
 			}
 		} else {
-      NodeSetup->CoreInfo.Allocatedata=false;
-      AllocatedData=false;/*Needs to be set to false else it will stay at true*/
-    }
+      			NodeSetup->CoreInfo.Allocatedata=false;
+      			AllocatedData=false;/*Needs to be set to false else it will stay at true*/
+    		}
 
 		SetupNodeStorage(NodeSetup, Sizes, DbNames, DatabaseNode,InitUpd);
 
 		CheckStorage(NodeSetup, InitUpd,DatabaseNode);
 	}
-
-  #undef SETDEFAULT
+  	#undef SETDEFAULT
 }
