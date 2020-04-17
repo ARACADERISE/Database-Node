@@ -90,11 +90,11 @@
               }\
           }\
           /* Setting up extra Node Information */\
-            memset(ExtraNode->ExtraDb->NodeId,0,sizeof(ExtraNode->ExtraDb->NodeId));memset(ExtraNode->ExtraDb->CoreInfo.NodeName,'_',sizeof(ExtraNode->ExtraDb->CoreInfo.NodeName));\
-            memset(ExtraNode->ExtraDb->CoreInfo.NodeStorage.MaxStorageTotal,0,sizeof(ExtraNode->ExtraDb->CoreInfo.NodeStorage.MaxStorageTotal));memset(ExtraNode->ExtraDb->CoreInfo.NodeStorage.MaxFileSize,0,sizeof(ExtraNode->ExtraDb->CoreInfo.NodeStorage.MaxFileSize));\
-            memset(ExtraNode->ExtraDb->CoreInfo.NodeStorage.MaxStringSize,0,sizeof(ExtraNode->ExtraDb->CoreInfo.NodeStorage.MaxStringSize));memset(ExtraNode->ExtraDb->CoreInfo.NodeStorage.MaxIntegerSize,0,sizeof(ExtraNode->ExtraDb->CoreInfo.NodeStorage.MaxIntegerSize));\
-            memset(ExtraNode->ExtraDb->CoreInfo.StorageUsed.Total,0,sizeof(ExtraNode->ExtraDb->CoreInfo.StorageUsed.Total));memset(ExtraNode->ExtraDb->CoreInfo.StorageUsed.TotalFileStorageUsed,0,sizeof(ExtraNode->ExtraDb->CoreInfo.StorageUsed.TotalFileStorageUsed));\
-            memset(ExtraNode->ExtraDb->CoreInfo.StorageUsed.TotalStringStorageUsed,0,sizeof(ExtraNode->ExtraDb->CoreInfo.StorageUsed.TotalStringStorageUsed));memset(ExtraNode->ExtraDb->CoreInfo.StorageUsed.TotalIntegerStorageUsed,0,sizeof(ExtraNode->ExtraDb->CoreInfo.StorageUsed.TotalIntegerStorageUsed));\
+          memset(ExtraNode->ExtraDb->NodeId,0,sizeof(ExtraNode->ExtraDb->NodeId));memset(ExtraNode->ExtraDb->CoreInfo.NodeName,'_',sizeof(ExtraNode->ExtraDb->CoreInfo.NodeName));\
+          memset(ExtraNode->ExtraDb->CoreInfo.NodeStorage.MaxStorageTotal,0,sizeof(ExtraNode->ExtraDb->CoreInfo.NodeStorage.MaxStorageTotal));memset(ExtraNode->ExtraDb->CoreInfo.NodeStorage.MaxFileSize,0,sizeof(ExtraNode->ExtraDb->CoreInfo.NodeStorage.MaxFileSize));\
+          memset(ExtraNode->ExtraDb->CoreInfo.NodeStorage.MaxStringSize,0,sizeof(ExtraNode->ExtraDb->CoreInfo.NodeStorage.MaxStringSize));memset(ExtraNode->ExtraDb->CoreInfo.NodeStorage.MaxIntegerSize,0,sizeof(ExtraNode->ExtraDb->CoreInfo.NodeStorage.MaxIntegerSize));\
+          memset(ExtraNode->ExtraDb->CoreInfo.StorageUsed.Total,0,sizeof(ExtraNode->ExtraDb->CoreInfo.StorageUsed.Total));memset(ExtraNode->ExtraDb->CoreInfo.StorageUsed.TotalFileStorageUsed,0,sizeof(ExtraNode->ExtraDb->CoreInfo.StorageUsed.TotalFileStorageUsed));\
+          memset(ExtraNode->ExtraDb->CoreInfo.StorageUsed.TotalStringStorageUsed,0,sizeof(ExtraNode->ExtraDb->CoreInfo.StorageUsed.TotalStringStorageUsed));memset(ExtraNode->ExtraDb->CoreInfo.StorageUsed.TotalIntegerStorageUsed,0,sizeof(ExtraNode->ExtraDb->CoreInfo.StorageUsed.TotalIntegerStorageUsed));\
         }\
       }\
     }
