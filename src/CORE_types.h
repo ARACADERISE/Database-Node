@@ -49,39 +49,54 @@
 #define BuffAmmount(Db,ExtraNode,CopyOld) \
     for(int i = 0; i < 1000/*Only a thousand indexes*/; i++) {\
         if(i==999&&!(strcmp(Db->CoreInfo.NodeName[i],"_")==0)) {\
-            /* 
-            Setting value of ExtraNodeSetNeeded to true,
-            then setting values of ExtraDatabaseNodeSet to a default value of 0 and _ 
-            */\
-            Db->ExtraNodeSetNeeded=true;\
-            if(CopyOld) {\
-              /*Reseting all to 2000*/\
+          /* 
+          Setting value of ExtraNodeSetNeeded to true,
+          then setting values of ExtraDatabaseNodeSet to a default value of 0 and _ 
+          */\
+          Db->ExtraNodeSetNeeded=true;\
+          if(CopyOld) {\
+            /*Reseting all to 2000*/\
+            /* Node name/Node id */\
+            ExtraNode->ExtraDb->CoreInfo.NodeName = (char *) realloc(2000,sizeof(char)*50);\
+            ExtraNode->ExtraDb->NodeId = realloc(2000,sizeof(int));\
+            /* Node Storage */\
+            ExtraNode->ExtraDb->CoreInfo.NodeStorage.MaxStorageTotal = realloc(2000,sizeof(size_t));\
+            ExtraNode->ExtraDb->CoreInfo.MaxStringSize = realloc(2000,sizeof(size_t));\
+            ExtraNode->ExtraDb->CoreInfo.NodeStorage.MaxFileSize = realloc(2000,sizeof(size_t));\
+            ExtraNode->ExtraDb->CoreInfo.NodeStorage.MaxIntegerSize = realloc(2000,sizeof(size_t));\
+            /* Allocated Data */\
+            ExtraNode->ExtraDb->CoreInfo.AllocatedStorage.AllocatedTotal = realloc(2000,sizeof(size_t));\
+            ExtraNode->ExtraDb->CoreInfo.AllocatedStorage.AllocatedMaxFileSize = realloc(2000,sizeof(size_t));\
+            ExtraNode->ExtraDb->CoreInfo.AllocatedStorage.AllocatedMaxStringSize = realloc(2000,sizeof(size_t));\
+            ExtraNode->ExtraDb->CoreInfo.AllocatedStorage.AllocatedMaxIntegerSize = realloc(2000,sizeof(size_t));\
+            /* Storage Used */\
+            ExtraNode->ExtraDb->CoreInfo.StorageUsed.Total = realloc(2000,sizeof(size_t));\
+            ExtraNode->ExtraDb->CoreInfo.StorageUsed.TotalFileStorageUsed = realloc(2000,sizeof(size_t));\
+            ExtraNode->ExtraDb->CoreInfo.StorageUsed.TotalStringStorageUsed = realloc(2000,sizeof(size_t));\
+            ExtraNode->ExtraDb->CoreInfo.StorageUsed.TotalIntegerStorageUsed = realloc(2000,sizeof(size_t));\
+            /* Copying */\
+            for(int i = 0; i < 1000/*using 1000 out of 2000 indexes to copy*/; i++) {\
               /* Node name/Node id */\
-              ExtraNode->ExtraDb->CoreInfo.NodeName = (char *) realloc(2000,sizeof(char)*50);\
-              ExtraNode->ExtraDb->NodeId = realloc(2000,sizeof(int));\
+              memcpy(ExtraNode->ExtraDb->NodeId[i],Db->CoreInfo.NodeId[i]);memcpy(ExtraNode->ExtraDb->CoreInfo->NodeName[i],Db->CoreInfo.NodeName[i]);\
               /* Node Storage */\
-              ExtraNode->ExtraDb->CoreInfo.NodeStorage.MaxStorageTotal = realloc(2000,sizeof(size_t));\
-              ExtraNode->ExtraDb->CoreInfo.MaxStringSize = realloc(2000,sizeof(size_t));\
-              ExtraNode->ExtraDb->CoreInfo.NodeStorage.MaxFileSize = realloc(2000,sizeof(size_t));\
-              ExtraNode->ExtraDb->CoreInfo.NodeStorage.MaxIntegerSize = realloc(2000,sizeof(size_t));\
-              /* Allocated Data */\
-              ExtraNode->ExtraDb->CoreInfo.AllocatedStorage.AllocatedTotal = realloc(2000,sizeof(size_t));\
-              ExtraNode->ExtraDb->CoreInfo.AllocatedStorage.AllocatedMaxFileSize = realloc(2000,sizeof(size_t));\
-              ExtraNode->ExtraDb->CoreInfo.AllocatedStorage.AllocatedMaxStringSize = realloc(2000,sizeof(size_t));\
-              ExtraNode->ExtraDb->CoreInfo.AllocatedStorage.AllocatedMaxIntegerSize = realloc(2000,sizeof(size_t));\
+              memcpy(ExtraNode->ExtraDb->CoreInfo.NodeStorage.MaxStorageTotal[i],Db->CoreInfo.NodeStorage.MaxStorageTotal[i]);memcpy(ExtraNode->ExtraDb->CoreInfo.NodeStorage.MaxFileSize[i],Db->CoreInfo.NodeStorage.MaxFileSize[i]);\
+              memcpy(ExtraNode->ExtraDb->CoreInfo.NodeStorage.MaxStringSize[i],Db->CoreInfo.NodeStorage.MaxStringSize[i]);memcpy(ExtraNode->ExtraDb->CoreInfo.NodeStorage.MaxIntegerSize[i],Db->CoreInfo.NodeStorage.MaxIntegerSize[i]);\
+              /* Allocated Storage */\
+              memcpy(ExtraNode->ExtraDb->CoreInfo.AllocatedStorage.AllocatedTotal[i],Db->CoreInfo.AllocatedStorage.AllocatedTotal[i]);memcpy(ExtraNode->ExtraDb->CoreInfo.AllocatedStorage.AllocatedMaxFileSize[i],Db->CoreInfo.AllocatedStorage.AllocatedMaxFileSize[i]);\
+              memcpy(ExtraNode->ExtraDb->CoreInfo.AllocatedStorage.AllocatedMaxStringSize[i],Db->CoreInfo.AllocatedStorage.AllocatedMaxStringSize[i]);memcpy(ExtraNode->ExtraDb->CoreInfo.AllocatedStorage.AllocatedMaxIntegerSize[i],Db->CoreInfo.AllocatedStorage.AllocatedMaxIntegerSize[i]);\
               /* Storage Used */\
-              ExtraNode->ExtraDb->CoreInfo.StorageUsed.Total = realloc(2000,sizeof(size_t));\
-              ExtraNode->ExtraDb->CoreInfo.StorageUsed.TotalFileStorageUsed = realloc(2000,sizeof(size_t));\
-              ExtraNode->ExtraDb->CoreInfo.StorageUsed.TotalStringStorageUsed = realloc(2000,sizeof(size_t));\
-              ExtraNode->ExtraDb->CoreInfo.StorageUsed.TotalIntegerStorageUsed = realloc(2000,sizeof(size_t));\
-            }\
-            /* Setting up extra Node Information */\
+              memcpy(ExtraNode->ExtraDb->CoreInfo.StorageUsed.Total[i],Db->CoreInfo.StorageUsed.Total[i]);memcpy(ExtraNode->ExtraDb->CoreInfo.StorageUsed.TotalFileStorageUsed[i],Db->CoreInfo.StorageUsed.TotalFileStorageUsed[i]);\
+              memcpy(ExtraNode->ExtraDb->CoreInfo.StorageUsed.TotalStringStorageUsed[i],Db->CoreInfo.StorageUsed.TotalStringStorageUsed[i]);memcpy(ExtraNode->ExtraDb->CoreInfo.StorageUsed.TotalIntegerStorageUsed[i],Db->CoreInfo.StorageUsed.TotalIntegerStorageUsed[i]);\
+              }\
+          }\
+          /* Setting up extra Node Information */\
             memset(ExtraNode->ExtraDb->NodeId,0,sizeof(ExtraNode->ExtraDb->NodeId));memset(ExtraNode->ExtraDb->CoreInfo.NodeName,'_',sizeof(ExtraNode->ExtraDb->CoreInfo.NodeName));\
             memset(ExtraNode->ExtraDb->CoreInfo.NodeStorage.MaxStorageTotal,0,sizeof(ExtraNode->ExtraDb->CoreInfo.NodeStorage.MaxStorageTotal));memset(ExtraNode->ExtraDb->CoreInfo.NodeStorage.MaxFileSize,0,sizeof(ExtraNode->ExtraDb->CoreInfo.NodeStorage.MaxFileSize));\
             memset(ExtraNode->ExtraDb->CoreInfo.NodeStorage.MaxStringSize,0,sizeof(ExtraNode->ExtraDb->CoreInfo.NodeStorage.MaxStringSize));memset(ExtraNode->ExtraDb->CoreInfo.NodeStorage.MaxIntegerSize,0,sizeof(ExtraNode->ExtraDb->CoreInfo.NodeStorage.MaxIntegerSize));\
             memset(ExtraNode->ExtraDb->CoreInfo.StorageUsed.Total,0,sizeof(ExtraNode->ExtraDb->CoreInfo.StorageUsed.Total));memset(ExtraNode->ExtraDb->CoreInfo.StorageUsed.TotalFileStorageUsed,0,sizeof(ExtraNode->ExtraDb->CoreInfo.StorageUsed.TotalFileStorageUsed));\
             memset(ExtraNode->ExtraDb->CoreInfo.StorageUsed.TotalStringStorageUsed,0,sizeof(ExtraNode->ExtraDb->CoreInfo.StorageUsed.TotalStringStorageUsed));memset(ExtraNode->ExtraDb->CoreInfo.StorageUsed.TotalIntegerStorageUsed,0,sizeof(ExtraNode->ExtraDb->CoreInfo.StorageUsed.TotalIntegerStorageUsed));\
         }\
+      }\
     }
 
 
