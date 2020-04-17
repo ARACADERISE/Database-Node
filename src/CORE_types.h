@@ -45,7 +45,7 @@
 */
 #define BuffAmmount(Db,ExtraNode) \
     for(int i = 0; i < 1000/*Only a thousand indexes*/; i++) {\
-        if(!(strcmp(Db->CoreInfo.NodeName[999],"_")==0)) {\
+        if(i==999&&!(strcmp(Db->CoreInfo.NodeName[i],"_")==0)) {\
             /* 
             Setting value of ExtraNodeSetNeeded to true,
             then setting values of ExtraDatabaseNodeSet to a default value of 0 and _ 
