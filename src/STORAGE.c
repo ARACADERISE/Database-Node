@@ -245,8 +245,8 @@ SetupNodeStorage(
 	/* 
 		There cannot be any allocating data going on before SetupNodeStorage is used.
 
-    This section is commented out due to the fact this error should be taken cared of
-    in CORE.c, but just in case for later references, we'll keep it commented out
+    		This section is commented out due to the fact this error should be taken cared of
+    		in CORE.c, but just in case for later references, we'll keep it commented out
 	
 	if(AllocatedData) {
 		if(DbNode->CoreInfo.AllocatedStorage.AllocatedTotal[3]!=0) {
@@ -255,7 +255,7 @@ SetupNodeStorage(
 			exit(ErrStatus);
 		}
 	}
-  */
+  	*/
 
 	// This needs to be done in SetupNodeStorage, sets all of them to zero since no storage is being used as 
 	// of thus far
