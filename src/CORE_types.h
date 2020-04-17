@@ -27,12 +27,12 @@
     * long very basic function but is needed!
 */
 #define SETDEFAULT(Db) \
-    memset(Db->CoreInfo.NodeName,'_',sizeof(Db->CoreInfo.NodeName)); memset(Db->NodeId,0,sizeof(Db->NodeId)); \
-    memset(Db->CoreInfo.NodeStorage.MaxStorageTotal, 0, sizeof(Db->CoreInfo.NodeStorage.MaxStorageTotal)); \
-    memset(Db->CoreInfo.NodeStorage.MaxFileSize,0,sizeof(Db->CoreInfo.NodeStorage.MaxFileSize)); memset(Db->CoreInfo.NodeStorage.MaxStringSize,0,sizeof(Db->CoreInfo.NodeStorage.MaxStringSize)); \
-    memset(Db->CoreInfo.NodeStorage.MaxIntegerSize,0,sizeof(Db->CoreInfo.NodeStorage.MaxIntegerSize)); memset(Db->CoreInfo.StorageUsed.Total,0,sizeof(Db->CoreInfo.StorageUsed.Total)); \
-    memset(Db->CoreInfo.StorageUsed.TotalFileStorageUsed,0,sizeof(Db->CoreInfo.StorageUsed.TotalFileStorageUsed)); memset(Db->CoreInfo.StorageUsed.TotalStringStorageUsed,0,sizeof(Db->CoreInfo.StorageUsed.TotalStringStorageUsed)); \
-    memset(Db->CoreInfo.StorageUsed.TotalIntegerStorageUsed,0,sizeof(Db->CoreInfo.StorageUsed.TotalIntegerStorageUsed))
+    memset(Db->CoreInfo.NodeName,'_',sizeof(&Db->CoreInfo.NodeName)); memset(Db->NodeId,0,sizeof(&Db->NodeId)); \
+    memset(Db->CoreInfo.NodeStorage.MaxStorageTotal, 0, sizeof(&Db->CoreInfo.NodeStorage.MaxStorageTotal)); \
+    memset(Db->CoreInfo.NodeStorage.MaxFileSize,0,sizeof(&Db->CoreInfo.NodeStorage.MaxFileSize)); memset(Db->CoreInfo.NodeStorage.MaxStringSize,0,sizeof(&Db->CoreInfo.NodeStorage.MaxStringSize)); \
+    memset(Db->CoreInfo.NodeStorage.MaxIntegerSize,0,sizeof(&Db->CoreInfo.NodeStorage.MaxIntegerSize)); memset(Db->CoreInfo.StorageUsed.Total,0,sizeof(&Db->CoreInfo.StorageUsed.Total)); \
+    memset(Db->CoreInfo.StorageUsed.TotalFileStorageUsed,0,sizeof(&Db->CoreInfo.StorageUsed.TotalFileStorageUsed)); memset(Db->CoreInfo.StorageUsed.TotalStringStorageUsed,0,sizeof(&Db->CoreInfo.StorageUsed.TotalStringStorageUsed)); \
+    memset(Db->CoreInfo.StorageUsed.TotalIntegerStorageUsed,0,sizeof(&Db->CoreInfo.StorageUsed.TotalIntegerStorageUsed))
 
 
 /* 
@@ -40,10 +40,13 @@
     * No matter what index anything else is at, if Node names
     * is at a thousand it will switch over to ExtraDatabaseNodeSet.
     * Yet another simple, very simple, function, yet again...very much needed
+    * If CopyOld is true then there will be 1000 added to the each index of ExtraDatabaseNodeSet.
+    * There is allot of "waste code" as I like to call it.
+      - "waste code" meaning..code that could be refactored, but I just didn't refactor it
 
     EVERYTHING IN DatabaseNodeSet WILL BE SAVED!
 */
-#define BuffAmmount(Db,ExtraNode) \
+#define BuffAmmount(Db,ExtraNode,CopyOld) \
     for(int i = 0; i < 1000/*Only a thousand indexes*/; i++) {\
         if(i==999&&!(strcmp(Db->CoreInfo.NodeName[i],"_")==0)) {\
             /* 
@@ -51,6 +54,27 @@
             then setting values of ExtraDatabaseNodeSet to a default value of 0 and _ 
             */\
             Db->ExtraNodeSetNeeded=true;\
+            if(CopyOld) {\
+              /*Reseting all to 2000*/\
+              /* Node name/Node id */\
+              ExtraNode->ExtraDb->CoreInfo.NodeName = (char *) realloc(2000,sizeof(char)*50);\
+              ExtraNode->ExtraDb->NodeId = realloc(2000,sizeof(int));\
+              /* Node Storage */\
+              ExtraNode->ExtraDb->CoreInfo.NodeStorage.MaxStorageTotal = realloc(2000,sizeof(size_t));\
+              ExtraNode->ExtraDb->CoreInfo.MaxStringSize = realloc(2000,sizeof(size_t));\
+              ExtraNode->ExtraDb->CoreInfo.NodeStorage.MaxFileSize = realloc(2000,sizeof(size_t));\
+              ExtraNode->ExtraDb->CoreInfo.NodeStorage.MaxIntegerSize = realloc(2000,sizeof(size_t));\
+              /* Allocated Data */\
+              ExtraNode->ExtraDb->CoreInfo.AllocatedStorage.AllocatedTotal = realloc(2000,sizeof(size_t));\
+              ExtraNode->ExtraDb->CoreInfo.AllocatedStorage.AllocatedMaxFileSize = realloc(2000,sizeof(size_t));\
+              ExtraNode->ExtraDb->CoreInfo.AllocatedStorage.AllocatedMaxStringSize = realloc(2000,sizeof(size_t));\
+              ExtraNode->ExtraDb->CoreInfo.AllocatedStorage.AllocatedMaxIntegerSize = realloc(2000,sizeof(size_t));\
+              /* Storage Used */\
+              ExtraNode->ExtraDb->CoreInfo.StorageUsed.Total = realloc(2000,sizeof(size_t));\
+              ExtraNode->ExtraDb->CoreInfo.StorageUsed.TotalFileStorageUsed = realloc(2000,sizeof(size_t));\
+              ExtraNode->ExtraDb->CoreInfo.StorageUsed.TotalStringStorageUsed = realloc(2000,sizeof(size_t));\
+              ExtraNode->ExtraDb->CoreInfo.StorageUsed.TotalIntegerStorageUsed = realloc(2000,sizeof(size_t));\
+            }\
             /* Setting up extra Node Information */\
             memset(ExtraNode->ExtraDb->NodeId,0,sizeof(ExtraNode->ExtraDb->NodeId));memset(ExtraNode->ExtraDb->CoreInfo.NodeName,'_',sizeof(ExtraNode->ExtraDb->CoreInfo.NodeName));\
             memset(ExtraNode->ExtraDb->CoreInfo.NodeStorage.MaxStorageTotal,0,sizeof(ExtraNode->ExtraDb->CoreInfo.NodeStorage.MaxStorageTotal));memset(ExtraNode->ExtraDb->CoreInfo.NodeStorage.MaxFileSize,0,sizeof(ExtraNode->ExtraDb->CoreInfo.NodeStorage.MaxFileSize));\
