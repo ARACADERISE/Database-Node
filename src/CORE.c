@@ -134,28 +134,28 @@ void SetupDatabaseNode(
 	DefaultMainDbNode * DefDbNode = (DefaultMainDbNode *) malloc(sizeof(DefaultMainDbNode));
 	NodeSizes * Sizes = (NodeSizes *) malloc(sizeof(NodeSizes));
 
-  	// Setting up default sizes to 1000
-	// Id/Name
-	NodeSetup->NodeId = calloc(1000,sizeof(int));
-	NodeSetup->CoreInfo.NodeName = (char *) calloc(1000,sizeof(char)*50);
+  // Setting up default sizes to 1000
+  // Id/Name
+  NodeSetup->NodeId = calloc(1000,sizeof(int));
+  NodeSetup->CoreInfo.NodeName = (char *) calloc(1000,sizeof(char)*50);
 
-	// Node storage
-	NodeSetup->CoreInfo.NodeStorage.MaxStorageTotal = calloc(1000,sizeof(size_t));
-	NodeSetup->CoreInfo.NodeStorage.MaxFileSize = calloc(1000,sizeof(size_t));
-	NodeSetup->CoreInfo.NodeStorage.MaxStringSize = calloc(1000,sizeof(size_t));
-	NodeSetup->CoreInfo.NodeStorage.MaxIntegerSize = calloc(1000,sizeof(size_t));
+  // Node storage
+  NodeSetup->CoreInfo.NodeStorage.MaxStorageTotal = calloc(1000,sizeof(size_t));
+  NodeSetup->CoreInfo.NodeStorage.MaxFileSize = calloc(1000,sizeof(size_t));
+  NodeSetup->CoreInfo.NodeStorage.MaxStringSize = calloc(1000,sizeof(size_t));
+  NodeSetup->CoreInfo.NodeStorage.MaxIntegerSize = calloc(1000,sizeof(size_t));
 
-  	// Allocated storage
-  	NodeSetup->CoreInfo.AllocatedStorage.AllocatedTotal = calloc(1000,sizeof(size_t));
-  	NodeSetup->CoreInfo.AllocatedStorage.AllocatedMaxFileSize = calloc(1000,sizeof(size_t));
-  	NodeSetup->CoreInfo.AllocatedStorage.AllocatedMaxStringSize = calloc(1000,sizeof(size_t));
-  	NodeSetup->CoreInfo.AllocatedStorage.AllocatedMaxIntegerSize = calloc(1000,sizeof(size_t));
+  // Allocated storage
+  NodeSetup->CoreInfo.AllocatedStorage.AllocatedTotal = calloc(1000,sizeof(size_t));
+  NodeSetup->CoreInfo.AllocatedStorage.AllocatedMaxFileSize = calloc(1000,sizeof(size_t));
+  NodeSetup->CoreInfo.AllocatedStorage.AllocatedMaxStringSize = calloc(1000,sizeof(size_t));
+  NodeSetup->CoreInfo.AllocatedStorage.AllocatedMaxIntegerSize = calloc(1000,sizeof(size_t));
 
-  	// Storage used
-  	NodeSetup->CoreInfo.StorageUsed.Total = calloc(1000,sizeof(size_t));
-  	NodeSetup->CoreInfo.StorageUsed.TotalFileStorageUsed = calloc(1000,sizeof(size_t));
-  	NodeSetup->CoreInfo.StorageUsed.TotalStringStorageUsed = calloc(1000,sizeof(size_t));
-  	NodeSetup->CoreInfo.StorageUsed.TotalIntegerStorageUsed = calloc(1000,sizeof(size_t));
+  // Storage used
+  NodeSetup->CoreInfo.StorageUsed.Total = calloc(1000,sizeof(size_t));
+  NodeSetup->CoreInfo.StorageUsed.TotalFileStorageUsed = calloc(1000,sizeof(size_t));
+  NodeSetup->CoreInfo.StorageUsed.TotalStringStorageUsed = calloc(1000,sizeof(size_t));
+  NodeSetup->CoreInfo.StorageUsed.TotalIntegerStorageUsed = calloc(1000,sizeof(size_t));
 
 	// 4 default ERAS
 	strcpy(DefDbNode->ERAS[0],"wro"); // Read/Write files
@@ -339,7 +339,7 @@ void SetupDatabaseNode(
 		}
 		
 		// Allocating storage if true
-		if(!(strcmp(DatabaseNode,"DefaultNodeSetup") == 0) &&AllocateData_) {
+		if(AllocateData_) {
 			NodeSetup->CoreInfo.Allocatedata=true;
 			if(AllocatedData==true) {
 				fprintf(stderr,"\033[0;43mCannot allocate storage from allocated storage.\n\tError on %s\t\033[0;32mReassigned\033[0;0m\n",DatabaseNode);
@@ -352,10 +352,11 @@ void SetupDatabaseNode(
       			NodeSetup->CoreInfo.Allocatedata=false;
       			AllocatedData=false;/*Needs to be set to false else it will stay at true*/
     		}
-
+	
 		SetupNodeStorage(NodeSetup, Sizes, DbNames, DatabaseNode,InitUpd);
 
 		CheckStorage(NodeSetup, InitUpd,DatabaseNode);
 	}
+
   	#undef SETDEFAULT
 }
