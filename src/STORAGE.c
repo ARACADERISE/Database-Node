@@ -66,11 +66,12 @@ AllocateData(DatabaseNodeset *Db, int SizeToIterate /*const char *NodeName*/) {
 
 	/* may need it for later on if we run into an error allocating from default node
 
-  if(SizeToIterate == 2 && AllocatedData) {
+  	if(SizeToIterate == 2 && AllocatedData) {
 		ErrStatus = (_CGE == 0) ? CannotAllocateFromDefaultDbNode : Failure;
 		RETURNERRINFO("\033[0;31m", ErrStatus);
 		exit(ErrStatus);
-	}*/
+	}
+	*/
 
 	if(AllocatedData && (
 		Db->CoreInfo.StorageUsed.Total[SizeToIterate]!=0 &&
