@@ -134,28 +134,28 @@ void SetupDatabaseNode(
 	DefaultMainDbNode * DefDbNode = (DefaultMainDbNode *) malloc(sizeof(DefaultMainDbNode));
 	NodeSizes * Sizes = (NodeSizes *) malloc(sizeof(NodeSizes));
 
-  // Setting up default sizes to 1000
-  // Id/Name
-  NodeSetup->NodeId = calloc(1000,sizeof(int));
-  NodeSetup->CoreInfo.NodeName = (char *) calloc(1000,sizeof(char)*50);
+  	// Setting up default sizes to 1000
+  	// Id/Name
+  	NodeSetup->NodeId = calloc(1000,sizeof(int));
+  	NodeSetup->CoreInfo.NodeName = (char *) calloc(1000,sizeof(char)*50);
 
-  // Node storage
-  NodeSetup->CoreInfo.NodeStorage.MaxStorageTotal = calloc(1000,sizeof(size_t));
-  NodeSetup->CoreInfo.NodeStorage.MaxFileSize = calloc(1000,sizeof(size_t));
-  NodeSetup->CoreInfo.NodeStorage.MaxStringSize = calloc(1000,sizeof(size_t));
-  NodeSetup->CoreInfo.NodeStorage.MaxIntegerSize = calloc(1000,sizeof(size_t));
+  	// Node storage
+  	NodeSetup->CoreInfo.NodeStorage.MaxStorageTotal = calloc(1000,sizeof(size_t));
+  	NodeSetup->CoreInfo.NodeStorage.MaxFileSize = calloc(1000,sizeof(size_t));
+  	NodeSetup->CoreInfo.NodeStorage.MaxStringSize = calloc(1000,sizeof(size_t));
+  	NodeSetup->CoreInfo.NodeStorage.MaxIntegerSize = calloc(1000,sizeof(size_t));
 
-  // Allocated storage
-  NodeSetup->CoreInfo.AllocatedStorage.AllocatedTotal = calloc(1000,sizeof(size_t));
-  NodeSetup->CoreInfo.AllocatedStorage.AllocatedMaxFileSize = calloc(1000,sizeof(size_t));
-  NodeSetup->CoreInfo.AllocatedStorage.AllocatedMaxStringSize = calloc(1000,sizeof(size_t));
-  NodeSetup->CoreInfo.AllocatedStorage.AllocatedMaxIntegerSize = calloc(1000,sizeof(size_t));
+  	// Allocated storage
+  	NodeSetup->CoreInfo.AllocatedStorage.AllocatedTotal = calloc(1000,sizeof(size_t));
+  	NodeSetup->CoreInfo.AllocatedStorage.AllocatedMaxFileSize = calloc(1000,sizeof(size_t));
+  	NodeSetup->CoreInfo.AllocatedStorage.AllocatedMaxStringSize = calloc(1000,sizeof(size_t));
+  	NodeSetup->CoreInfo.AllocatedStorage.AllocatedMaxIntegerSize = calloc(1000,sizeof(size_t));
 
-  // Storage used
-  NodeSetup->CoreInfo.StorageUsed.Total = calloc(1000,sizeof(size_t));
-  NodeSetup->CoreInfo.StorageUsed.TotalFileStorageUsed = calloc(1000,sizeof(size_t));
-  NodeSetup->CoreInfo.StorageUsed.TotalStringStorageUsed = calloc(1000,sizeof(size_t));
-  NodeSetup->CoreInfo.StorageUsed.TotalIntegerStorageUsed = calloc(1000,sizeof(size_t));
+  	// Storage used
+  	NodeSetup->CoreInfo.StorageUsed.Total = calloc(1000,sizeof(size_t));
+  	NodeSetup->CoreInfo.StorageUsed.TotalFileStorageUsed = calloc(1000,sizeof(size_t));
+  	NodeSetup->CoreInfo.StorageUsed.TotalStringStorageUsed = calloc(1000,sizeof(size_t));
+  	NodeSetup->CoreInfo.StorageUsed.TotalIntegerStorageUsed = calloc(1000,sizeof(size_t));
 
 
 
