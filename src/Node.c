@@ -33,7 +33,6 @@ SetupNode() {
   if(strcmp(CanRead,"yes")==0)CanRead_=true;
   else CanRead_=false;
   if(strcmp(AllocData,"yes")==0)AlocData=true;
-  else if(strcmp(AllocData, "no")) AlocData=false;
   else AlocData=false;
 
   SetupDatabaseNode(NodeName, __CGE, CanRead_, AlocData, EraType,FileSize,StringSize,IntegerSize);
