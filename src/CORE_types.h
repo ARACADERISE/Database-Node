@@ -51,7 +51,6 @@
             then setting values of ExtraDatabaseNodeSet to a default value of 0 and _ 
             */\
             Db->ExtraNodeSetNeeded=true;\
-            \
             /* Setting up extra Node Information */\
             memset(ExtraNode->ExtraDb->NodeId,0,sizeof(ExtraNode->ExtraDb->NodeId));memset(ExtraNode->ExtraDb->CoreInfo.NodeName,'_',sizeof(ExtraNode->ExtraDb->CoreInfo.NodeName));\
             memset(ExtraNode->ExtraDb->CoreInfo.NodeStorage.MaxStorageTotal,0,sizeof(ExtraNode->ExtraDb->CoreInfo.NodeStorage.MaxStorageTotal));memset(ExtraNode->ExtraDb->CoreInfo.NodeStorage.MaxFileSize,0,sizeof(ExtraNode->ExtraDb->CoreInfo.NodeStorage.MaxFileSize));\
