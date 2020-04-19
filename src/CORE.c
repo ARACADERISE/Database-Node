@@ -124,9 +124,17 @@ void SetupDatabaseNode(
 	size_t StringSize,
 	size_t IntegerSize
 ) {
-	static int InitId = 0;
-	static int DefDb = 0;
-	static int InitUpd = 0;
+	/* 
+		InitId/InitUpd - unsigned due to the fact they never reach negatives and or there
+		may be many Nodes that access these 2 elements
+
+		DefDb - signed due to the fact it reached -1 if max of 4 default Nodes are reached
+
+		Strict types on these 3 variables, but it is better off using strict types instead of getting errors
+	*/
+	static unsigned int InitId = 0;
+	static unsigned int InitUpd = 0;
+	static signed int DefDb = 0;
 
 	// Struct ideals for the application
 	AddInfo * Add_Info = (AddInfo *) malloc(sizeof(AddInfo));
@@ -134,28 +142,28 @@ void SetupDatabaseNode(
 	DefaultMainDbNode * DefDbNode = (DefaultMainDbNode *) malloc(sizeof(DefaultMainDbNode));
 	NodeSizes * Sizes = (NodeSizes *) malloc(sizeof(NodeSizes));
 
-  // Setting up default sizes to 1000
-  // Id/Name
-  NodeSetup->NodeId = calloc(1000,sizeof(int));
-  NodeSetup->CoreInfo.NodeName = (char *) calloc(1000,sizeof(char)*50);
+    // Setting up default sizes to 1000
+    // Id/Name
+    NodeSetup->NodeId = calloc(1000,sizeof(int));
+    NodeSetup->CoreInfo.NodeName = (char *) calloc(1000,sizeof(char)*50);
 
-  // Node storage
-  NodeSetup->CoreInfo.NodeStorage.MaxStorageTotal = calloc(1000,sizeof(size_t));
-  NodeSetup->CoreInfo.NodeStorage.MaxFileSize = calloc(1000,sizeof(size_t));
-  NodeSetup->CoreInfo.NodeStorage.MaxStringSize = calloc(1000,sizeof(size_t));
-  NodeSetup->CoreInfo.NodeStorage.MaxIntegerSize = calloc(1000,sizeof(size_t));
+    // Node storage
+    NodeSetup->CoreInfo.NodeStorage.MaxStorageTotal = calloc(1000,sizeof(size_t));
+    NodeSetup->CoreInfo.NodeStorage.MaxFileSize = calloc(1000,sizeof(size_t));
+    NodeSetup->CoreInfo.NodeStorage.MaxStringSize = calloc(1000,sizeof(size_t));
+    NodeSetup->CoreInfo.NodeStorage.MaxIntegerSize = calloc(1000,sizeof(size_t));
 
-  // Allocated storage
-  NodeSetup->CoreInfo.AllocatedStorage.AllocatedTotal = calloc(1000,sizeof(size_t));
-  NodeSetup->CoreInfo.AllocatedStorage.AllocatedMaxFileSize = calloc(1000,sizeof(size_t));
-  NodeSetup->CoreInfo.AllocatedStorage.AllocatedMaxStringSize = calloc(1000,sizeof(size_t));
-  NodeSetup->CoreInfo.AllocatedStorage.AllocatedMaxIntegerSize = calloc(1000,sizeof(size_t));
+    // Allocated storage
+    NodeSetup->CoreInfo.AllocatedStorage.AllocatedTotal = calloc(1000,sizeof(size_t));
+    NodeSetup->CoreInfo.AllocatedStorage.AllocatedMaxFileSize = calloc(1000,sizeof(size_t));
+    NodeSetup->CoreInfo.AllocatedStorage.AllocatedMaxStringSize = calloc(1000,sizeof(size_t));
+    NodeSetup->CoreInfo.AllocatedStorage.AllocatedMaxIntegerSize = calloc(1000,sizeof(size_t));
 
-  // Storage used
-  NodeSetup->CoreInfo.StorageUsed.Total = calloc(1000,sizeof(size_t));
-  NodeSetup->CoreInfo.StorageUsed.TotalFileStorageUsed = calloc(1000,sizeof(size_t));
-  NodeSetup->CoreInfo.StorageUsed.TotalStringStorageUsed = calloc(1000,sizeof(size_t));
-  NodeSetup->CoreInfo.StorageUsed.TotalIntegerStorageUsed = calloc(1000,sizeof(size_t));
+    // Storage used
+    NodeSetup->CoreInfo.StorageUsed.Total = calloc(1000,sizeof(size_t));
+    NodeSetup->CoreInfo.StorageUsed.TotalFileStorageUsed = calloc(1000,sizeof(size_t));
+    NodeSetup->CoreInfo.StorageUsed.TotalStringStorageUsed = calloc(1000,sizeof(size_t));
+    NodeSetup->CoreInfo.StorageUsed.TotalIntegerStorageUsed = calloc(1000,sizeof(size_t));
 
 	// 4 default ERAS
 	strcpy(DefDbNode->ERAS[0],"wro"); // Read/Write files
@@ -349,14 +357,14 @@ void SetupDatabaseNode(
 				AllocatedData = true;
 			}
 		} else {
-      			NodeSetup->CoreInfo.Allocatedata=false;
-      			AllocatedData=false;/*Needs to be set to false else it will stay at true*/
-    		}
-	
+      NodeSetup->CoreInfo.Allocatedata=false;
+      AllocatedData=false;/*Needs to be set to false else it will stay at true*/
+    }
+
 		SetupNodeStorage(NodeSetup, Sizes, DbNames, DatabaseNode,InitUpd);
 
 		CheckStorage(NodeSetup, InitUpd,DatabaseNode);
 	}
 
-  	#undef SETDEFAULT
+  #undef SETDEFAULT
 }
